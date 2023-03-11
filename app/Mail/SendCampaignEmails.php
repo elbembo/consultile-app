@@ -57,7 +57,7 @@ class SendCampaignEmails extends Mailable
     public function content()
     {
         return new Content(
-            view: 'mail.test',
+            view: 'mail.base',
             with: ['body' =>$this->mailData['body']],
         );
     }

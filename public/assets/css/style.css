@@ -16,3 +16,24 @@
 .form-control.form-control-tags  input:-moz-placeholder{color:#adb5bd;opacity:1}
 .form-control.form-control-tags  input:-ms-input-placeholder{color:#adb5bd;opacity:1}
 .form-control.form-control-tags  input::placeholder{color:#adb5bd;opacity:1}
+.rubber {
+    position: absolute;
+    box-shadow: 0 0 0 6px #9b1515, 0 0 0 5px #9b1515 inset;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    display: inline-block;
+    padding: 40px 5px;
+    line-height: 60px;
+    color: #9b1515;
+    font-size: 83px;
+    /* font-family: 'Black Ops One', cursive; */
+    text-transform: uppercase;
+    text-align: center;
+    opacity: 0.8;
+    width: 484px;
+    transform: rotate(337deg);
+    font-weight: 700;
+    top: 31%;
+    left: 25%;
+    z-index: 9999;
+  }

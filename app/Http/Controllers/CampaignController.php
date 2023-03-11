@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Campaign;
 use App\Mail\SendCampaignEmails;
+use App\Models\Contact;
+use App\Models\EmailQeue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Models\EmailTemplate;
 use App\Models\Setting;
+use Illuminate\Support\Facades\DB;
 
 class CampaignController extends Controller
 {
@@ -19,25 +22,10 @@ class CampaignController extends Controller
     public function index()
     {
         //
-
-        return view('campaign.index');
-
+        $campaigns = Campaign::where('id', '>', '0')->orderBy('id', 'desc')->paginate(10);
+        return view('campaign.index', compact('campaigns'));
     }
-    public function view()
-    {
-        //
-        $mailData = [
-            'from'=>['email'=>'consultile@emadissa.com', 'name'=>'Consultile'],
-            'replyTo'=>['email'=>'info@consultile.com', 'name'=>'Consultile'],
-            'to'=>['email'=>'test1@emadissa.com', 'name'=>'Emad Isaa'],
-            'subject'=>'Send Campaign Emails',
-            'body'=>'hiiiiiiiiiii'
-        ];
-        // if(Mail::to('test1@emadissa.com','Test user')->send(new SendCampaignEmails($mailData)));
-        // $email = Mail::failures();
-        // return view('campaign.index')->with($email);
-        return (new SendCampaignEmails($mailData))->render();
-    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -48,14 +36,14 @@ class CampaignController extends Controller
     {
         //
         $templates = EmailTemplate::all();
-        $settings = Setting::where('key','stmp_sender_name')
-        ->orWhere('key','stmp_replay_email')
-        ->orWhere('key','stmp_replay_name')->get();
+        $settings = Setting::where('key', 'stmp_sender_name')
+            ->orWhere('key', 'stmp_replay_email')
+            ->orWhere('key', 'stmp_replay_name')->get();
         $headers = array();
-        foreach($settings as $setting ){
+        foreach ($settings as $setting) {
             $headers[$setting['key']] = $setting['value'];
         }
-        return view('campaign.create',compact('templates','headers'));
+        return view('campaign.create', compact('templates', 'headers'));
     }
 
     /**
@@ -76,7 +64,7 @@ class CampaignController extends Controller
         //     'about_me'    => ['max:150'],
         // ]);
         $campaigns = Campaign::create($request->all());
-        if($campaigns)
+        if ($campaigns)
             return redirect("campaigns/$campaigns->id/edit");
         // return view('mail.view')->with($code);
         // return view('campaign.create',compact('code'));
@@ -106,9 +94,8 @@ class CampaignController extends Controller
         //
         $templates = EmailTemplate::all();
         $campaign = Campaign::find($id);
-        if($campaign )
-        return view('campaign.create',compact('campaign','templates'));
-
+        if ($campaign)
+            return view('campaign.create', compact('campaign', 'templates'));
     }
 
     /**
@@ -118,9 +105,35 @@ class CampaignController extends Controller
      * @param  \App\Models\Campaign  $campaign
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Campaign $campaign)
+    public function update(Request $request, $id)
     {
         //
+        $contacts = Contact::all();
+        $campaign = Campaign::find($id);
+        if (isset($request->action)) {
+            if ($request->status == 'processing') {
+                $ta = 0;
+                foreach ($contacts as $contact) {
+                    EmailQeue::create([
+                        'capmaign_id' => $campaign->id,
+                        'contact_id' => $contact->id,
+                        'priority' => $campaign->campaign_priority,
+                        'massage_id' => now()->timestamp,
+                    ]);
+                    $ta++;
+                }
+                $request->request->add(['total_audience' => $ta]);
+            }elseif($request->status == 'canceled'){
+                DB::table('email_qeues')->where('capmaign_id',$campaign->id)->delete();
+            }elseif($request->status == 'pending'){
+                DB::table('email_qeues')->where('capmaign_id',$campaign->id)->update([
+                    'priority' => 0,
+                ]);
+            }
+        }
+        $campaign = Campaign::find($id);
+        $campaign->update($request->all());
+        $campaign->save();
 
         return redirect("campaigns/$campaign->id/edit");
     }

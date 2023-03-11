@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Campaign;
+use App\Models\EmailTemplate;
 use App\Models\Summernote;
 use Illuminate\Http\Request;
 
@@ -12,9 +14,20 @@ class SummernoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $cid = $request->query('c');
+        $tid = $request->query('t');
         //
+        if ($cid) {
+            $campaign = Campaign::find($cid);
+            return view('components.editor',compact('campaign'));
+        }
+        if ($tid) {
+            $et = EmailTemplate::find($tid);
+            return view('components.editor',compact('et'));
+        }
+
     }
 
     /**

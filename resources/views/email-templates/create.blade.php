@@ -40,10 +40,11 @@
                     </div>
                         <textarea id="summernote" name="content" >{{ $code ?? '' }}</textarea>
                         <div class="d-flex justify-content-between">
-                            <a href="{{url('email/template/preview')}}" class="btn bg-gradient-primary btn-md mt-2 mb-0" type="button">Preview</a>
+                            <button id="email-preview" href="{{url('email/template/preview')}}" class="btn bg-gradient-primary btn-md mt-2 mb-0" type="button">Preview</button>
                             <button type="submit" class="btn bg-gradient-primary btn-md mt-2 mb-0" >Save template</button>
                         </div>
                     </form>
+
                 </div>
 
 
@@ -52,5 +53,29 @@
         </div>
     </div>
 </div>
+<script>
+            document.querySelector('#email-preview')
+            .addEventListener('click',(e)=>{
 
+                const formElement = document.querySelector('form')
+                const data ={};
+                for (const pair of new FormData(formElement)) {
+                    data[pair[0]] = pair[1];
+                    data["_method"] = "POST"
+                }
+                const formData = new FormData(formElement);
+                fetch("/email-preview", {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-Token": formElement._token.value
+                    },
+                    credentials: "same-origin",
+                    method: 'post',
+                    body: JSON.stringify(data),
+                });
+            })
+
+        </script>
 @endsection

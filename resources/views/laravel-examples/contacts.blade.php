@@ -7,7 +7,7 @@
         <span class="text-white">
             <strong>Add, Edit, Delete features are not functional!</strong> This is a
             <strong>PRO</strong> feature! Click <strong>
-            <a href="https://www.creative-tim.com/live/soft-ui-dashboard-pro-laravel" target="_blank" class="text-white">here</a></strong>
+                <a href="https://www.creative-tim.com/live/soft-ui-dashboard-pro-laravel" target="_blank" class="text-white">here</a></strong>
             to see the PRO product!
         </span>
     </div>
@@ -20,7 +20,13 @@
                         <div>
                             <h5 class="mb-0">All Users</h5>
                         </div>
-                        <a href="{{url('contacts/new')}}" class="btn bg-gradient-primary btn-sm mb-0" type="button">+&nbsp; New User</a>
+                        <div class="d-flex flex-row justify-content-end">
+
+                            <a href="{{url('contacts/import')}}" class="btn bg-gray-50 btn-sm m-1">{{ __('+ Import') }}</a>
+
+                            <a href="{{url('contacts/new')}}" class="btn bg-gradient-primary btn-sm m-1" >{{ __('+ New User') }}</a>
+
+                        </div>
                     </div>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">

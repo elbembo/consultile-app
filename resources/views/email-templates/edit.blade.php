@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="card-body px-2 py-1">
-                    <form  id="tempCode" action="{{ url('email/templates/'.$emailTemp->id) }}" method="post">
+                    <!-- <form  id="tempCode" action="{{ url('email/templates/'.$emailTemp->id) }}" method="post">
                     @csrf
                     {{ method_field('PATCH') }}
                     <div class="row pb-2">
@@ -39,9 +39,21 @@
                         </div>
 
                     </div>
+                    <div class="d-flex">
+                        <div class="border border-1 btn custom_data shadow-none" data-value="First Name">First Name</div>
+                        <div class="border border-1 btn custom_data shadow-none" data-value="Last Name">Last Name</div>
+                        <div class="border border-1 btn custom_data shadow-none" data-value="Title">Title</div>
+                        <div class="border border-1 btn custom_data shadow-none" data-value="Email">Email</div>
+                    </div>
+                    <div class="row">
                         <textarea id="summernote" name="content" >{{ $emailTemp->content ?? '' }}</textarea>
-                        <button type="submit" class="btn bg-gradient-primary btn-md mt-2 mb-0" >Save template</button>
-                    </form>
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url('email/template/preview' )}}" class="btn bg-gradient-primary btn-md mt-2 mb-0" target="_blank">Preview</a>
+                            <button type="submit" class="btn bg-gradient-primary btn-md mt-2 mb-0" >Save template</button>
+                        </div>
+                    </div>
+                    </form> -->
+                    <iframe src="/editor?{{ isset($emailTemp->id) ? "t=$emailTemp->id" : '' }}" frameborder="0" height="600" width="800"></iframe>
                 </div>
 
 

@@ -26,10 +26,15 @@ class Kernel extends ConsoleKernel
     {
         $hour = config('app.hour');
         $min = config('app.min');
+        config(['app.sec' => '5']);
         $scheduledInterval = $hour !== '' ? ( ($min !== '' && $min != 0) ?  $min .' */'. $hour .' * * *' : '0 */'. $hour .' * * *') : '*/'. $min .' * * * *';
-        if(env('IS_DEMO')) {
-            $schedule->command('migrate:fresh --seed')->cron($scheduledInterval);
-        }
+        // if(env('IS_DEMO')) {
+        //     $schedule->command('migrate:fresh --seed')->cron($scheduledInterval);
+        // }
+        $schedule->call(function () {
+            env(['SCHEDULED_SEC' => 15]);
+        })->everyMinute();
+
     }
 
     /**

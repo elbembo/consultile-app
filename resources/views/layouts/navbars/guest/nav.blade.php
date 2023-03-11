@@ -40,7 +40,7 @@
           </a>
         </li> -->
         <li class="nav-item">
-          <a class="nav-link me-2" href="{{ auth()->user() ? url('static-sign-up') : url('register') }}">
+          <a class="nav-link me-2" href="https://subscribe.consultile.com/">
             <i class="fas fa-user-circle opacity-6 me-1 {{ (Request::is('static-sign-up') ? '' : 'text-dark') }}"></i>
             Subscribe
           </a>
@@ -54,7 +54,7 @@
       </ul>
       <ul class="navbar-nav d-lg-block d-none">
         <li class="nav-item">
-          <a href="https://www.creative-tim.com/product/soft-ui-dashboard-laravel" target="_blank" class="btn btn-sm btn-round mb-0 me-1 bg-gradient-{{ (Request::is('static-sign-up') ? 'light' : 'dark') }}">Free download</a>
+          <!-- <a href="https://www.creative-tim.com/product/soft-ui-dashboard-laravel" target="_blank" class="btn btn-sm btn-round mb-0 me-1 bg-gradient-{{ (Request::is('static-sign-up') ? 'light' : 'dark') }}">Free download</a> -->
         </li>
       </ul>
     </div>

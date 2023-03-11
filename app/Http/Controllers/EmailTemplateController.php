@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
+use App\Mail\SendCampaignEmails;
 use App\Models\EmailTemplate;
+use App\Models\Campaign;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class EmailTemplateController extends Controller
 {
@@ -16,10 +21,46 @@ class EmailTemplateController extends Controller
     {
         //
         $emailTemplates = EmailTemplate::all();
-        return view('email-templates.index',compact('emailTemplates'));
-
+        return view('email-templates.index', compact('emailTemplates'));
     }
 
+    public function preview(Request $request)
+    {
+        //
+        if (isset($request->content)) {
+            $mailData = [
+                'from' => ['email' => 'consultile@emadissa.com', 'name' => 'Consultile'],
+                'replyTo' => ['email' => 'info@consultile.com', 'name' => 'Consultile'],
+                'to' => ['email' => 'test1@emadissa.com', 'name' => 'Emad Isaa'],
+                'subject' => 'Send Campaign Emails',
+                'body' => Helper::parser('cto@emadissa.com', $request->content)
+            ];
+            // if(Mail::to('test1@emadissa.com','Test user')->send(new SendCampaignEmails($mailData)));
+            // $email = Mail::failures();
+            // return view('campaign.index')->with($email);
+            return (new SendCampaignEmails($mailData))->render();
+        }
+        return response()->json($request->all());
+    }
+    public function send_test(Request $request)
+    {
+        //
+        $data = $request->all();
+        //return response()->json($request->template_id);
+        $emailTemplates = EmailTemplate::find($request->template_id);
+        $mailData = [
+            'from' => ['email' => 'consultile@emadissa.com', 'name' => $request->sender_name],
+            'replyTo' => ['email' => $request->replay_to, 'name' => $request->sender_name],
+            'to' => ['email' => $request->send_to, 'name' => 'Emad Isaa'],
+            'subject' => $request->subject,
+            'body' => Helper::parser($request->send_to, $emailTemplates->content)
+        ];
+        if (Mail::to($request->send_to, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)))
+            return response()->json($request->all());
+        // $email = Mail::failures();
+        // return view('campaign.index')->with($email);
+        return (new SendCampaignEmails($mailData))->render();
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -40,12 +81,28 @@ class EmailTemplateController extends Controller
     public function store(Request $request)
     {
         //
-        $code = $request->content;
+
         $emailTemplate = EmailTemplate::create($request->all());
+        if ($emailTemplate) {
+            // $campaign = Campaign::find($request->cid);
+            // $campaign->template_id = $emailTemplate->id;
+            // $campaign->save();
+            DB::table('campaigns')->where('id',$request->cid)->update(['template_id' => $emailTemplate->id]);
+            $mailData = [
+                'from' => ['email' => 'consultile@emadissa.com', 'name' => 'Consultile'],
+                'replyTo' => ['email' => 'info@consultile.com', 'name' => 'Consultile'],
+                'to' => ['email' => 'test1@emadissa.com', 'name' => 'Emad Isaa'],
+                'subject' => 'Send Campaign Emails',
+                'body' => Helper::parser('cto@emadissa.com', $emailTemplate->content)
+            ];
+            return response("please refresh page");
+        }
         // return view('mail.view')->with($code);
         // return view('campaign.create',compact('code'));
         //  return view('email-templates.edit',compact('code'));
+        // return view()
         return redirect('email/templates/'.$emailTemplate->id.'/edit');
+        // return response($request->query('c'));
     }
 
     /**
@@ -54,9 +111,22 @@ class EmailTemplateController extends Controller
      * @param  \App\Models\EmailTemplate  $emailTemplate
      * @return \Illuminate\Http\Response
      */
-    public function show(EmailTemplate $emailTemplate)
+    public function show(EmailTemplate $emailTemplate, $id)
     {
         //
+
+        $emailTemplate = EmailTemplate::find($id);
+        $mailData = [
+            'from' => ['email' => 'consultile@emadissa.com', 'name' => 'Consultile'],
+            'replyTo' => ['email' => 'info@consultile.com', 'name' => 'Consultile'],
+            'to' => ['email' => 'test1@emadissa.com', 'name' => 'Emad Isaa'],
+            'subject' => 'Send Campaign Emails',
+            'body' => Helper::parser('cto@emadissa.com', $emailTemplate->content)
+        ];
+        // if(Mail::to('test1@emadissa.com','Test user')->send(new SendCampaignEmails($mailData)));
+        // $email = Mail::failures();
+        // return view('campaign.index')->with($email);
+        return (new SendCampaignEmails($mailData))->render();
     }
 
     /**
@@ -69,7 +139,7 @@ class EmailTemplateController extends Controller
     {
         //
         $emailTemp = EmailTemplate::find($id);
-        return view('email-templates.edit',compact('emailTemp'));
+        return view('email-templates.edit', compact('emailTemp'));
     }
 
     /**
@@ -85,7 +155,7 @@ class EmailTemplateController extends Controller
         $emailTemp = EmailTemplate::find($id);
         $emailTemp->update($request->all());
         $emailTemp->save();
-        return view('email-templates.edit',compact('emailTemp'));
+        return view('email-templates.edit', compact('emailTemp'));
     }
 
     /**
