@@ -72,12 +72,11 @@ class SendCampaignEmails extends Mailable
     public function attachments(): array
     {
         $attachments = [];
-        if(isset($this->mailData['attachments']))
-        foreach ($this->mailData['attachments'] as $attachment) {
-            array_push($attachment, Attachment::fromStorage($attachment['path'])
-                ->as($attachment['name'])
-                ->withMime($attachment['mime']));
-        };
+        if (isset($this->mailData['attachments']) && is_array($this->mailData['attachments']) && count($this->mailData['attachments']) > 0)
+            foreach ($this->mailData['attachments'] as $attachment) {
+                array_push($attachments, Attachment::fromStorage($attachment['path'])
+                    ->as($attachment['name']));
+            };
         return $attachments;
     }
 }

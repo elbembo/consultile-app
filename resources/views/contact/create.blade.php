@@ -75,7 +75,7 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-6 ">
-                                <label for="personal-phone" class="form-control-label">{{ __('Personal Phone') }}</label>
+                                <label for="personal-phone" class="form-control-label">{{ __('Mobile') }}</label>
                                 <div class="@error('personal_phone')border border-danger rounded-3 @enderror">
                                     <input class="form-control" type="tel" placeholder="010xxxxxxxxx" id="personal-phone" name="personal_phone" value="{{  $contact->personal_phone ?? '' }}">
                                     @error('personal_phone')
@@ -107,6 +107,17 @@
 
                     </div>
                     <div class="row">
+                        <div class="col-md-3 ">
+                            <div class="form-group">
+                                <label for="title" class="form-control-label">{{ __('Country') }}</label>
+                                <div class="@error('title')border border-danger rounded-3 @enderror">
+                                    <input class="form-control" type="text" placeholder="Country" id="country" name="country" value="{{  $contact->country ?? '' }}">
+                                    @error('country')
+                                    <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-3 ">
                             <div class="form-group">
                                 <label for="title" class="form-control-label">{{ __('Title') }}</label>

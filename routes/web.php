@@ -99,7 +99,7 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('dashboard');
 	})->name('sign-up');
 
-    Route::post('/send-test-email',[EmailTemplateController::class, 'send_test'])->name('email.send_test');
+    Route::post('/send-test-email',[CampaignController::class, 'send_test'])->name('email.send_test');
     Route::resource('campaigns', CampaignController::class);
     Route::resource('email/templates', EmailTemplateController::class);
     Route::resource('editor',SummernoteController::class);

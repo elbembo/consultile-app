@@ -27,12 +27,13 @@
             @csrf
             @if(isset($campaign))
             @method('PATCH')
-            @endif
             @if($campaign->status == 'canceled')
             <div class="rubber">
                 Canceled
             </div>
             @endif
+            @endif
+
             <div class="card mb-2">
                 <div class="card-header">
                     <h6 class="mb-0 d-flex justify-content-between">{{ __('Campaign Information') }}
@@ -65,6 +66,7 @@
                             <div class="form-group">
                                 <label for="campaign-name" class="form-control-label">{{ __('Campaign Name') }}</label>
                                 <div class="@error('user.name')border border-danger rounded-3 @enderror">
+                                    <input type="hidden" name="id" value="{{ (isset($campaign) ? $campaign->id : '' ) }}">
                                     <input class="form-control" value="{{ (isset($campaign) ? $campaign->name : '' ) }}" type="text" placeholder="Campaign Name" id="campaign-name" name="name" required>
                                     @error('name')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
@@ -165,7 +167,7 @@
                             <div class="form-group">
                                 <label for="about">{{ 'Description' }}</label>
                                 <div class="@error('user.about')border border-danger rounded-3 @enderror">
-                                    <textarea class="form-control" id="about" rows="12" placeholder="Say something about yourself" name="about_me">{{ (isset($campaign) ? $campaign->description : '' ) }}</textarea>
+                                    <textarea class="form-control" id="about" rows="12" placeholder="Say something about yourself" name="description">{{ (isset($campaign) ? $campaign->description : '' ) }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -215,17 +217,22 @@
                                 @method('PATCH')
                                 <fieldset class="form-group">
                                     <legend>Attachments</legend>
+                                    @if(is_array($campaign->details))
                                     @foreach($campaign->details as $attachment)
-                                    <button class="btn btn-sm btn-outline-secondary pe-2">
-                                        <i class="fa fa-file-pdf-o text-lg mo-sm-1" aria-hidden="true"></i>
-                                        {{ $attachment["name"] }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="cursor-pointer fas fa-trash text-secondary text-lg mo-sm-1 me-2" aria-hidden="true"></i>
-                                    </button>
+                                    <div class="attachment">
+                                        <span>
+                                            <i class="fa fa-file-pdf-o text-lg mo-sm-1" aria-hidden="true"></i>
+                                            {{ $attachment["name"] }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </span>
+                                        <div class="attachment-del"><i class="cursor-pointer fa fa-times text-secondary text-lg " aria-hidden="true"></i></div>
+
+                                    </div>
                                     @endforeach
+                                    @endif
                                     <input type="hidden" name="id">
                                     <input type="hidden" name="action" value="uploads">
                                     <input class="form-control" type="file" multiple name="attachmens[]" value="{{old('attachmens')}}">
-                                    <button class=" btn bg-gradient-dark mt-2 mb-0" type="submit">
+                                    <button class="btn bg-gradient-dark mt-2 mb-0" type="submit">
                                         <i class="fa fa-upload me-sm-1" aria-hidden="true"></i>Upload</button>
                                 </fieldset>
                             </form>
@@ -236,7 +243,7 @@
                                     <legend>Test Email</legend>
                                     <label for="send-to" class="form-control-label">{{ __('Email to send a test') }}</label>
                                     <div class="@error('email')border border-danger rounded-3 @enderror">
-                                        <input class="form-control" value="" type="email" placeholder="test email" id="send-to" name="send_to">
+                                        <input  class="form-control" value="" type="email" placeholder="test email" id="send-to" name="send_to">
                                     </div>
 
                                     <button type="button" id="send-test" class="btn bg-gradient-secondary mb-0 mt-2"><i class="fa fa-envelope me-sm-1" aria-hidden="true"></i> Send</button>
@@ -269,29 +276,29 @@
 
 
                 <script>
-                    if (document.querySelector('#send-test'))
-                        document.querySelector('#send-test')
-                        .addEventListener('click', (e) => {
+                    // if (document.querySelector('#send-test'))
+                    //     document.querySelector('#send-test')
+                    //     .addEventListener('click', (e) => {
 
-                            const formElement = document.querySelector('form')
-                            const data = {};
-                            for (const pair of new FormData(formElement)) {
-                                data[pair[0]] = pair[1];
-                                data["_method"] = "POST"
-                            }
-                            const formData = new FormData(formElement);
-                            fetch("/send-test-email", {
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    "Accept": "application/json",
-                                    "X-Requested-With": "XMLHttpRequest",
-                                    "X-CSRF-Token": formElement._token.value
-                                },
-                                credentials: "same-origin",
-                                method: 'post',
-                                body: JSON.stringify(data),
-                            });
-                        })
+                    //         const formElement = document.querySelector('form')
+                    //         const data = {};
+                    //         for (const pair of new FormData(formElement)) {
+                    //             data[pair[0]] = pair[1];
+                    //             data["_method"] = "POST"
+                    //         }
+                    //         const formData = new FormData(formElement);
+                    //         fetch("/send-test-email", {
+                    //             headers: {
+                    //                 "Content-Type": "application/json",
+                    //                 "Accept": "application/json",
+                    //                 "X-Requested-With": "XMLHttpRequest",
+                    //                 "X-CSRF-Token": formElement._token.value
+                    //             },
+                    //             credentials: "same-origin",
+                    //             method: 'post',
+                    //             body: JSON.stringify(data),
+                    //         });
+                    //     })
 
                     const cardExpend = (btn, select) => {
                         const ele = document.getElementById(select)

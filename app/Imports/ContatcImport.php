@@ -49,9 +49,9 @@ class ContatcImport implements ToCollection, WithHeadingRow,  WithValidation,Ski
     public function rules(): array
     {
         return [
-            'work_e_mail' => [
-                'required',
-                 'regex:/(.+)@(.+)\.(.+)/i',
+            'first_name' => [
+                'string',
+                //  'regex:/(.+)@(.+)\.(.+)/i',
                 // Rule::unique('contacts')->ignore($row['work_e_mail'], 'id')
             ]
             //...

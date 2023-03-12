@@ -33,21 +33,20 @@
                                     <h6 class="mb-3 text-sm">{{ $campaign->name }}</h6>
                                     <span class="mb-2 text-xs">Status: {!! statusBadg($campaign->status,' text-white
                                         ms-sm-2 font-weight-bold') !!}</span>
-                                    <span class="mb-2 text-xs">Achieved: <span
-                                            class="text-dark ms-sm-2 font-weight-bold">{{ $campaign->audience_done."/" }}{{ $campaign->total_audience }}</span></span>
+                                    <span class="mb-2 text-xs">Achieved: <span class="text-dark ms-sm-2 font-weight-bold">{{ $campaign->audience_done."/" }}{{ $campaign->total_audience }}</span></span>
                                     <span class="text-xs">Priority: <span class="text-dark ms-sm-2 font-weight-bold">{!!
                                             priority($campaign->campaign_priority) !!}</span></span>
                                 </div>
                                 <div class="ms-auto text-end d-flex justify-content-between  flex-column">
                                     <div class="">
 
-                                        <a class="btn btn-link text-danger text-gradient px-3 mb-0"
-                                            href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                                        <a class="btn btn-link text-dark px-3 mb-0"
-                                            href="campaigns/{{$campaign->id}}/edit"><i
-                                                class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                                        <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
+                                        <a class="btn btn-link text-dark px-3 mb-0" href="campaigns/{{$campaign->id}}/edit"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
                                     </div>
                                     <div class="align-items-center text-sm">
+                                        @if(is_array($campaign->details) && count($campaign->details) > 0)
+                                        <i class="fa fa-paperclip  me-2" title="Has Attachment"></i>
+                                        @endif
                                         <i class="far fa-calendar-alt me-2"></i>
                                         <small>{{date('d M Y h:j a', strtotime($campaign->created_at))}}</small>
                                     </div>

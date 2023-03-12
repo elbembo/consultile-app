@@ -29,7 +29,7 @@ class EmailTemplateController extends Controller
         //
         if (isset($request->content)) {
             $mailData = [
-                'from' => ['email' => 'consultile@emadissa.com', 'name' => 'Consultile'],
+                'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => env('MAIL_FROM_NAME', '')],
                 'replyTo' => ['email' => 'info@consultile.com', 'name' => 'Consultile'],
                 'to' => ['email' => 'test1@emadissa.com', 'name' => 'Emad Isaa'],
                 'subject' => 'Send Campaign Emails',
@@ -49,13 +49,14 @@ class EmailTemplateController extends Controller
         //return response()->json($request->template_id);
         $emailTemplates = EmailTemplate::find($request->template_id);
         $mailData = [
-            'from' => ['email' => 'consultile@emadissa.com', 'name' => $request->sender_name],
+            'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => env('MAIL_FROM_NAME', '')],
             'replyTo' => ['email' => $request->replay_to, 'name' => $request->sender_name],
             'to' => ['email' => $request->send_to, 'name' => 'Emad Isaa'],
             'subject' => $request->subject,
+            'attachments' => $request->details,
             'body' => Helper::parser($request->send_to, $emailTemplates->content)
         ];
-        if (Mail::to($request->send_to, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)))
+        if (Mail::to($request->send_to)->send(new SendCampaignEmails($mailData)))
             return response()->json($request->all());
         // $email = Mail::failures();
         // return view('campaign.index')->with($email);
@@ -89,7 +90,7 @@ class EmailTemplateController extends Controller
             // $campaign->save();
             DB::table('campaigns')->where('id',$request->cid)->update(['template_id' => $emailTemplate->id]);
             $mailData = [
-                'from' => ['email' => 'consultile@emadissa.com', 'name' => 'Consultile'],
+                'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => env('MAIL_FROM_NAME', '')],
                 'replyTo' => ['email' => 'info@consultile.com', 'name' => 'Consultile'],
                 'to' => ['email' => 'test1@emadissa.com', 'name' => 'Emad Isaa'],
                 'subject' => 'Send Campaign Emails',
@@ -117,10 +118,11 @@ class EmailTemplateController extends Controller
 
         $emailTemplate = EmailTemplate::find($id);
         $mailData = [
-            'from' => ['email' => 'consultile@emadissa.com', 'name' => 'Consultile'],
+            'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => env('MAIL_FROM_NAME', '')],
             'replyTo' => ['email' => 'info@consultile.com', 'name' => 'Consultile'],
             'to' => ['email' => 'test1@emadissa.com', 'name' => 'Emad Isaa'],
             'subject' => 'Send Campaign Emails',
+            'attachments'=> null,
             'body' => Helper::parser('cto@emadissa.com', $emailTemplate->content)
         ];
         // if(Mail::to('test1@emadissa.com','Test user')->send(new SendCampaignEmails($mailData)));

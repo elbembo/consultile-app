@@ -29,7 +29,7 @@
                 <div class="alert alert-danger mx-4" role="alert">
                     <span class="text-white">
                         <strong>
-                            <span> Row {{$failure->row()}} for {{ $failure->values()["first_name"] }} {{ $failure->values()["last_name"] }} skiped : </span>
+                            <span> Row {{$failure->row()}}  skiped : </span>
                             <span> Reasons ->
                                 @foreach($failure->errors() as $err)
                                 {{$err}},

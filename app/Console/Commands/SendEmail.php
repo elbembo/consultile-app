@@ -3,8 +3,10 @@
 namespace App\Console\Commands;
 
 use App\Helpers\Helper;
+use App\Mail\SendCampaignEmails;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class SendEmail extends Command
 {
@@ -47,7 +49,7 @@ class SendEmail extends Command
                         'attachments' => $campaign->details,
                         'body' => Helper::parser($contact->email, $mailTemp->content)
                     ];
-                    if (file_put_contents('email.txt', "$contact->email $campaign->replay_to $mailTemp->template_name\n", FILE_APPEND)) {
+                    if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
                         DB::table('email_qeues')->where('id', $qeue->id)->delete();
                     }
                     // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));

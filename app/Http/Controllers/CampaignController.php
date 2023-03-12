@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use App\Models\Campaign;
 use App\Mail\SendCampaignEmails;
 use App\Models\Contact;
@@ -70,6 +71,30 @@ class CampaignController extends Controller
         // return view('campaign.create',compact('code'));
         //  return view('campaign.create',compact('code'));
 
+    }
+    public function send_test(Request $request)
+    {
+        //
+        $contact = DB::table('contacts')->where('id', 1)->first();
+        if ($contact)
+            $campaign = DB::table('campaigns')->where('id', $request->id)->first();
+        if ($campaign)
+            $mailTemp = DB::table('email_templates')->where('id', $campaign->template_id)->first();
+        if ($mailTemp) {
+            $mailData = [
+                'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => env('MAIL_FROM_NAME', '')],
+                'replyTo' => ['email' => $campaign->replay_to, 'name' => $campaign->sender_name],
+                'to' => ['email' => $request->send_to, 'name' => $contact->first_name],
+                'subject' => $campaign->subject,
+                'attachments' => $campaign->details,
+                'body' => Helper::parser($contact->email, $mailTemp->content)
+            ];
+            if (Mail::to($request->send_to)->send(new SendCampaignEmails($mailData))) {
+                return response()->json($request->all());
+            }
+            return response()->json($request->all(),404);
+            // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
+        }
     }
 
     /**
@@ -140,7 +165,7 @@ class CampaignController extends Controller
                 foreach ($files as $file) {
                     $filename = $file->getClientOriginalName();
                     $extension = $file->getClientOriginalExtension();
-                    $check = true;//in_array($extension, $allowedfileExtension);
+                    $check = true; //in_array($extension, $allowedfileExtension);
                     // dd($file)
                     $path = $file->store('attachmens');
 
@@ -153,7 +178,7 @@ class CampaignController extends Controller
                         ];
                     }
                 }
-                $request->request->add(['details' => json_encode($attachmens)]);
+                $request->request->add(['details' => $attachmens]);
             }
         }
         $campaign = Campaign::find($id);

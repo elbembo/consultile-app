@@ -58,3 +58,21 @@ legend {
     font-size: calc(1.275rem + 0.3vw);
     line-height: inherit;
 }
+.fa, .fab, .fad, .fal, .far, .fas {
+
+    transition: all 0.2s ease-in;
+}
+.attachment {
+    margin-bottom: 1rem;
+    border: 1px solid #0000004a;
+    background-size: 150%;
+    background-position-x: 25%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+.attachment div:hover i {
+    color: #ed5050!important;
+    margin-right: 5px;
+}
