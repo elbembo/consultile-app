@@ -1,5 +1,4 @@
-.form-control.form-control-tags  {
-
+.form-control.form-control-tags {
     padding-left: 0.5rem;
 }
 .form-control.form-control-tags span {
@@ -11,11 +10,19 @@
     padding-right: 0.4rem;
     margin: 0 0.1rem;
     cursor: pointer;
-
 }
-.form-control.form-control-tags  input:-moz-placeholder{color:#adb5bd;opacity:1}
-.form-control.form-control-tags  input:-ms-input-placeholder{color:#adb5bd;opacity:1}
-.form-control.form-control-tags  input::placeholder{color:#adb5bd;opacity:1}
+.form-control.form-control-tags input:-moz-placeholder {
+    color: #adb5bd;
+    opacity: 1;
+}
+.form-control.form-control-tags input:-ms-input-placeholder {
+    color: #adb5bd;
+    opacity: 1;
+}
+.form-control.form-control-tags input::placeholder {
+    color: #adb5bd;
+    opacity: 1;
+}
 .rubber {
     position: absolute;
     box-shadow: 0 0 0 6px #9b1515, 0 0 0 5px #9b1515 inset;
@@ -36,4 +43,18 @@
     top: 31%;
     left: 25%;
     z-index: 9999;
-  }
+}
+fieldset {
+    border: 1px solid #bbb8b8;
+    border-color: #bbb8b8;
+    border-radius: 9px;
+    padding: 1.2rem;
+}
+legend {
+    float: none;
+    width: auto;
+    padding: 0 10px;
+    margin-bottom: 0.5rem;
+    font-size: calc(1.275rem + 0.3vw);
+    line-height: inherit;
+}

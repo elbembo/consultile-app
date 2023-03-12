@@ -2,8 +2,12 @@
 
 namespace App\Console;
 
+use App\Helpers\Helper;
+use App\Mail\SendCampaignEmails;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class Kernel extends ConsoleKernel
 {
@@ -14,6 +18,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
+        Commands\SendEmail::class
     ];
 
     /**
@@ -27,14 +32,12 @@ class Kernel extends ConsoleKernel
         $hour = config('app.hour');
         $min = config('app.min');
         config(['app.sec' => '5']);
-        $scheduledInterval = $hour !== '' ? ( ($min !== '' && $min != 0) ?  $min .' */'. $hour .' * * *' : '0 */'. $hour .' * * *') : '*/'. $min .' * * * *';
+        $scheduledInterval = $hour !== '' ? (($min !== '' && $min != 0) ?  $min . ' */' . $hour . ' * * *' : '0 */' . $hour . ' * * *') : '*/' . $min . ' * * * *';
         // if(env('IS_DEMO')) {
         //     $schedule->command('migrate:fresh --seed')->cron($scheduledInterval);
         // }
-        $schedule->call(function () {
-            env(['SCHEDULED_SEC' => 15]);
-        })->everyMinute();
 
+        $schedule->command('send:email')->everyMinute();
     }
 
     /**
@@ -44,7 +47,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

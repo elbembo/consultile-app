@@ -111,30 +111,56 @@ class CampaignController extends Controller
         $contacts = Contact::all();
         $campaign = Campaign::find($id);
         if (isset($request->action)) {
-            if ($request->status == 'processing') {
-                $ta = 0;
-                foreach ($contacts as $contact) {
-                    EmailQeue::create([
-                        'capmaign_id' => $campaign->id,
-                        'contact_id' => $contact->id,
-                        'priority' => $campaign->campaign_priority,
-                        'massage_id' => now()->timestamp,
+            if ($request->action == 'update_status') {
+                if ($request->status == 'processing') {
+                    $ta = 0;
+                    foreach ($contacts as $contact) {
+                        EmailQeue::create([
+                            'capmaign_id' => $campaign->id,
+                            'contact_id' => $contact->id,
+                            'priority' => $campaign->campaign_priority,
+                            'massage_id' => now()->timestamp,
+                        ]);
+                        $ta++;
+                    }
+                    $request->request->add(['total_audience' => $ta]);
+                } elseif ($request->status == 'canceled') {
+                    DB::table('email_qeues')->where('capmaign_id', $campaign->id)->delete();
+                } elseif ($request->status == 'pending') {
+                    DB::table('email_qeues')->where('capmaign_id', $campaign->id)->update([
+                        'priority' => 0,
                     ]);
-                    $ta++;
                 }
-                $request->request->add(['total_audience' => $ta]);
-            }elseif($request->status == 'canceled'){
-                DB::table('email_qeues')->where('capmaign_id',$campaign->id)->delete();
-            }elseif($request->status == 'pending'){
-                DB::table('email_qeues')->where('capmaign_id',$campaign->id)->update([
-                    'priority' => 0,
-                ]);
+            } elseif ($request->action == 'uploads' && $request->hasFile('attachmens')) {
+
+                $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx'];
+                $files = $request->file('attachmens');
+                // dd($files);
+                $attachmens = [];
+                foreach ($files as $file) {
+                    $filename = $file->getClientOriginalName();
+                    $extension = $file->getClientOriginalExtension();
+                    $check = true;//in_array($extension, $allowedfileExtension);
+                    // dd($file)
+                    $path = $file->store('attachmens');
+
+                    if ($check) {
+                        $attachmens[] = [
+                            'path' => $path,
+                            'name' => $filename,
+                            'mime' => 'application/' . $extension,
+
+                        ];
+                    }
+                }
+                $request->request->add(['details' => json_encode($attachmens)]);
             }
         }
         $campaign = Campaign::find($id);
         $campaign->update($request->all());
         $campaign->save();
 
+        return back();
         return redirect("campaigns/$campaign->id/edit");
     }
 
