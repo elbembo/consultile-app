@@ -346,3 +346,4 @@ database
 |       console.php
 |       web.php
 ```
+/usr/local/bin/php82 /usr/local/bin/composer.phar update
