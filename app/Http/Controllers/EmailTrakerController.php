@@ -16,7 +16,7 @@ class EmailTrakerController extends Controller
     public function index($id)
     {
         //
-        $name ="Consultile_Logo_png.png";
+        $name ="attachmens/CuvLf3z6fNI3RNoQsfkyFAMmbD3Xd6TBOS9HxcYu.png";
         if (!Storage::exists($name)) {
             return response('File no found.', 404);
         }
