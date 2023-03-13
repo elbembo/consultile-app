@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Helpers\Helper;
 use App\Mail\SendCampaignEmails;
+use App\Models\EmailQeue;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -32,7 +33,7 @@ class SendEmail extends Command
     public function handle()
     {
         $sec = env('SCHEDULED_SEC', 15);
-        for ($i = 0; $i < (60/$sec) ; $i++) {
+        for ($i = 0; $i < (60 / $sec); $i++) {
             $qeue = DB::table('email_qeues')->where('priority', '>', 0)->first();
             if ($qeue) {
                 $contact = DB::table('contacts')->where('id',  $qeue->contact_id)->first();
@@ -50,7 +51,8 @@ class SendEmail extends Command
                         'body' => Helper::parser($contact->email, $mailTemp->content)
                     ];
                     if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
-                        DB::table('email_qeues')->where('id', $qeue->id)->delete();
+                        if (EmailQeue::create($qeue))
+                            DB::table('email_qeues')->where('id', $qeue->id)->delete();
                     }
                     // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
                 }
