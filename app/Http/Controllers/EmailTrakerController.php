@@ -17,16 +17,20 @@ class EmailTrakerController extends Controller
     {
         //
         $name =storage_path()."/app/attachmens/CuvLf3z6fNI3RNoQsfkyFAMmbD3Xd6TBOS9HxcYu.png";
+        $im = imagecreatefrompng($name);
         // dd($name);
-        if (!Storage::exists($name)) {
-            return response('File no found.', 404);
-        }
+        // if (!Storage::exists($name)) {
+        //     return response('File no found.', 404);
+        // }
 
-        $file = Storage::get($name);
-        $type = Storage::mimeType($name);
-        $response = response()->file($file, ['Content-Type' => $type ]);
-
-        return $response;
+        // $file = Storage::get($name);
+        // $type = Storage::mimeType($name);
+        // header("Content-type: image/png");
+        // passthru("cat $name");
+        // $response = response()->file($file, ['Content-Type' => $type ]);
+        header('Content-Type: image/png');
+imagepng($im);
+        return response("",200,['Content-Type' => "image/png" ]);
     }
 
     /**
