@@ -2,10 +2,13 @@
 function execPrint($command) {
     $result = array();
     exec($command, $result);
-    print("<pre>");
-    foreach ($result as $line) {
-        print($line . "\n");
-    }
-    print("</pre>");
+    // print("<pre>");
+    // foreach ($result as $line) {
+    //     print($line . "\n");
+    // }
+    // print("</pre>");
+    return $result ;
 }
-execPrint("git status");
+$data = execPrint("git pull");
+header('Content-Type: application/json; charset=utf-8');
+echo json_encode($data);
