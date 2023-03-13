@@ -15,9 +15,18 @@
                 <form action="" method="POST" enctype="multipart/form-data" role="form text-left">
                     @csrf
                     <input class="form-control" type="file" name="contacts" value="{{old('contacts')}}">
+
                     <div class="d-flex justify-content-between">
-                        <button type="submit" class="btn bg-gray-500 text-white mt-3 btn-sm m-1">{{ __('Import') }}</button>
+                        <div class="d-flex align-items-center">
+                            <button type="submit" class="btn bg-gray-500 text-white mt-3 btn-sm ">{{ __('Import') }}</button>
+                            <div class="form-check form-switch ps-0 ms-2">
+                                <input class="form-check-input mt-1 ms-auto" name="debug" type="checkbox" value="debug" onclick="">
+                                <span class="ms-1 text-sm">Errors report</span>
+                            </div>
+                        </div>
+
                         <a href="{{route('contacts.export.example')}}" class="link  mt-3 align-self-end">download example file</a>
+
                     </div>
 
                 </form>
@@ -29,7 +38,7 @@
                 <div class="alert alert-danger mx-4" role="alert">
                     <span class="text-white">
                         <strong>
-                            <span> Row {{$failure->row()}}  skiped : </span>
+                            <span> Row {{$failure->row()}} skiped : </span>
                             <span> Reasons ->
                                 @foreach($failure->errors() as $err)
                                 {{$err}},

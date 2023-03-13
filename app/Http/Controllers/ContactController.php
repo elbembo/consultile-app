@@ -21,7 +21,6 @@ class ContactController extends Controller
      */
     public function index()
     {
-        updateDotEnv('SCHEDULED_SEC', 15);
         $contacts = Contact::where('id', '>', '0')->orderBy('id', 'desc')->paginate(30);
         return view('contact.index', compact('contacts'));
     }
@@ -83,7 +82,7 @@ class ContactController extends Controller
     public function update(Request $request, $id)
     {
         //
-        
+
         $contact = Contact::find($id);
         $contact->update($request->all());
         $contact->save();
@@ -115,9 +114,12 @@ class ContactController extends Controller
                 $import = new ContatcImport();
                 $import->import($file);
                 $failures = $import->failures();
+                if ($request->debug != 'debug')
+                    $failures = null;
                 return view('contact.import', compact('failures'));
             } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
                 $failures = $e->failures();
+
                 return view('contact.import', compact('failures'));
             }
         }

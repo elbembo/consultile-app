@@ -31,7 +31,7 @@ class ContatcImport implements ToCollection, WithHeadingRow,  WithValidation,Ski
         foreach ($rows as $row) {
 
 
-            Contact::insertOrIgnore([
+            Contact::firstOrCreate([
                 //
                 'title' => $row['salutation'],
                 'first_name' => $row['first_name'],

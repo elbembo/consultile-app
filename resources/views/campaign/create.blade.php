@@ -196,8 +196,6 @@
         @endif
         @if(isset($campaign) && $campaign->template_id != 0 )
         <div class="card mb-2">
-            @foreach($templates as $template)
-            @if($template->id == $campaign->template_id)
             <div class="card-header">
                 <h6 class="mb-0 d-flex justify-content-between">{{ __('Campaign Information')   }} <small class="text-normal text-muted ">( {{ $template->template_name }} )</small>
                     <span> <button class="btn m-0 py-1 px-2  text-lg bg-gradient-faded-danger text-white clips" type="button" onclick="javascript:tempZoom(this,'temp-view');"></button></span>
@@ -205,72 +203,77 @@
             </div>
             <div class="card-body pt-4 p-3">
 
-
+                <div class="row">
+                    <div id="temp-view" class="col-8  ">
+                        <!-- <iframe src="/email/templates/{{ $template->id }}" frameborder="0" width="550" height="500"></iframe> -->
+                        <iframe src="/editor?{{ isset($campaign->template_id) ? "t=$campaign->template_id" : '' }}" frameborder="0" height="600" width="800"></iframe>
+                    </div>
+                </div>
                 <div class="row">
                     <!-- <div id="temp-view"  class="col-8  {{ (isset($campaign) ? 'zoom-out col-6 ' : '' ) }}"><iframe src="/email/templates/{{ $template->id }}"  frameborder="0" height="500"></iframe></div> -->
-                    <div id="temp-view" class="col-8  "><iframe src="/email/templates/{{ $template->id }}" frameborder="0" width="550" height="500"></iframe></div>
 
-                    <div class="col-4">
-                        <div class="row">
-                            <form action="{{(isset($campaign) ?  url('campaigns/'.$campaign->id) : url('campaigns'))}}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                @method('PATCH')
-                                <fieldset class="form-group">
-                                    <legend>Attachments</legend>
-                                    @if(is_array($campaign->details))
-                                    @foreach($campaign->details as $attachment)
-                                    <div class="attachment">
-                                        <span>
-                                            <i class="fa fa-file-pdf-o text-lg mo-sm-1" aria-hidden="true"></i>
-                                            {{ $attachment["name"] }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        </span>
-                                        <div class="attachment-del"><i class="cursor-pointer fa fa-times text-secondary text-lg " aria-hidden="true"></i></div>
 
-                                    </div>
-                                    @endforeach
-                                    @endif
-                                    <input type="hidden" name="id">
-                                    <input type="hidden" name="action" value="uploads">
-                                    <input class="form-control" type="file" multiple name="attachmens[]" value="{{old('attachmens')}}">
-                                    <button class="btn bg-gradient-dark mt-2 mb-0" type="submit">
-                                        <i class="fa fa-upload me-sm-1" aria-hidden="true"></i>Upload</button>
-                                </fieldset>
-                            </form>
-                        </div>
-                        <div class="row">
-                            <form action="">
-                                <fieldset class="form-group">
-                                    <legend>Test Email</legend>
+
+                    <div class="col-md-4">
+                        <form action="{{(isset($campaign) ?  url('campaigns/'.$campaign->id) : url('campaigns'))}}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('PATCH')
+                            <fieldset class="form-group">
+                                <legend>Attachments</legend>
+                                @if(is_array($campaign->details))
+                                @foreach($campaign->details as $key => $attachment)
+                                <div class="attachment" data-key="{{ $key }}"  >
+                                    <span>
+                                        <i class="fa fa-file-pdf text-lg mo-sm-1" aria-hidden="true"></i>
+                                        {{ $attachment["name"] }}
+                                    </span>
+                                    <span class="attachment-del"><i data-key="{{ $key }}" data-id="{{$campaign->id}}" class="cursor-pointer fa fa-times text-secondary text-lg " aria-hidden="true"></i></span>
+
+                                </div>
+                                @endforeach
+                                @endif
+                                <input type="hidden" name="id">
+                                <input type="hidden" name="action" value="uploads">
+                                <input class="form-control" type="file" multiple name="attachmens[]" value="{{old('attachmens')}}">
+                                <button class="btn bg-gradient-dark mt-2 mb-0" type="submit">
+                                    <i class="fa fa-upload me-sm-1" aria-hidden="true"></i>Upload</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="col-md-4">
+                        <form action="">
+                            <fieldset class="form-group">
+                                <legend>Test Email</legend>
+                                <div class="form-group">
                                     <label for="send-to" class="form-control-label">{{ __('Email to send a test') }}</label>
                                     <div class="@error('email')border border-danger rounded-3 @enderror">
-                                        <input  class="form-control" value="" type="email" placeholder="test email" id="send-to" name="send_to">
+                                        <input class="form-control" value="" type="email" placeholder="test email" id="send-to" name="send_to">
                                     </div>
+                                </div>
 
-                                    <button type="button" id="send-test" class="btn bg-gradient-secondary mb-0 mt-2"><i class="fa fa-envelope me-sm-1" aria-hidden="true"></i> Send</button>
-                                </fieldset>
-                            </form>
-                        </div>
-                        <div class="row">
-                            <form action="{{(isset($campaign) ?  url('campaigns/'.$campaign->id) : url('campaigns'))}}" method="post">
-                                <fieldset class="form-group">
-                                    <legend>Take Action</legend>
-                                    @csrf
-                                    @method('PATCH')
-                                    <input type="hidden" name="id">
-                                    <input type="hidden" name="action" value="update_status">
-                                    @if($campaign->status == 'draft')
-                                    <input type="hidden" name="status" value="processing">
-                                    <button class="btn bg-gradient-success text-2xl mt-5" type="submit"><i class="fa fa-play me-sm-1" aria-hidden="true"></i>Run campaign</button>
-                                    @elseif($campaign->status == 'processing')
-                                    <input type="hidden" name="status" value="canceled">
-                                    <button class="btn bg-gradient-danger text-2xl mt-5" type="submit"><i class="fa fa-stop me-sm-1" aria-hidden="true"></i>Stop campaign</button>
-                                    @endif
-                                </fieldset>
-                            </form>
-                        </div>
+                                <button type="button" id="send-test" class="btn bg-gradient-secondary mb-0 mt-2"><i class="fa fa-envelope me-sm-1" aria-hidden="true"></i> Send</button>
+                            </fieldset>
+                        </form>
                     </div>
-                    @endif
-                    @endforeach
+                    <div class="col-md-4">
+                        <form action="{{(isset($campaign) ?  url('campaigns/'.$campaign->id) : url('campaigns'))}}" method="post">
+                            <fieldset class="form-group">
+                                <legend>Take Action</legend>
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="id">
+                                <input type="hidden" name="action" value="update_status">
+                                @if($campaign->status == 'draft')
+                                <input type="hidden" name="status" value="processing">
+                                <button class="btn bg-gradient-success text-lg mt-2" type="submit"><i class="fa fa-play me-sm-1" aria-hidden="true"></i>Run campaign</button>
+                                @elseif($campaign->status == 'processing')
+                                <input type="hidden" name="status" value="canceled">
+                                <button class="btn bg-gradient-danger text-lg mt-2" type="submit"><i class="fa fa-stop me-sm-1" aria-hidden="true"></i>Stop campaign</button>
+                                @endif
+                            </fieldset>
+                        </form>
+                    </div>
+
                 </div>
                 @endif
 

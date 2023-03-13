@@ -58,8 +58,12 @@ legend {
     font-size: calc(1.275rem + 0.3vw);
     line-height: inherit;
 }
-.fa, .fab, .fad, .fal, .far, .fas {
-
+.fa,
+.fab,
+.fad,
+.fal,
+.far,
+.fas {
     transition: all 0.2s ease-in;
 }
 .attachment {
@@ -72,7 +76,27 @@ legend {
     padding: 0.5rem 1rem;
     border-radius: 5px;
 }
-.attachment div:hover i {
-    color: #ed5050!important;
+.attachment .attachment-del:hover i {
+    color: #ed5050 !important;
     margin-right: 5px;
+}
+.row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+}
+.row > [class*="col-"] {
+    display: flex;
+    flex-direction: column;
+}
+.row > [class*="col-"] form {
+    height: 100%;
+}
+.row > [class*="col-"] form fieldset {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

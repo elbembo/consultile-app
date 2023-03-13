@@ -199,4 +199,17 @@ class CampaignController extends Controller
     {
         //
     }
+    public function removeAttachment(Request $request)
+    {
+        //
+        $campaign = Campaign::find($request->id);
+        if($campaign){
+            $attachments = $campaign->details ;
+            unset($attachments[$request->index]);
+            $campaign->details = $attachments;
+            $campaign->save();
+            return response()->json(true,200);
+        }
+        return response()->json($campaign,404);
+    }
 }

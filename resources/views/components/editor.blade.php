@@ -22,8 +22,11 @@
                     <div class="border bg-warning border-1 btn custom_data shadow-none" data-value="Title">Title</div>
                     <div class="border bg-warning border-1 btn custom_data shadow-none" data-value="Email">Email</div>
                 </div>
-                <form action="email/templates" method="post">
+                <form action="{{Request::get('t') ?'email/templates/'.Request::get('t').'?t='.Request::get('t') : 'email/templates'}}" method="post">
                     @csrf
+                    @if(Request::get('t'))
+                    @method('PUT')
+                    @endif
                     <input type="hidden" name="template_name" value="{{ $campaign->name ?? '' }}">
                     <input type="hidden" name="cid" value="{{ $campaign->id ?? '' }}">
 
@@ -32,14 +35,14 @@
                 </form>
             </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-xs-12 text-right">
                 <button class="btn btn-sm btn-primary" id="btn-get-content">Get Content</button>
                 <button class="btn btn-sm btn-primary" id="btn-get-text">Get Text</button>
                 <button class="btn btn-sm btn-success" id="btn-set-content">Set Content</button>
                 <button class="btn btn-sm btn-danger" id="btn-reset">Reset</button>
             </div>
-        </div>
+        </div> -->
         <hr>
         <div class="row">
             <code class="col-xs-12" id="content">
@@ -74,11 +77,11 @@
                 "<p><img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzC_Ho_08G0m7PyxJOPLpPujM9UTLxvaE-5nXewscnqa3GMWjGwg' alt='Image result for summernote.js'></p><h1>Summernote</h1>";
             var $sumNote = $("#ta-1")
                 .summernote({
-                    callbacks: {
-                        onPaste: function(e, x, d) {
-                            $sumNote.code(($($sumNote.code()).find("font").remove()));
-                        }
-                    },
+                    // callbacks: {
+                    //     onPaste: function(e, x, d) {
+                    //         $sumNote.code(($($sumNote.code()).find("font").remove()));
+                    //     }
+                    // },
 
                     dialogsInBody: true,
                     dialogsFade: true,
