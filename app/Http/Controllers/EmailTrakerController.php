@@ -17,7 +17,7 @@ class EmailTrakerController extends Controller
     {
         //
         $name =storage_path()."/app/attachmens/CuvLf3z6fNI3RNoQsfkyFAMmbD3Xd6TBOS9HxcYu.png";
-        dd($name);
+        // dd($name);
         if (!Storage::exists($name)) {
             return response('File no found.', 404);
         }
