@@ -1,5 +1,5 @@
 <?php
-if ($_SERVER['method'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $json = file_get_contents('php://input');
     function execPrint($command)
     {
