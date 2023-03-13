@@ -127,4 +127,4 @@ Route::get('/login', function () {
     return view('session/login-session');
 })->name('login');
 
-Route::get('/newsletters/images/{id}.png', [EmailTrakerController::class, 'show']);
+Route::get('/newsletters/images/{id}.png', [EmailTrakerController::class, 'index']);

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\EmailTraker;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 class EmailTrakerController extends Controller
 {
     /**
@@ -12,9 +13,19 @@ class EmailTrakerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
         //
+        $name ="app/attachmens/4cdlbcCKWGZmL9GYTMELUIDYbAzbJ4ipfMR3bbNI.xlsx";
+        if (!Storage::exists($name)) {
+            return response('File no found.', 404);
+        }
+
+        $file = Storage::get($name);
+        $type = Storage::mimeType($name);
+        $response = response()->file($file, ['Content-Type' => $type ]);
+
+        return $response;
     }
 
     /**
