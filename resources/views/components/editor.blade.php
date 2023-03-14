@@ -27,7 +27,7 @@
                     @if(Request::get('t'))
                     @method('PUT')
                     @endif
-                    <input type="hidden" name="template_name" value="{{ $campaign->name ?? '' }}">
+                    <input type="hidden" name="template_name" value="{{ Request::get('t') ? ($et->name ?? '' ): '' }}">
                     <input type="hidden" name="cid" value="{{ $campaign->id ?? '' }}">
 
                     <textarea name="content" id="ta-1" cols="30" rows="30">{{ $et->content ?? '' }}</textarea>

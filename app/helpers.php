@@ -15,7 +15,7 @@ if (!function_exists('statusBadg')) {
                 $color =  "#c3c249";
                 break;
             case 'completed':
-                $color =  "#4982c3";
+                $color =  "#9ccaff";
                 break;
             case 'canceled':
                 $color =  "#b80505";
