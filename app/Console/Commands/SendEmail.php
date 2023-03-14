@@ -52,10 +52,7 @@ class SendEmail extends Command
                         'attachments' => $campaign->details,
                         'body' => Helper::parser($contact->email, $mailTemp->content, $qeue->massage_id)
                     ];
-                    $validated = $contact->validate([
-                        'email' => 'required|regex:/(.+)@(.+)\.(.+)/i',
-                    ]);
-                    if ($validated) {
+                    if (preg_match("/(.+)@(.+)\.(.+)/i",$contact->email)) {
                         try {
                             if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
 

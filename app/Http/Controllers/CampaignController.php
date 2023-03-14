@@ -140,10 +140,7 @@ class CampaignController extends Controller
                 if ($request->status == 'processing') {
                     $ta = 0;
                     foreach ($contacts as $contact) {
-                        $validated = $contact->validate([
-                            'email' => 'required|regex:/(.+)@(.+)\.(.+)/i',
-                        ]);
-                        if ($validated) {
+                        if (preg_match("/(.+)@(.+)\.(.+)/i",$contact->email)) {
                             EmailQeue::create([
                                 'capmaign_id' => $campaign->id,
                                 'contact_id' => $contact->id,
