@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Helpers\Helper;
 use App\Mail\SendCampaignEmails;
+use App\Models\Campaign;
 use App\Models\EmailQeue;
 use App\Models\EmailTraker;
 use Illuminate\Console\Command;
@@ -40,7 +41,7 @@ class SendEmail extends Command
             if ($qeue) {
                 $contact = DB::table('contacts')->where('id',  $qeue->contact_id)->first();
                 if ($contact)
-                    $campaign = DB::table('campaigns')->where('id', $qeue->capmaign_id)->first();
+                    $campaign = Campaign::find($qeue->capmaign_id);
                 if ($campaign)
                     $mailTemp = DB::table('email_templates')->where('id', $campaign->template_id)->first();
                 if ($mailTemp) {
@@ -52,7 +53,7 @@ class SendEmail extends Command
                         'attachments' => $campaign->details,
                         'body' => Helper::parser($contact->email, $mailTemp->content, $qeue->massage_id)
                     ];
-                    if (preg_match("/(.+)@(.+)\.(.+)/i",$contact->email)) {
+                    if (preg_match("/(.+)@(.+)\.(.+)/i", $contact->email)) {
                         try {
                             if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
 
@@ -61,8 +62,12 @@ class SendEmail extends Command
                                     'contact_id' => $contact->id,
                                     'priority' => $campaign->campaign_priority,
                                     'massage_id' => $qeue->massage_id,
-                                ]))
+                                ])) {
                                     DB::table('email_qeues')->where('id', $qeue->id)->delete();
+                                    $campaign->audience_done = $campaign->audience_done + 1;
+                                    $campaign->status = ($campaign->audience_done + 1) >= $campaign->total_audience ? 'completed' :  $campaign->status;
+                                    $campaign->save();
+                                }
                             } else {
                                 if (EmailTraker::create([
                                     'capmaign_id' => $campaign->id,
@@ -70,8 +75,12 @@ class SendEmail extends Command
                                     'priority' => $campaign->campaign_priority,
                                     'massage_id' => $qeue->massage_id,
                                     'delivered' => 0
-                                ]))
+                                ])) {
                                     DB::table('email_qeues')->where('id', $qeue->id)->delete();
+                                    $campaign->audience_done = $campaign->audience_done + 1;
+                                    $campaign->status = ($campaign->audience_done + 1) >= $campaign->total_audience ? 'completed' :  $campaign->status;
+                                    $campaign->save();
+                                }
                             }
                         } catch (Expectation $e) {
                             if (EmailTraker::create([
@@ -80,11 +89,18 @@ class SendEmail extends Command
                                 'priority' => $campaign->campaign_priority,
                                 'massage_id' => $qeue->massage_id,
                                 'delivered' => 0
-                            ]))
+                            ])) {
                                 DB::table('email_qeues')->where('id', $qeue->id)->delete();
+                                $campaign->audience_done = $campaign->audience_done + 1;
+                                $campaign->status = ($campaign->audience_done + 1) >= $campaign->total_audience ? 'completed' :  $campaign->status;
+                                $campaign->save();
+                            }
                         }
                     } else {
                         DB::table('email_qeues')->where('id', $qeue->id)->delete();
+                        $campaign->audience_done = $campaign->audience_done + 1;
+                        $campaign->status = ($campaign->audience_done + 1) >= $campaign->total_audience ? 'completed' :  $campaign->status;
+                        $campaign->save();
                     }
                     // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
                 }
