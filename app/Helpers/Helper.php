@@ -4,7 +4,7 @@ namespace App\Helpers;
 use App\Models\Contact;
 class Helper {
 
-    public  static function parser($email,$content)
+    public  static function parser($email,$content,$tracker = 'anana')
     {
         $contact = Contact::where('email',$email)->first();
         if($contact){
@@ -15,6 +15,7 @@ class Helper {
                 '{{ Job Title }}' => $contact->job_title,
                 '{{ Email }}' => $contact->email,
                 '{{ Work Phone }}' => $contact->work_phone,
+                '{{ Tracker }}' => $tracker,
             );
             $result = str_replace(array_keys($array), array_values($array), $content);
             return $result;

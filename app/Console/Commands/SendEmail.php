@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Helpers\Helper;
 use App\Mail\SendCampaignEmails;
 use App\Models\EmailQeue;
+use App\Models\EmailTraker;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -34,7 +35,7 @@ class SendEmail extends Command
     {
         $sec = env('SCHEDULED_SEC', 15);
         for ($i = 0; $i < (60 / $sec); $i++) {
-            $qeue = DB::table('email_qeues')->where('priority', '>', 0)->first();
+            $qeue = EmailQeue::where('priority', '>', 0)->first();
             if ($qeue) {
                 $contact = DB::table('contacts')->where('id',  $qeue->contact_id)->first();
                 if ($contact)
@@ -48,10 +49,11 @@ class SendEmail extends Command
                         'to' => ['email' => $contact->email, 'name' => $contact->first_name],
                         'subject' => $campaign->subject,
                         'attachments' => $campaign->details,
-                        'body' => Helper::parser($contact->email, $mailTemp->content)
+                        'body' => Helper::parser($contact->email, $mailTemp->content,$qeue->massage_id)
                     ];
                     if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
-                        if (EmailQeue::create($qeue))
+
+                        if (EmailTraker::create($qeue))
                             DB::table('email_qeues')->where('id', $qeue->id)->delete();
                     }
                     // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
