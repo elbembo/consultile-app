@@ -27,11 +27,12 @@ class EmailTrakerController extends Controller
             if($tracker){
                 $tracker->delivered = 1;
                 $tracker->opend = 1;
-                $tracker->views = $tracker->views ? $tracker->views++ : 0;
+                $tracker->views = $tracker->views ? $tracker->views++ : 1;
                 $tracker->save();
             }
         }
         header('Content-Type: image/png');
+        header('Cache-control: max-age=5');
         imagepng($img);
         imagedestroy($img);
         return response("", 200, ['Content-Type' => "image/png"]);
