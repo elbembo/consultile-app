@@ -54,7 +54,7 @@ class SendEmail extends Command
                     $validated = $contact->validate([
                         'email' => 'required|regex:/(.+)@(.+)\.(.+)/i',
                     ]);
-                    if ($validated)
+                    if ($validated){
                         if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
 
                             if (EmailTraker::create([
@@ -65,9 +65,18 @@ class SendEmail extends Command
                             ]))
                                 DB::table('email_qeues')->where('id', $qeue->id)->delete();
                         } else {
-                            $qeue->priority = 0;
-                            $qeue->save();
+                            if (EmailTraker::create([
+                                'capmaign_id' => $campaign->id,
+                                'contact_id' => $contact->id,
+                                'priority' => $campaign->campaign_priority,
+                                'massage_id' => $qeue->massage_id,
+                                'delivered' =>0
+                            ]))
+                            DB::table('email_qeues')->where('id', $qeue->id)->delete();
                         }
+                    }else{
+                        DB::table('email_qeues')->where('id', $qeue->id)->delete();
+                    }
                     // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
                 }
             }
