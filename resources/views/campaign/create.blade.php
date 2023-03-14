@@ -229,7 +229,7 @@
                                 @if(is_array($campaign->details))
                                 @foreach($campaign->details as $key => $attachment)
                                 <div class="attachment" data-key="{{ $key }}">
-                                    <span>
+                                    <span class=" text-truncate">
                                         <i class="fa fa-file-pdf text-lg mo-sm-1" aria-hidden="true"></i>
                                         {{ $attachment["name"] }}
                                     </span>
@@ -275,6 +275,9 @@
                                 @elseif($campaign->status == 'processing')
                                 <input type="hidden" name="status" value="canceled">
                                 <button class="btn bg-gradient-danger text-lg mt-2" type="submit"><i class="fa fa-stop me-sm-1" aria-hidden="true"></i>Stop campaign</button>
+                                @elseif($campaign->status == 'completed')
+                                <input type="hidden" name="status" value="replicate">
+                                <button class="btn bg-gradient-info text-lg mt-2" type="submit"><i class="fa fa-repeat me-sm-1" aria-hidden="true"></i>Replicate</button>
                                 @endif
                             </fieldset>
                         </form>

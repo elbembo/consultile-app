@@ -10,8 +10,13 @@ use App\Models\EmailQeue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Models\EmailTemplate;
+use App\Models\EmailTraker;
 use App\Models\Setting;
+use App\Notifications\CampaignComplete;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class CampaignController extends Controller
 {
@@ -140,7 +145,7 @@ class CampaignController extends Controller
                 if ($request->status == 'processing') {
                     $ta = 0;
                     foreach ($contacts as $contact) {
-                        if (preg_match("/(.+)@(.+)\.(.+)/i",$contact->email)) {
+                        if (preg_match("/(.+)@(.+)\.(.+)/i", $contact->email)) {
                             EmailQeue::create([
                                 'capmaign_id' => $campaign->id,
                                 'contact_id' => $contact->id,
@@ -153,6 +158,21 @@ class CampaignController extends Controller
                     $request->request->add(['total_audience' => $ta]);
                 } elseif ($request->status == 'canceled') {
                     DB::table('email_qeues')->where('capmaign_id', $campaign->id)->delete();
+                } elseif ($request->status == 'replicate') {
+                    $newCampaign = $campaign->replicate();
+                    $newCampaign->created_at = Carbon::now();
+                    $newCampaign->status = 'draft';
+                    if (strpos($campaign->name, 'Replicate') !== false) {
+                        $needle = 'Replicate';
+                        $number = substr($campaign->name, strpos($campaign->name, $needle) + strlen($needle));
+                        $newReplicate = substr_replace($campaign->name, " " . $number + 1, strlen($needle)  + strpos($campaign->name, $needle));
+                        $newCampaign->name = $newReplicate;
+                    } else {
+                        $newCampaign->name = $campaign->name . ' Replicate 1';
+                    }
+
+                    $newCampaign->save();
+                    return redirect("campaigns/$newCampaign->id/edit");
                 } elseif ($request->status == 'pending') {
                     DB::table('email_qeues')->where('capmaign_id', $campaign->id)->update([
                         'priority' => 0,
@@ -213,5 +233,60 @@ class CampaignController extends Controller
             return response()->json(true, 200);
         }
         return response()->json($campaign, 404);
+    }
+    public static function qeueHandle($campaign, $contact, $qeue, $sent)
+    {
+        if (EmailTraker::create([
+            'capmaign_id' => $campaign->id,
+            'contact_id' => $contact->id,
+            'priority' => $campaign->campaign_priority,
+            'massage_id' => $qeue->massage_id,
+            'delivered' => $sent ? null : 0
+        ])) {
+            DB::table('email_qeues')->where('id', $qeue->id)->delete();
+            $campaign->audience_done = $campaign->audience_done + 1;
+            $campaign->status = ($campaign->audience_done + 1) >= $campaign->total_audience ? 'completed' :  $campaign->status;
+            $campaign->save();
+        }
+        if ($campaign->status == 'completed') {
+            auth()->user()->notify(new CampaignComplete($campaign));
+        }
+    }
+    public static function send()
+    {
+
+        $qeue = EmailQeue::where('priority', '>', 0)->first();
+        if ($qeue) {
+            $contact = DB::table('contacts')->where('id',  $qeue->contact_id)->first();
+            if ($contact)
+                $campaign = Campaign::find($qeue->capmaign_id);
+            if ($campaign)
+                $mailTemp = DB::table('email_templates')->where('id', $campaign->template_id)->first();
+            if ($mailTemp) {
+                $mailData = [
+                    'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => env('MAIL_FROM_NAME', '')],
+                    'replyTo' => ['email' => $campaign->replay_to, 'name' => $campaign->sender_name],
+                    'to' => ['email' => $contact->email, 'name' => $contact->first_name],
+                    'subject' => $campaign->subject,
+                    'attachments' => $campaign->details,
+                    'body' => Helper::parser($contact->email, $mailTemp->content, $qeue->massage_id)
+                ];
+                if (preg_match("/(.+)@(.+)\.(.+)/i", $contact->email)) {
+                    try {
+                        if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
+                            self::qeueHandle($campaign, $contact, $qeue, true);
+                        } else {
+                            self::qeueHandle($campaign, $contact, $qeue, false);
+                        }
+                    } catch (Throwable $exception) {
+                        Log::error($exception);
+                        // self::qeueHandle($campaign, $contact, $qeue, false);
+                    }
+                } else {
+                    // self::qeueHandle($campaign, $contact, $qeue, false);
+                }
+                // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
+            }
+        }
     }
 }

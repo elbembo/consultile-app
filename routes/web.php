@@ -96,12 +96,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/user-profile', [InfoUserController::class, 'create']);
     Route::post('/user-profile', [InfoUserController::class, 'store']);
     Route::get('/login', function () {
-        return view('dashboard');
+        return view('campaigns');
     })->name('sign-up');
 
     Route::post('/send-test-email', [CampaignController::class, 'send_test'])->name('email.send_test');
     Route::delete('campaigns/attachments', [CampaignController::class, 'removeAttachment']);
-    Route::resource('campaigns', CampaignController::class);
+    Route::resource('campaigns', CampaignController::class)->name('GET','campaigns');
     Route::resource('email/templates', EmailTemplateController::class);
     Route::resource('editor', SummernoteController::class);
 });
@@ -121,8 +121,7 @@ Route::group(['middleware' => 'guest'], function () {
 Route::get('/email-preview', function () {
     return view('mail.test');
 })->name('email.preview');
-Route::get('/login', function () {
-    return view('session/login-session');
-})->name('login');
+
+Route::get('/login', [SessionsController::class, 'create'])->name('login');
 
 Route::get('/newsletters/images/{id}.png', [EmailTrakerController::class, 'index']);

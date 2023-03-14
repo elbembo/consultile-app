@@ -43,24 +43,25 @@
             </li>
             <li class="nav-item dropdown pe-2 d-flex align-items-center">
                 <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa fa-bell cursor-pointer"></i>
+                <i class="fa fa-bell cursor-pointer position-relative"><span class="ba badge badge-circle badge-notifcation"> </span></i>
                 </a>
                 <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
                 <li class="mb-2">
                     <a class="dropdown-item border-radius-md" href="javascript:;">
                     <div class="d-flex py-1">
                         <div class="my-auto">
-                        <img src="/assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
-                        </div>
+
+                        <i class="avatar-sm cursor-pointer fa fa-bullhorn me-3 text-5xl" aria-hidden="true"></i></div>
                         <div class="d-flex flex-column justify-content-center">
                         <h6 class="text-sm font-weight-normal mb-1">
-                            <span class="font-weight-bold">New message</span> from Laur
+                            <span class="font-weight-bold">Campaign completed</span> medicen resarsh
                         </h6>
+                        <p class="text-xs text-secondary mb-1 text-wrap">
+                        Successfuly sent 100% of target keep your eyes on it to know how its performance
                         <p class="text-xs text-secondary mb-0">
-                            <i class="fa fa-clock me-1"></i>
+                            <i class="fa fa-clock me-1" aria-hidden="true"></i>
                             13 minutes ago
-                        </p>
-                        </div>
+                        </p></div>
                     </div>
                     </a>
                 </li>

@@ -107,7 +107,7 @@
 
                     </div>
                     <div class="row">
-                        <div class="col-md-3 ">
+                        <div class="col-md-2 ">
                             <div class="form-group">
                                 <label for="title" class="form-control-label">{{ __('Country') }}</label>
                                 <div class="@error('title')border border-danger rounded-3 @enderror">
@@ -118,7 +118,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 ">
+                        <div class="col-md-2 ">
                             <div class="form-group">
                                 <label for="title" class="form-control-label">{{ __('Title') }}</label>
                                 <div class="@error('title')border border-danger rounded-3 @enderror">

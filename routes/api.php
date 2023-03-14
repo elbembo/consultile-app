@@ -15,8 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth')->get('/user', function (Request $request) {
     return $request->user();
+});
+Route::middleware('auth')->get('/', function (Request $request) {
+    return view('contacts.index');
 });
 // Route::group(['middleware' => 'auth'], function () {
 //     Route::delete('campaign/attachments', [CampaignController::class, 'removeAttachment']);
