@@ -61,7 +61,7 @@ class SendEmail extends Command
                         ]))
                             DB::table('email_qeues')->where('id', $qeue->id)->delete();
                     }else{
-                        $qeue->priority = 10;
+                        $qeue->priority = 0;
                         $qeue->save();
 
                     }
