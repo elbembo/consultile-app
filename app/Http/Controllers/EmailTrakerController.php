@@ -6,6 +6,7 @@ use App\Models\EmailTraker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+
 class EmailTrakerController extends Controller
 {
     /**
@@ -16,8 +17,10 @@ class EmailTrakerController extends Controller
     public function index($id)
     {
         //
-        $name =storage_path()."/app/attachmens/CuvLf3z6fNI3RNoQsfkyFAMmbD3Xd6TBOS9HxcYu.png";
-        $im = imagecreatefrompng($name);
+        $name = storage_path() . "/app/attachmens/CuvLf3z6fNI3RNoQsfkyFAMmbD3Xd6TBOS9HxcYu.png";
+        $img = imagecreatefrompng($name);
+        imagealphablending($img, false);
+        imagesavealpha($img, true);
         // dd($name);
         // if (!Storage::exists($name)) {
         //     return response('File no found.', 404);
@@ -29,8 +32,9 @@ class EmailTrakerController extends Controller
         // passthru("cat $name");
         // $response = response()->file($file, ['Content-Type' => $type ]);
         header('Content-Type: image/png');
-imagepng($im);
-        return response("",200,['Content-Type' => "image/png" ]);
+        imagepng($img);
+        imagedestroy($img);
+        return response("", 200, ['Content-Type' => "image/png"]);
     }
 
     /**
