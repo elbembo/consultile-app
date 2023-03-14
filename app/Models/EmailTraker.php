@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class EmailTraker extends Model
 {
     use HasFactory;
+    protected $fillable = [
+
+        'type',
+        'capmaign_id',
+        'contact_id',
+        'priority',
+        'massage_id',
+    ];
+
 }
