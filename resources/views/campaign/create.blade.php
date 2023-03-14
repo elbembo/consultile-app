@@ -186,7 +186,7 @@
         <div class="card mb-2">
             <div class="card-header">
                 <h6 class="mb-0 d-flex justify-content-between">{{ __('Email Template  ')   }} <small class="text-normal text-muted ">( {{ $template->template_name ?? '' }} )</small>
-                    <span> <button class="btn m-0 py-1 px-2  text-lg bg-gradient-faded-danger text-white clips" type="button" onclick="javascript:cardExpend(this,'.temp-body');"></button></span>
+                    <span> <button class="btn m-0 py-1 px-2  text-lg bg-gradient-faded-danger text-white clips bg-gradient-faded-dark expend" type="button" onclick="javascript:cardExpend(this,'.temp-body');"></button></span>
                 </h6>
             </div>
             <div class="card-body pt-4 p-3 ">
@@ -194,7 +194,7 @@
                 <div class="row temp-body">
                     <div><button type="button" class="btn bg-primary text-white" onclick="javascript:cardExpend(this,'.temp-view');">Edit</button></div>
 
-                    <div class="col-md-12 temp-view">
+                    <div class="col-md-12 temp-view {{ $campaign->template_id != 0 ? '' : 'd-none'}}">
                         <iframe src="{{url('/email/template/preview/'.$campaign->template_id)}}" sandbox="allow-same-origin allow-scripts allow-popups" height="700px" seamless="">{{ $template->content ?? '' }}</iframe>
                     </div>
                     <div id="" class="col-md-12 temp-view {{ $campaign->template_id != 0 ? 'd-none' : ''}}">
@@ -202,6 +202,19 @@
                         <iframe src="/editor?{{ isset($campaign->template_id) ? "t=$campaign->template_id&c=$campaign->id" : "c=$campaign->id" }}" frameborder="0" height="700" seamless></iframe>
                     </div>
                 </div>
+
+
+
+
+
+            </div>
+        </div>
+        <div class="card mb-2">
+            <div class="card-header">
+                <h6 class="mb-0 d-flex justify-content-between">{{ __('Take Action')   }}
+                </h6>
+            </div>
+            <div class="card-body pt-4 p-3 ">
                 <div class="row">
                     <!-- <div id="temp-view"  class="col-8  {{ (isset($campaign) ? 'zoom-out col-6 ' : '' ) }}"><iframe src="/email/templates/{{ $template->id }}"  frameborder="0" height="500"></iframe></div> -->
 
@@ -268,53 +281,27 @@
                     </div>
 
                 </div>
-                @endif
-
-
-                <script>
-                    // if (document.querySelector('#send-test'))
-                    //     document.querySelector('#send-test')
-                    //     .addEventListener('click', (e) => {
-
-                    //         const formElement = document.querySelector('form')
-                    //         const data = {};
-                    //         for (const pair of new FormData(formElement)) {
-                    //             data[pair[0]] = pair[1];
-                    //             data["_method"] = "POST"
-                    //         }
-                    //         const formData = new FormData(formElement);
-                    //         fetch("/send-test-email", {
-                    //             headers: {
-                    //                 "Content-Type": "application/json",
-                    //                 "Accept": "application/json",
-                    //                 "X-Requested-With": "XMLHttpRequest",
-                    //                 "X-CSRF-Token": formElement._token.value
-                    //             },
-                    //             credentials: "same-origin",
-                    //             method: 'post',
-                    //             body: JSON.stringify(data),
-                    //         });
-                    //     })
-
-                    const cardExpend = (btn, select) => {
-                        const ele = document.querySelectorAll(select)
-                        ele.forEach(element => {
-                            element.classList.toggle('d-none')
-                        })
-
-                        btn.classList.toggle('bg-gradient-faded-dark')
-                        btn.classList.toggle('expend')
-                        // btn.innerText == '+' ? btn.innerText = '-' :  btn.innerText = '+'
-                    }
-                    const tempZoom = (btn, select) => {
-                        const ele = document.getElementById(select)
-                        ele.classList.toggle('zoom-out')
-                        btn.classList.toggle('bg-gradient-faded-dark')
-                        btn.classList.toggle('expend')
-                        // btn.innerText == '' ? btn.innerText = '-' :  btn.innerText = ''
-                    }
-                </script>
-
             </div>
         </div>
+        @endif
+        <script>
+
+            const cardExpend = (btn, select) => {
+                const ele = document.querySelectorAll(select)
+                ele.forEach(element => {
+                    element.classList.toggle('d-none')
+                })
+
+                btn.classList.toggle('bg-gradient-faded-dark')
+                btn.classList.toggle('expend')
+                // btn.innerText == '+' ? btn.innerText = '-' :  btn.innerText = '+'
+            }
+            const tempZoom = (btn, select) => {
+                const ele = document.getElementById(select)
+                ele.classList.toggle('zoom-out')
+                btn.classList.toggle('bg-gradient-faded-dark')
+                btn.classList.toggle('expend')
+                // btn.innerText == '' ? btn.innerText = '-' :  btn.innerText = ''
+            }
+        </script>
         @endsection
