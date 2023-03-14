@@ -188,7 +188,7 @@
             </div>
             <div class="card-body pt-4 p-3">
                 <div class="row">
-                    <iframe src="/editor?c={{ $campaign->id }}" frameborder="0" height="400"></iframe>
+                    <iframe src="/editor?c={{ $campaign->id }}" frameborder="0" height="400" seamless></iframe>
 
                 </div>
             </div>
@@ -206,7 +206,7 @@
                 <div class="row">
                     <div id="temp-view" class="col-md-12">
                         <!-- <iframe src="/email/templates/{{ $template->id }}" frameborder="0" width="550" height="500"></iframe> -->
-                        <iframe src="/editor?{{ isset($campaign->template_id) ? "t=$campaign->template_id" : '' }}" frameborder="0" height="600" width="800"></iframe>
+                        <iframe src="/editor?{{ isset($campaign->template_id) ? "t=$campaign->template_id" : '' }}" frameborder="0" height="600" seamless></iframe>
                     </div>
                 </div>
                 <div class="row">

@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     </form> -->
-                    <iframe src="/editor?{{ isset($emailTemp->id) ? "t=$emailTemp->id" : '' }}" frameborder="0" height="600" width="800"></iframe>
+                    <iframe src="/editor?{{ isset($emailTemp->id) ? "t=$emailTemp->id" : '' }}" frameborder="0" height="600" seamless></iframe>
                 </div>
 
 
