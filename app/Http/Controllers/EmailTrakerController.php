@@ -27,7 +27,7 @@ class EmailTrakerController extends Controller
             if($tracker){
                 $tracker->delivered = 1;
                 $tracker->opend = 1;
-                $tracker->views = $tracker->views < 0 ? $tracker->views++ : 1;
+                $tracker->views = ($tracker->views+1) ;
                 $tracker->save();
             }
         }
