@@ -17,20 +17,20 @@ class EmailTrakerController extends Controller
     public function index($id)
     {
         //
+
         $name = storage_path() . "/app/attachmens/CuvLf3z6fNI3RNoQsfkyFAMmbD3Xd6TBOS9HxcYu.png";
         $img = imagecreatefrompng($name);
         imagealphablending($img, false);
         imagesavealpha($img, true);
-        // dd($name);
-        // if (!Storage::exists($name)) {
-        //     return response('File no found.', 404);
-        // }
-
-        // $file = Storage::get($name);
-        // $type = Storage::mimeType($name);
-        // header("Content-type: image/png");
-        // passthru("cat $name");
-        // $response = response()->file($file, ['Content-Type' => $type ]);
+        if($id){
+            $tracker = EmailTraker::where('massage_id',$id)->first();
+            if($tracker){
+                $tracker->delivered = 1;
+                $tracker->opend = 1;
+                $tracker->views = $tracker->views++;
+                $tracker->save();
+            }
+        }
         header('Content-Type: image/png');
         imagepng($img);
         imagedestroy($img);
