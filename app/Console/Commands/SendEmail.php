@@ -9,6 +9,7 @@ use App\Models\EmailTraker;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Mockery\Expectation;
 
 class SendEmail extends Command
 {
@@ -54,27 +55,38 @@ class SendEmail extends Command
                     $validated = $contact->validate([
                         'email' => 'required|regex:/(.+)@(.+)\.(.+)/i',
                     ]);
-                    if ($validated){
-                        if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
+                    if ($validated) {
+                        try {
+                            if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
 
+                                if (EmailTraker::create([
+                                    'capmaign_id' => $campaign->id,
+                                    'contact_id' => $contact->id,
+                                    'priority' => $campaign->campaign_priority,
+                                    'massage_id' => $qeue->massage_id,
+                                ]))
+                                    DB::table('email_qeues')->where('id', $qeue->id)->delete();
+                            } else {
+                                if (EmailTraker::create([
+                                    'capmaign_id' => $campaign->id,
+                                    'contact_id' => $contact->id,
+                                    'priority' => $campaign->campaign_priority,
+                                    'massage_id' => $qeue->massage_id,
+                                    'delivered' => 0
+                                ]))
+                                    DB::table('email_qeues')->where('id', $qeue->id)->delete();
+                            }
+                        } catch (Expectation $e) {
                             if (EmailTraker::create([
                                 'capmaign_id' => $campaign->id,
                                 'contact_id' => $contact->id,
                                 'priority' => $campaign->campaign_priority,
                                 'massage_id' => $qeue->massage_id,
+                                'delivered' => 0
                             ]))
                                 DB::table('email_qeues')->where('id', $qeue->id)->delete();
-                        } else {
-                            if (EmailTraker::create([
-                                'capmaign_id' => $campaign->id,
-                                'contact_id' => $contact->id,
-                                'priority' => $campaign->campaign_priority,
-                                'massage_id' => $qeue->massage_id,
-                                'delivered' =>0
-                            ]))
-                            DB::table('email_qeues')->where('id', $qeue->id)->delete();
                         }
-                    }else{
+                    } else {
                         DB::table('email_qeues')->where('id', $qeue->id)->delete();
                     }
                     // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
