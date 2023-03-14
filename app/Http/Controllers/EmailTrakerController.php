@@ -32,7 +32,7 @@ class EmailTrakerController extends Controller
             }
         }
         header('Content-Type: image/png');
-        header('Cache-control: max-age=5');
+        header('Cache-control: max-age=3600');
         imagepng($img);
         imagedestroy($img);
         return response("", 200, ['Content-Type' => "image/png"]);
