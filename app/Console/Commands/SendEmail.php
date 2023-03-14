@@ -49,11 +49,16 @@ class SendEmail extends Command
                         'to' => ['email' => $contact->email, 'name' => $contact->first_name],
                         'subject' => $campaign->subject,
                         'attachments' => $campaign->details,
-                        'body' => Helper::parser($contact->email, $mailTemp->content,$qeue->massage_id)
+                        'body' => Helper::parser($contact->email, $mailTemp->content, $qeue->massage_id)
                     ];
                     if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
 
-                        if (EmailTraker::create($qeue))
+                        if (EmailTraker::create([
+                            'capmaign_id' => $campaign->id,
+                            'contact_id' => $contact->id,
+                            'priority' => $campaign->campaign_priority,
+                            'massage_id' => $qeue->massage_id,
+                        ]))
                             DB::table('email_qeues')->where('id', $qeue->id)->delete();
                     }
                     // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
