@@ -90,9 +90,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('static-sign-up', function () {
         return view('static-sign-up');
     })->name('sign-up');
-    Route::get('email/template/preview', function () {
-        return view('mail.test');
-    })->name('mail-preview');
+    Route::get('email/template/preview/{id}', [EmailTemplateController::class,'preview'])->name('mail-preview');
 
     Route::get('/logout', [SessionsController::class, 'destroy']);
     Route::get('/user-profile', [InfoUserController::class, 'create']);

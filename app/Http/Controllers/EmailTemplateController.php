@@ -24,16 +24,17 @@ class EmailTemplateController extends Controller
         return view('email-templates.index', compact('emailTemplates'));
     }
 
-    public function preview(Request $request)
+    public function preview(Request $request,$id)
     {
         //
-        if (isset($request->content)) {
+        $template = EmailTemplate::find($id);
+        if ($template) {
             $mailData = [
                 'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => env('MAIL_FROM_NAME', '')],
                 'replyTo' => ['email' => 'info@consultile.com', 'name' => 'Consultile'],
                 'to' => ['email' => 'test1@emadissa.com', 'name' => 'Emad Isaa'],
                 'subject' => 'Send Campaign Emails',
-                'body' => Helper::parser('cto@emadissa.com', $request->content)
+                'body' => Helper::parser('cto@emadissa.com', $template->content)
             ];
             // if(Mail::to('test1@emadissa.com','Test user')->send(new SendCampaignEmails($mailData)));
             // $email = Mail::failures();
@@ -158,7 +159,7 @@ class EmailTemplateController extends Controller
         $emailTemp->update($request->all());
         $emailTemp->save();
         if ($request->query('t'))
-            return redirect('/editor?t=' . $request->query('t'));
+            return redirect('/editor?t=' . $request->query('t')."&&c=$request->cid");
         return view('email-templates.edit', compact('emailTemp'));
     }
 

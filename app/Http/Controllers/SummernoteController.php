@@ -21,7 +21,8 @@ class SummernoteController extends Controller
         //
         if ($cid) {
             $campaign = Campaign::find($cid);
-            return view('components.editor',compact('campaign'));
+            $et = EmailTemplate::where('id',$campaign->template_id)->first();
+            return view('components.editor',compact('campaign','et'));
         }
         if ($tid) {
             $et = EmailTemplate::find($tid);

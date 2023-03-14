@@ -101,7 +101,7 @@ legend {
     justify-content: space-between;
 }
 iframe{
-    width: 100%;
+    width: 700px;
     border: 0;
     padding: 0;
     overflow: auto;

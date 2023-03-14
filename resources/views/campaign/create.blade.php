@@ -37,7 +37,7 @@
             <div class="card mb-2">
                 <div class="card-header">
                     <h6 class="mb-0 d-flex justify-content-between">{{ __('Campaign Information') }}
-                        <span> <button class="btn m-0 py-1 px-2 text-lg  bg-gradient-faded-danger text-white clips" type="button" onclick="javascript:cardExpend(this,'info-body');"></button></span>
+                        <span> <button class="btn m-0 py-1 px-2 text-lg  bg-gradient-faded-danger text-white clips" type="button" onclick="javascript:cardExpend(this,'#info-body');"></button></span>
                     </h6>
                 </div>
                 <div id="info-body" class="card-body pt-4 p-3 {{ (isset($campaign) ? 'd-none' : '' ) }}">
@@ -181,32 +181,25 @@
                 </div>
             </div>
         </form>
-        @if(isset($campaign) && $campaign->template_id == 0 )
-        <div class="card mb-2">
-            <div class="card-header pb-0 px-3">
-                <h6 class="mb-0">{{ __('Campaign Information') }}</h6>
-            </div>
-            <div class="card-body pt-4 p-3">
-                <div class="row">
-                    <iframe src="/editor?c={{ $campaign->id }}" frameborder="0" height="400" seamless></iframe>
 
-                </div>
-            </div>
-        </div>
-        @endif
-        @if(isset($campaign) && $campaign->template_id != 0 )
+        @if(isset($campaign) )
         <div class="card mb-2">
             <div class="card-header">
-                <h6 class="mb-0 d-flex justify-content-between">{{ __('Campaign Information')   }} <small class="text-normal text-muted ">( {{ $template->template_name }} )</small>
-                    <span> <button class="btn m-0 py-1 px-2  text-lg bg-gradient-faded-danger text-white clips" type="button" onclick="javascript:tempZoom(this,'temp-view');"></button></span>
+                <h6 class="mb-0 d-flex justify-content-between">{{ __('Email Template  ')   }} <small class="text-normal text-muted ">( {{ $template->template_name ?? '' }} )</small>
+                    <span> <button class="btn m-0 py-1 px-2  text-lg bg-gradient-faded-danger text-white clips" type="button" onclick="javascript:cardExpend(this,'.temp-body');"></button></span>
                 </h6>
             </div>
-            <div class="card-body pt-4 p-3">
+            <div class="card-body pt-4 p-3 ">
 
-                <div class="row">
-                    <div id="temp-view" class="col-md-12">
+                <div class="row temp-body">
+                    <div><button type="button" class="btn bg-primary text-white" onclick="javascript:cardExpend(this,'.temp-view');">Edit</button></div>
+
+                    <div class="col-md-12 temp-view">
+                        <iframe src="{{url('/email/template/preview/'.$campaign->template_id)}}" sandbox="allow-same-origin allow-scripts allow-popups" height="700px" seamless="">{{ $template->content ?? '' }}</iframe>
+                    </div>
+                    <div id="" class="col-md-12 temp-view {{ $campaign->template_id != 0 ? 'd-none' : ''}}">
                         <!-- <iframe src="/email/templates/{{ $template->id }}" frameborder="0" width="550" height="500"></iframe> -->
-                        <iframe src="/editor?{{ isset($campaign->template_id) ? "t=$campaign->template_id" : '' }}" frameborder="0" height="600" seamless></iframe>
+                        <iframe src="/editor?{{ isset($campaign->template_id) ? "t=$campaign->template_id&c=$campaign->id" : "c=$campaign->id" }}" frameborder="0" height="700" seamless></iframe>
                     </div>
                 </div>
                 <div class="row">
@@ -222,7 +215,7 @@
                                 <legend>Attachments</legend>
                                 @if(is_array($campaign->details))
                                 @foreach($campaign->details as $key => $attachment)
-                                <div class="attachment" data-key="{{ $key }}"  >
+                                <div class="attachment" data-key="{{ $key }}">
                                     <span>
                                         <i class="fa fa-file-pdf text-lg mo-sm-1" aria-hidden="true"></i>
                                         {{ $attachment["name"] }}
@@ -304,8 +297,11 @@
                     //     })
 
                     const cardExpend = (btn, select) => {
-                        const ele = document.getElementById(select)
-                        ele.classList.toggle('d-none')
+                        const ele = document.querySelectorAll(select)
+                        ele.forEach(element => {
+                            element.classList.toggle('d-none')
+                        })
+
                         btn.classList.toggle('bg-gradient-faded-dark')
                         btn.classList.toggle('expend')
                         // btn.innerText == '+' ? btn.innerText = '-' :  btn.innerText = '+'
