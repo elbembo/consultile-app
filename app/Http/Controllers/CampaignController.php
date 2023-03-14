@@ -92,7 +92,7 @@ class CampaignController extends Controller
             if (Mail::to($request->send_to)->send(new SendCampaignEmails($mailData))) {
                 return response()->json($request->all());
             }
-            return response()->json($request->all(),404);
+            return response()->json($request->all(), 404);
             // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
         }
     }
@@ -140,13 +140,18 @@ class CampaignController extends Controller
                 if ($request->status == 'processing') {
                     $ta = 0;
                     foreach ($contacts as $contact) {
-                        EmailQeue::create([
-                            'capmaign_id' => $campaign->id,
-                            'contact_id' => $contact->id,
-                            'priority' => $campaign->campaign_priority,
-                            'massage_id' => now()->timestamp,
+                        $validated = $contact->validate([
+                            'email' => 'required|regex:/(.+)@(.+)\.(.+)/i',
                         ]);
-                        $ta++;
+                        if ($validated) {
+                            EmailQeue::create([
+                                'capmaign_id' => $campaign->id,
+                                'contact_id' => $contact->id,
+                                'priority' => $campaign->campaign_priority,
+                                'massage_id' => now()->timestamp,
+                            ]);
+                            $ta++;
+                        }
                     }
                     $request->request->add(['total_audience' => $ta]);
                 } elseif ($request->status == 'canceled') {
@@ -203,13 +208,13 @@ class CampaignController extends Controller
     {
         //
         $campaign = Campaign::find($request->id);
-        if($campaign){
-            $attachments = $campaign->details ;
+        if ($campaign) {
+            $attachments = $campaign->details;
             unset($attachments[$request->index]);
             $campaign->details = $attachments;
             $campaign->save();
-            return response()->json(true,200);
+            return response()->json(true, 200);
         }
-        return response()->json($campaign,404);
+        return response()->json($campaign, 404);
     }
 }

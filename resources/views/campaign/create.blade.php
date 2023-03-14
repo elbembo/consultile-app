@@ -204,7 +204,7 @@
             <div class="card-body pt-4 p-3">
 
                 <div class="row">
-                    <div id="temp-view" class="col-8  ">
+                    <div id="temp-view" class="col-md-12">
                         <!-- <iframe src="/email/templates/{{ $template->id }}" frameborder="0" width="550" height="500"></iframe> -->
                         <iframe src="/editor?{{ isset($campaign->template_id) ? "t=$campaign->template_id" : '' }}" frameborder="0" height="600" width="800"></iframe>
                     </div>
