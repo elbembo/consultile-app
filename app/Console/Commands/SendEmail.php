@@ -60,6 +60,10 @@ class SendEmail extends Command
                             'massage_id' => $qeue->massage_id,
                         ]))
                             DB::table('email_qeues')->where('id', $qeue->id)->delete();
+                    }else{
+                        $qeue->priority = 10;
+                        $qeue->save();
+
                     }
                     // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
                 }
