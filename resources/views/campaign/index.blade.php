@@ -10,7 +10,7 @@
 
         </span>
     </div>
-    <div class="row">
+    <div class="row mx-3">
         <div class="col-md-12 mt-4">
             <div class="card">
                 <div class="card-header pb-0 px-3">
@@ -40,7 +40,7 @@
                                 <div class="ms-auto text-end d-flex justify-content-between  flex-column">
                                     <div class="">
                                         @if($campaign->status == 'completed')
-                                        <a class="btn btn-link text-dark px-3 mb-0" href="campaigns/{{$campaign->id}}"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>View</a>
+                                        <a class="btn btn-link text-success px-3 mb-0" href="campaigns/{{$campaign->id}}"><i class="fas  fa-eye text-success me-2" aria-hidden="true"></i>View</a>
 
                                         @else
                                         <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
