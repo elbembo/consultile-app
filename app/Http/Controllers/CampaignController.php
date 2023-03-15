@@ -12,10 +12,13 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\EmailTemplate;
 use App\Models\EmailTraker;
 use App\Models\Setting;
+use App\Models\User;
 use App\Notifications\CampaignComplete;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 use Throwable;
 
 class CampaignController extends Controller
@@ -92,6 +95,7 @@ class CampaignController extends Controller
                 'to' => ['email' => $request->send_to, 'name' => $contact->first_name],
                 'subject' => $campaign->subject,
                 'attachments' => $campaign->details,
+                'messageId' => md5($request->send_to . now()->timestamp),
                 'body' => Helper::parser($contact->email, $mailTemp->content)
             ];
             if (Mail::to($request->send_to)->send(new SendCampaignEmails($mailData))) {
@@ -111,6 +115,7 @@ class CampaignController extends Controller
     public function show(Campaign $campaign)
     {
         //
+        return view('campaign.view',compact('campaign'));
     }
 
     /**
@@ -161,6 +166,8 @@ class CampaignController extends Controller
                 } elseif ($request->status == 'replicate') {
                     $newCampaign = $campaign->replicate();
                     $newCampaign->created_at = Carbon::now();
+                    $newCampaign->total_audience = 0;
+                    $newCampaign->audience_done = 0;
                     $newCampaign->status = 'draft';
                     if (strpos($campaign->name, 'Replicate') !== false) {
                         $needle = 'Replicate';
@@ -245,11 +252,12 @@ class CampaignController extends Controller
         ])) {
             DB::table('email_qeues')->where('id', $qeue->id)->delete();
             $campaign->audience_done = $campaign->audience_done + 1;
-            $campaign->status = ($campaign->audience_done + 1) >= $campaign->total_audience ? 'completed' :  $campaign->status;
+            $campaign->status =  $campaign->audience_done  >= $campaign->total_audience ? 'completed' :  $campaign->status;
             $campaign->save();
-        }
-        if ($campaign->status == 'completed') {
-            auth()->user()->notify(new CampaignComplete($campaign));
+            if ($campaign->status == 'completed') {
+                $users = User::all();
+                Notification::send($users, new CampaignComplete($campaign));
+            }
         }
     }
     public static function send()
@@ -269,11 +277,17 @@ class CampaignController extends Controller
                     'to' => ['email' => $contact->email, 'name' => $contact->first_name],
                     'subject' => $campaign->subject,
                     'attachments' => $campaign->details,
+                    'messageId' => $qeue->massage_id,
                     'body' => Helper::parser($contact->email, $mailTemp->content, $qeue->massage_id)
                 ];
                 if (preg_match("/(.+)@(.+)\.(.+)/i", $contact->email)) {
                     try {
-                        if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
+                        // if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
+                        //     self::qeueHandle($campaign, $contact, $qeue, true);
+                        // } else {
+                        //     self::qeueHandle($campaign, $contact, $qeue, false);
+                        // }
+                        if (true) {
                             self::qeueHandle($campaign, $contact, $qeue, true);
                         } else {
                             self::qeueHandle($campaign, $contact, $qeue, false);
@@ -286,6 +300,7 @@ class CampaignController extends Controller
                     // self::qeueHandle($campaign, $contact, $qeue, false);
                 }
                 // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
+
             }
         }
     }

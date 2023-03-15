@@ -67,6 +67,7 @@ $(document).ready(function () {
     $('.custom_data').on('click', (e) => {
         $('#summernote').summernote('insertText', `{{ ${e.target.dataset.value} }}`)
     })
+    // $('.moment').text(moment.unix($(this).text()).fromNow())
 
     // $("#tempCode").on('submit', function () {
     //     $('#tempCodetextarea').html($('#summernote').summernote('code'));
@@ -129,7 +130,9 @@ $(document).ready(function () {
 
         return this;
     }
-
+    document.querySelectorAll('.moment').forEach((ele) => {
+        ele.textContent = moment.unix(ele.textContent).fromNow()
+    })
 
 
     $s('.attachment-del').click((ele) => {

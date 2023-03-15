@@ -34,6 +34,7 @@ class EmailTemplateController extends Controller
                 'replyTo' => ['email' => 'info@consultile.com', 'name' => 'Consultile'],
                 'to' => ['email' => 'test1@emadissa.com', 'name' => 'Emad Isaa'],
                 'subject' => 'Send Campaign Emails',
+                'messageId' => md5($request->send_to.now()->timestamp),
                 'body' => Helper::parser('cto@emadissa.com', $template->content)
             ];
             // if(Mail::to('test1@emadissa.com','Test user')->send(new SendCampaignEmails($mailData)));
@@ -55,6 +56,7 @@ class EmailTemplateController extends Controller
             'to' => ['email' => $request->send_to, 'name' => 'Emad Isaa'],
             'subject' => $request->subject,
             'attachments' => $request->details,
+            'messageId' => md5($request->send_to.now()->timestamp),
             'body' => Helper::parser($request->send_to, $emailTemplates->content)
         ];
         if (Mail::to($request->send_to)->send(new SendCampaignEmails($mailData)))
@@ -124,6 +126,7 @@ class EmailTemplateController extends Controller
             'to' => ['email' => 'test1@emadissa.com', 'name' => 'Emad Isaa'],
             'subject' => 'Send Campaign Emails',
             'attachments' => null,
+            'messageId' => md5(env('MAIL_FROM_ADDRESS', '').now()->timestamp),
             'body' => Helper::parser('cto@emadissa.com', $emailTemplate->content)
         ];
         // if(Mail::to('test1@emadissa.com','Test user')->send(new SendCampaignEmails($mailData)));

@@ -11,6 +11,8 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Headers;
+use Symfony\Component\Mime\Header\PathHeader;
+
 
 class SendCampaignEmails extends Mailable
 {
@@ -45,7 +47,11 @@ class SendCampaignEmails extends Mailable
     public function headers(): Headers
     {
         return new Headers(
+            messageId: $this->mailData['messageId'].'@consultile-mea.com',
             text: [
+
+                'X-Confirm-Reading-To'=>'<'.$this->mailData['from']['email'].'>',
+                'Disposition-Notification-To'=>'<'.$this->mailData['from']['email'].'>',
                 'List-Unsubscribe' => env('APP_URL') . '/unsubscribe/?email=' . $this->mailData['to']['email'],
             ],
         );

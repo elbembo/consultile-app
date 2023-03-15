@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notification;
 class CampaignComplete extends Notification
 {
     use Queueable;
-    private $campaign;
+    // private $campaign;
     /**
      * Create a new notification instance.
      *
@@ -55,10 +55,11 @@ class CampaignComplete extends Notification
      */
     public function toArray($notifiable)
     {
+        $prec = $this->campaign->audience_done/$this->campaign->total_audience*100;
         return [
             'event'=>'Campaign completed',
             'title' => $this->campaign->name,
-            'body' => 'Successfuly sent '.($this->campaign->audience_done/$this->campaign->total_audience*100).'% of target keep your eyes on it to know how its performance',
+            'body' => 'Successfuly sent '.$prec.'% of target keep your eyes on it to know how its performance',
             'time' => now()->timestamp,
             'icon' => 'fa fa-bullhorn',
             'image'  => null,
