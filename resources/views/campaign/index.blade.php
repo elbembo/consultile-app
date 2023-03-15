@@ -39,9 +39,14 @@
                                 </div>
                                 <div class="ms-auto text-end d-flex justify-content-between  flex-column">
                                     <div class="">
+                                        @if($campaign->status == 'completed')
+                                        <a class="btn btn-link text-dark px-3 mb-0" href="campaigns/{{$campaign->id}}"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>View</a>
 
+                                        @else
                                         <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
+                                        @endif
                                         <a class="btn btn-link text-dark px-3 mb-0" href="campaigns/{{$campaign->id}}/edit"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+
                                     </div>
                                     <div class="align-items-center text-sm">
                                         @if(is_array($campaign->details) && count($campaign->details) > 0)
