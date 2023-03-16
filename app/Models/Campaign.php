@@ -23,7 +23,8 @@ class Campaign extends Model
         'total_audience',
         'template_id',
         'audience_done',
-        'details'
+        'details',
+        'tracking'
     ];
     /**
      * The attributes that should be cast.

@@ -100,7 +100,7 @@ legend {
     flex-direction: column;
     justify-content: space-between;
 }
-iframe{
+iframe {
     width: 700px;
     border: 0;
     padding: 0;
@@ -111,11 +111,23 @@ iframe{
     position: absolute;
     background-color: #ff0909;
     top: -6px;
-    padding: 0!important;
+    padding: 0 !important;
     line-height: normal;
     height: 8px;
     width: 8px;
     right: -4px;
     color: #ff0909;
-    box-shadow: 0px 0px 3px 1px #ff0909!important;
+    box-shadow: 0px 0px 3px 1px #ff0909 !important;
+}
+#track-eye {
+    visibility: hidden;
+    position:absolute;
+}
+#track-eye ~ label::before {
+    content: "\f070"; // bars code
+}
+
+#track-eye:checked ~ label::before {
+    content: "\f06e";
+    color: green;
 }

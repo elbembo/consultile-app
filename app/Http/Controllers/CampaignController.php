@@ -163,7 +163,9 @@ class CampaignController extends Controller
                             $ta++;
                         }
                     }
-                    $request->request->add(['total_audience' => $ta]);
+                    $tracking =  isset($request->tracking) ? 1 : 0;
+                    $request->request->add(['total_audience' => $ta,'tracking' => $tracking ]);
+
                 } elseif ($request->status == 'canceled') {
                     DB::table('email_qeues')->where('capmaign_id', $campaign->id)->delete();
                 } elseif ($request->status == 'replicate') {
