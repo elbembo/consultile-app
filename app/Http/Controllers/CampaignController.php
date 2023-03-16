@@ -83,27 +83,29 @@ class CampaignController extends Controller
     public function send_test(Request $request)
     {
         //
-        $contact = DB::table('contacts')->where('id', 1)->first();
-        if ($contact)
-            $campaign = DB::table('campaigns')->where('id', $request->id)->first();
-        if ($campaign)
+        $msgId = md5($request->send_to . now()->timestamp);
+        $contact = Contact::first();
+        if (!empty($contact))
+            $campaign = Campaign::find($request->id);
+        if (!empty($campaign))
             $mailTemp = DB::table('email_templates')->where('id', $campaign->template_id)->first();
-        if ($mailTemp) {
+        if (!empty($mailTemp)) {
             $mailData = [
                 'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => env('MAIL_FROM_NAME', '')],
                 'replyTo' => ['email' => $campaign->replay_to, 'name' => $campaign->sender_name],
                 'to' => ['email' => $request->send_to, 'name' => $contact->first_name],
                 'subject' => $campaign->subject,
                 'attachments' => $campaign->details,
-                'messageId' => md5($request->send_to . now()->timestamp),
+                'messageId' => $msgId ,
                 'body' => Helper::parser($contact->email, $mailTemp->content)
             ];
             if (Mail::to($request->send_to)->send(new SendCampaignEmails($mailData))) {
-                return response()->json($request->all());
+                return response()->json([...$request->all(),$msgId ]);
             }
-            return response()->json($request->all(), 404);
+
             // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
         }
+        return response()->json($contact, 404);
     }
 
     /**
@@ -115,7 +117,7 @@ class CampaignController extends Controller
     public function show(Campaign $campaign)
     {
         //
-        return view('campaign.view',compact('campaign'));
+        return view('campaign.view', compact('campaign'));
     }
 
     /**

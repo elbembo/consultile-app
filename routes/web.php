@@ -140,3 +140,4 @@ Route::get('/email-preview', function () {
 // Route::get('/login', [SessionsController::class, 'create'])->name('login');
 
 Route::get('/newsletters/images/{id}.png', [EmailTrakerController::class, 'index']);
+Route::get('/messages/receipt/{id}.png', [EmailTrakerController::class, 'index']);

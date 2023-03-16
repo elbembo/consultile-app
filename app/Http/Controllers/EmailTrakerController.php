@@ -18,24 +18,25 @@ class EmailTrakerController extends Controller
     {
         //
 
-        $name = storage_path() . "/app/attachmens/CuvLf3z6fNI3RNoQsfkyFAMmbD3Xd6TBOS9HxcYu.png";
-        $img = imagecreatefrompng($name);
-        imagealphablending($img, false);
-        imagesavealpha($img, true);
+        // $name = storage_path() . "/app/attachmens/CuvLf3z6fNI3RNoQsfkyFAMmbD3Xd6TBOS9HxcYu.png";
+        // $img = imagecreatefrompng($name);
+        // imagealphablending($img, false);
+        // imagesavealpha($img, true);
         if($id){
             $tracker = EmailTraker::where('massage_id',$id)->first();
-            if($tracker){
+            if(!empty($tracker)){
                 $tracker->delivered = 1;
                 $tracker->opend = 1;
                 $tracker->views = ($tracker->views+1) ;
                 $tracker->save();
             }
         }
-        header('Content-Type: image/png');
-        header('Cache-control: max-age=3600');
-        imagepng($img);
-        imagedestroy($img);
-        return response("", 200, ['Content-Type' => "image/png"]);
+        // header('Content-Type: image/png');
+        // header('Cache-control: max-age=3600');
+        // imagepng($img);
+        // imagedestroy($img);
+        // return response("", 200, ['Content-Type' => "image/png"]);
+        return redirect('https://app.consultile.com/assets/img/Consultile_Logo_png.png');
     }
 
     /**

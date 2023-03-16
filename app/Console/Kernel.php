@@ -18,7 +18,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
-        Commands\SendEmail::class
+        Commands\SendEmail::class,
+        \Webklex\IMAP\Commands\ImapIdleCommand::class,
     ];
 
     /**

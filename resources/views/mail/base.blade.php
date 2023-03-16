@@ -20,5 +20,6 @@
 </head>
 <body style="margin:0;padding:0;">
 {!! $body ?? '' !!}
+@if(!empty($tracking) && $tracking == 1) <img class="flm-open" width="0" height="0" style="border:0;width:0;height:0;display:block;" src="https://api.flockmail.com/s/1002/1571326/messages/receipt/5d5e397d569653aa">  @endif         
 </body>
 </html>
