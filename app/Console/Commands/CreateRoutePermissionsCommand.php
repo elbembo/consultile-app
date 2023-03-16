@@ -59,7 +59,7 @@ class CreateRoutePermissionsCommand extends Command
                 }
             }
         }
-
+        permission::create(['name' => 'secret.contacts']);
         $this->info('Permission routes added successfully.');
     }
 }
