@@ -47,11 +47,11 @@ class SendCampaignEmails extends Mailable
     public function headers(): Headers
     {
         return new Headers(
-            messageId: $this->mailData['messageId'].'@consultile-mea.com',
+            messageId: $this->mailData['messageId'] . '@consultile-mea.com',
             text: [
 
-                'X-Confirm-Reading-To'=>'<'.$this->mailData['from']['email'].'>',
-                'Disposition-Notification-To'=>'<'.$this->mailData['from']['email'].'>',
+                'X-Confirm-Reading-To' => '<' . $this->mailData['from']['email'] . '>',
+                'Disposition-Notification-To' => '<' . $this->mailData['from']['email'] . '>',
                 'List-Unsubscribe' => env('APP_URL') . '/unsubscribe/?email=' . $this->mailData['to']['email'],
             ],
         );
@@ -66,7 +66,9 @@ class SendCampaignEmails extends Mailable
     {
         return new Content(
             view: 'mail.base',
-            with: ['body' => $this->mailData['body']],
+            with: ['body' => $this->mailData['body'],
+             'tracking' => $this->mailData['tracking'],
+             'trackingId' => $this->mailData['messageId']],
         );
     }
 

@@ -96,6 +96,7 @@ class CampaignController extends Controller
                 'to' => ['email' => $request->send_to, 'name' => $contact->first_name],
                 'subject' => $campaign->subject,
                 'attachments' => $campaign->details,
+                'tracking' => $campaign->tracking,
                 'messageId' => $msgId ,
                 'body' => Helper::parser($contact->email, $mailTemp->content)
             ];
@@ -279,16 +280,17 @@ class CampaignController extends Controller
                     'to' => ['email' => $contact->email, 'name' => $contact->first_name],
                     'subject' => $campaign->subject,
                     'attachments' => $campaign->details,
+                    'tracking' => $campaign->tracking,
                     'messageId' => $qeue->massage_id,
                     'body' => Helper::parser($contact->email, $mailTemp->content, $qeue->massage_id)
                 ];
                 if (preg_match("/(.+)@(.+)\.(.+)/i", $contact->email)) {
                     try {
-                        // if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
-                        //     self::qeueHandle($campaign, $contact, $qeue, true);
-                        // } else {
-                        //     self::qeueHandle($campaign, $contact, $qeue, false);
-                        // }
+                        if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
+                            self::qeueHandle($campaign, $contact, $qeue, true);
+                        } else {
+                            self::qeueHandle($campaign, $contact, $qeue, false);
+                        }
                         if (true) {
                             self::qeueHandle($campaign, $contact, $qeue, true);
                         } else {
@@ -299,7 +301,7 @@ class CampaignController extends Controller
                         // self::qeueHandle($campaign, $contact, $qeue, false);
                     }
                 } else {
-                    // self::qeueHandle($campaign, $contact, $qeue, false);
+                    self::qeueHandle($campaign, $contact, $qeue, false);
                 }
                 // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
 

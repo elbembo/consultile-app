@@ -34,6 +34,7 @@ class EmailTemplateController extends Controller
                 'replyTo' => ['email' => 'info@consultile.com', 'name' => 'Consultile'],
                 'to' => ['email' => 'test1@emadissa.com', 'name' => 'Emad Isaa'],
                 'subject' => 'Send Campaign Emails',
+                'tracking' => 1,
                 'messageId' => md5($request->send_to.now()->timestamp),
                 'body' => Helper::parser('cto@emadissa.com', $template->content)
             ];
@@ -56,6 +57,7 @@ class EmailTemplateController extends Controller
             'to' => ['email' => $request->send_to, 'name' => 'Emad Isaa'],
             'subject' => $request->subject,
             'attachments' => $request->details,
+            'tracking' => 1,
             'messageId' => md5($request->send_to.now()->timestamp),
             'body' => Helper::parser($request->send_to, $emailTemplates->content)
         ];
@@ -88,25 +90,13 @@ class EmailTemplateController extends Controller
 
         $emailTemplate = EmailTemplate::create($request->all());
         if ($emailTemplate) {
-            // $campaign = Campaign::find($request->cid);
-            // $campaign->template_id = $emailTemplate->id;
-            // $campaign->save();
+
             DB::table('campaigns')->where('id', $request->cid)->update(['template_id' => $emailTemplate->id]);
-            $mailData = [
-                'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => env('MAIL_FROM_NAME', '')],
-                'replyTo' => ['email' => 'info@consultile.com', 'name' => 'Consultile'],
-                'to' => ['email' => 'test1@emadissa.com', 'name' => 'Emad Isaa'],
-                'subject' => 'Send Campaign Emails',
-                'body' => Helper::parser('cto@emadissa.com', $emailTemplate->content)
-            ];
+
             return response("please refresh page");
         }
-        // return view('mail.view')->with($code);
-        // return view('campaign.create',compact('code'));
-        //  return view('email-templates.edit',compact('code'));
-        // return view()
+
         return redirect('email/templates/' . $emailTemplate->id . '/edit');
-        // return response($request->query('c'));
     }
 
     /**
@@ -126,6 +116,7 @@ class EmailTemplateController extends Controller
             'to' => ['email' => 'test1@emadissa.com', 'name' => 'Emad Isaa'],
             'subject' => 'Send Campaign Emails',
             'attachments' => null,
+            'tracking' => 1,
             'messageId' => md5(env('MAIL_FROM_ADDRESS', '').now()->timestamp),
             'body' => Helper::parser('cto@emadissa.com', $emailTemplate->content)
         ];
