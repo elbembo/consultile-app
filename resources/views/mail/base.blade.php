@@ -20,6 +20,6 @@
 </head>
 <body style="margin:0;padding:0;">
 {!! $body ?? '' !!}
-@if(!empty($tracking) && $tracking == 1) <img class="flm-open" width="0" height="0" style="border:0;width:0;height:0;display:block;" src="{{ env('APP_URL') }}/messages/receipt/{{ $trackingId ?? 'noid' }}">  @endif         
+@if(!empty($tracking) && $tracking == 1) <img class="flm-open" width="0" height="0" style="border:0;width:0;height:0;display:block;" src="https://app.consultile.com/messages/receipt/{{ $trackingId ?? 'noid' }}">  @endif         
 </body>
 </html>
