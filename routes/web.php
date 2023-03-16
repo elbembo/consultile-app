@@ -105,7 +105,7 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
     // Route::get('/login', function () {
     //     return view('campaigns');
     // })->name('sign-up');
-    
+
     Route::post('/send-test-email', [CampaignController::class, 'send_test'])->name('email.send_test');
     Route::resource('campaigns', CampaignController::class);
     Route::delete('campaigns/{campaign}/attachments', [CampaignController::class, 'removeAttachment'])->name('campaigns.removeAttachment');
@@ -116,6 +116,9 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
 
     Route::resource('roles', RolesController::class);
     Route::resource('permissions', PermissionsController::class);
+    // Ajax
+    Route::post('/email-validation-dns', [ContactController::class, 'emailValidation'])->name('email.validation.dns');
+    Route::post('/check-duplicate', [ContactController::class, 'isDuplicate'])->name('check.duplicate');
 });
 
 
@@ -129,7 +132,6 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
     Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
     Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
-    
 });
 Route::get('/email-preview', function () {
     return view('mail.test');
@@ -138,4 +140,3 @@ Route::get('/email-preview', function () {
 // Route::get('/login', [SessionsController::class, 'create'])->name('login');
 
 Route::get('/newsletters/images/{id}.png', [EmailTrakerController::class, 'index']);
-Route::post('/email-validation-dns', [ContactController::class, 'emailValidation'])->name('email.validation.dns');

@@ -86,6 +86,12 @@ class ContactController extends Controller
     public function update(Request $request, $id)
     {
         //
+        if (empty($request->email))
+            $request->request->remove('email');
+        if (empty($request->personal_phone))
+            $request->request->remove('personal_phone');
+        if (empty($request->work_phone))
+            $request->request->remove('work_phone');
 
         $contact = Contact::find($id);
         $contact->update($request->all());
@@ -170,5 +176,10 @@ class ContactController extends Controller
             return response()->json('not email');
         }
         return response()->json($request->id);
+    }
+    public function isDuplicate(Request $request)
+    {
+        $contact = Contact::where($request->name, $request->value)->first();
+        return response()->json($contact);
     }
 }

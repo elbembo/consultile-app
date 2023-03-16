@@ -120,6 +120,20 @@ $(document).ready(function () {
 
         return this;
     }
+    $s.prototype.blur = function (hand) {
+        this.el.forEach(function (element) {
+            element.addEventListener('blur', hand);
+        });
+
+        return this;
+    }
+    $s.prototype.blockSubmit = function () {
+        this.el.forEach(function (element) {
+            console.log(element)
+        });
+
+        return this;
+    }
     $s.prototype.submitJson = function (action) {
         this.el.forEach(function (element) {
             const data = {};
@@ -134,7 +148,29 @@ $(document).ready(function () {
     document.querySelectorAll('.moment').forEach((ele) => {
         ele.textContent = moment.unix(ele.textContent).fromNow()
     })
+    
+    const checkThisBitch = (e) => {
+        e.target?.nextElementSibling?.remove()
+        e.target.classList.remove('border-danger')
+        document.querySelector('button[type="submit"]').disabled  = false
+        if (e.target.value == '')
+            return
+        const { name, value } = e.target
+        post("/check-duplicate", { name, value }).then(res => {
+            let span = document.createElement('span');
+            if (res?.id) {
+                e.target.classList.add('border-danger')
+                e.target.parentNode.insertBefore(span, e.target.nextSibling);
+                span.innerHTML = `<p class="text-danger text-xs mt-2">Its already exist under ${res?.first_name} ${res?.last_name}, click <a href="/contacts/${res?.id}/edit">here</a> to update it.</a></p>`
+                document.querySelector('button[type="submit"]').disabled  = true
+            } else {
+                e.target.classList.remove('border-danger')
+                e.target?.nextElementSibling?.remove()
+                document.querySelector('button[type="submit"]').disabled  = false
+            }
 
+        });
+    }
 
     $s('.attachment-del').click((ele) => {
         // alert('its work')
@@ -174,6 +210,9 @@ $(document).ready(function () {
                 e.target.classList.add('bg-gradient-faded-warning-vertical')
         });
     })
+    $s('input[name="email"]').blur(checkThisBitch)
+    $s('input[name*="phone"]').blur(checkThisBitch)
+    
 })()
 // function resizeIFrameToFitContent(iFrame) {
 

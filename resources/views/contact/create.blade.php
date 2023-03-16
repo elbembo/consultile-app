@@ -53,7 +53,7 @@
                             <div class="form-group col-md-6">
                                 <label for="user-name" class="form-control-label">{{ __('First Name') }}</label>
                                 <div class="@error('first_name')border border-danger rounded-3 @enderror">
-                                    <input class="form-control" value="{{ $contact->first_name ?? '' }}" type="text" placeholder="Name" id="user-name" name="first_name">
+                                    <input onblur="" class="form-control" value="{{ $contact->first_name ?? '' }}" type="text" placeholder="Name" id="user-name" name="first_name">
                                     @error('first_name')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
