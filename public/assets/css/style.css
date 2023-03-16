@@ -123,11 +123,37 @@ iframe {
     visibility: hidden;
     position:absolute;
 }
+#track-eye + label{
+    cursor:pointer
+    
+}
+#track-eye:checked ~ label{
+    color: #4fbf4f;
+
+}
 #track-eye ~ label::before {
     content: "\f070"; // bars code
+
 }
 
 #track-eye:checked ~ label::before {
     content: "\f06e";
-    color: green;
+    color: #4fbf4f;
+
+}
+#track-eye + label::after {
+    font-family: var(--bs-font-monospace)!important;
+    margin-left : 5px;
+
+}
+#track-eye ~ label::after {
+    content: "Tacking off!!";
+    
+
+}
+
+#track-eye:checked ~ label::after {
+    content: "Tracking...";
+    color: #4fbf4f;
+
 }

@@ -324,7 +324,7 @@
                                         @method('PATCH')
                                         <div class="text-">
                                             <input type="checkbox" name='tracking' value="1" id="track-eye" checked>
-                                            <label for="track-eye" class="fa text-lg">Traking emails</label>
+                                            <label for="track-eye" class="fa text-lg"></label>
                                         </div>
 
 
