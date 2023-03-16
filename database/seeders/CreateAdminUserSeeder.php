@@ -3,13 +3,16 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
+use Maatwebsite\Excel\Row;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class UserSeeder extends Seeder
+class CreateAdminUserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -70,5 +73,15 @@ class UserSeeder extends Seeder
         $role->syncPermissions($permissions);
 
         $user->assignRole([$role->id]);
+
+        // $all_users_with_all_their_roles = Role::pluck('name','user');
+        // $user = User::find(5);
+        // $user->revokePermissionTo(['campaigns.create']);
+        // $permissions = $user->getPermissionsViaRoles();
+        // $roles = Role::all();
+        // foreach ($roles  as $role) {
+        //     // print($permission->name . "\n");
+        //     $role->givePermissionTo(['campaigns.create']);
+        // }
     }
 }

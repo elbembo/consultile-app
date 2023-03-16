@@ -41,6 +41,21 @@ if (!function_exists('priority')) {
         return $priority;
     }
 }
+if (!function_exists('secret')) {
+    function secret($secret)
+    {
+        if(auth()->user()->hasAnyPermission(['secret.contacts'])){
+            return $secret;
+        }else{
+            if(preg_match('/\b[\w\.-]+@[\w\.-]+\.\w{2,6}\b/',$secret)){
+                return preg_replace('/(.).(?=..*@)/', '*', trim($secret));
+            }else{
+                return preg_replace('/(?<=...).(?=.*...)/', '*', $secret);
+            }
+        }
+
+    }
+}
 if (!function_exists('updateDotEnv')) {
     function updateDotEnv($key, $newValue, $delim = '')
     {

@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\ContactGroupe;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class ContactGroupeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function home()
+    public function index()
     {
         //
-        return redirect('campaigns');
     }
 
     /**
@@ -42,27 +41,21 @@ class HomeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Setting  $setting
+     * @param  \App\Models\ContactGroupe  $contactGroupe
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(ContactGroupe $contactGroupe)
     {
         //
-        return redirect('campaigns');
-    }
-    public function dashboard()
-    {
-        //
-        return redirect('campaigns');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Setting  $setting
+     * @param  \App\Models\ContactGroupe  $contactGroupe
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit(ContactGroupe $contactGroupe)
     {
         //
     }
@@ -71,10 +64,10 @@ class HomeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Setting  $setting
+     * @param  \App\Models\ContactGroupe  $contactGroupe
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, )
+    public function update(Request $request, ContactGroupe $contactGroupe)
     {
         //
     }
@@ -82,10 +75,10 @@ class HomeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Setting  $setting
+     * @param  \App\Models\ContactGroupe  $contactGroupe
      * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy(ContactGroupe $contactGroupe)
     {
         //
     }

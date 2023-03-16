@@ -15,6 +15,7 @@
                         </div>
                         <div class="d-flex flex-row justify-content-end">
 
+                            <a href="{{url('contacts/export')}}" class="btn bg-gray-50 btn-sm m-1">{{ __('Export') }}</a>
                             <a href="{{url('contacts/import')}}" class="btn bg-gray-50 btn-sm m-1">{{ __('Import') }}</a>
 
                             <a href="{{url('contacts/create')}}" class="btn bg-gradient-primary btn-sm m-1">{{ __('New Contact') }}</a>
@@ -56,10 +57,10 @@
                                         <p class="text-xs font-weight-bold mb-0">{{ $contact->first_name }} {{ $contact->last_name }}</p>
                                     </td>
                                     <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">{{ $contact->email }}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ secret($contact->email) }}</p>
                                     </td>
                                     <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">{{ $contact->personal_phone }}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ secret($contact->personal_phone) }}</p>
                                     </td>
                                     <td class="text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{ $contact->job_title }}</p>

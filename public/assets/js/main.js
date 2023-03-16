@@ -76,6 +76,7 @@ $(document).ready(function () {
         $(this).find('button').prop('disabled', true);
 
     })
+
 });
 (function () {
     async function post(url = "", data = {}, method = "POST") {
@@ -162,7 +163,17 @@ $(document).ready(function () {
         const formData = new FormData(formElement);
         post("/send-test-email", data);
     })
+    $s('#email-validation').click((e) => {
 
+        post("/email-validation-dns", { id: e.target.dataset.id }).then(res => {
+            if (res === true)
+                e.target.classList.add('bg-gradient-success')
+            else if (res === false)
+                e.target.classList.add('bg-gradient-danger')
+            else if (res === 'err')
+                e.target.classList.add('bg-gradient-faded-warning-vertical')
+        });
+    })
 })()
 // function resizeIFrameToFitContent(iFrame) {
 

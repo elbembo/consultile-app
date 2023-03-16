@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ExampleExport;
+use App\Helpers\VerifyEmail;
 use App\Imports\ContatcImport;
 use App\Imports\ContatcImportCheck;
 use App\Models\Contact;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -44,6 +46,7 @@ class ContactController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+
         //
         $contact = Contact::create($request->all());
         if ($contact)
@@ -59,6 +62,7 @@ class ContactController extends Controller
     public function show(Contact $contact)
     {
         //
+        return view('contact.create');
     }
 
     /**
@@ -69,7 +73,7 @@ class ContactController extends Controller
      */
     public function edit(Contact $contact)
     {
-        //
+        return view('contact.create', compact('contact'));
     }
 
     /**
@@ -128,5 +132,43 @@ class ContactController extends Controller
     public function exportExample()
     {
         return new ExampleExport();
+    }
+    public function export()
+    {
+        return new ExampleExport();
+    }
+    public function emailValidation(Request $request)
+    {
+        if (isset($request->id) && !empty($request->id)) {
+            $contact = Contact::find($request->id);
+            $email  = $contact->email;
+            if (preg_match('/\b[\w\.-]+@[\w\.-]+\.\w{2,6}\b/', $email)) {
+                $mail = new VerifyEmail();
+
+                // Set the timeout value on stream
+                $mail->setStreamTimeoutWait(20);
+
+                // Set debug output mode
+                $mail->Debug = true;
+                $mail->Debugoutput = 'log';
+
+                // Set email address for SMTP request
+                $mail->setEmailFrom(env('MAIL_FROM_ADDRESS'));
+
+                // Email to check
+                // $email = 'email@example.com';
+
+                // Check if email is valid and exist
+                if ($mail->check($email)) {
+                    return response()->json(true);
+                } elseif (verifyEmail::validate($email)) {
+                    return response()->json(false);
+                } else {
+                    return response()->json('err');
+                }
+            }
+            return response()->json('not email');
+        }
+        return response()->json($request->id);
     }
 }
