@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Support\Facades\Auth;
+
 if (!function_exists('statusBadg')) {
     function statusBadg($status, $classes = null)
     {
@@ -44,7 +47,7 @@ if (!function_exists('priority')) {
 if (!function_exists('secret')) {
     function secret($secret)
     {
-        if(auth()->user()->hasAnyPermission(['secret.contacts'])){
+        if(Auth::user()->hasAnyPermission(['secret.contacts'])){
             return $secret;
         }else{
             if(preg_match('/\b[\w\.-]+@[\w\.-]+\.\w{2,6}\b/',$secret)){
