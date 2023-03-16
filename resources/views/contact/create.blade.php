@@ -25,7 +25,7 @@
             </div>
             <div class="card-body pt-4 p-3">
                 
-                <form action="{{ isset($contact->id) ? '/contacts'.$contact->id.'/edit' : '/contacts' }}" method="POST" role="form text-left">
+                <form action="{{ isset($contact->id) ? '/contacts/'.$contact->id.'/edit' : '/contacts' }}" method="POST" role="form text-left">
                     @csrf
                     @if(isset($contact))
                     @method('PUT')
