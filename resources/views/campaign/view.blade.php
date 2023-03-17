@@ -3,7 +3,7 @@
 @section('content')
     @if (isset($campaign))
         <div class="row">
-            <div class="col-md-12 mt-4">
+            <div class="col-md-12 mt-8">
                 <div class="card bg-gradient-secondary">
                     <div class="card-body px-5 z-index-1 bg-cover">
                         <div class="row">
@@ -18,18 +18,33 @@
                                     </div>
                                     <div class="ms-lg-6 ms-4">
                                         <h6 class="mb-0 text-white opacity-7">Achieved</h6>
-                                        <h3 class="text-white">{{ $campaign->audience_done }} <small class="text-sm align-top"></small></h3>
+                                        <h3 class="text-white">{{ $campaign->audience_done }} <small
+                                                class="text-sm align-top"></small></h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-12 text-center">
-                                {{-- <div class="w-75 w-lg-auto mt-n7 mt-lg-n8 d-none d-md-block"> s</div> --}}
+                                <div class="mt-n7 mt-lg-n8 d-none d-md-block overflow-hidden"
+                                    style="height: 255px;width: 436px;box-shadow:-20px 20px 27px 0 rgba(0,0,0,12%);
+                                    border-radius: 0.5rem;margin-bottom: 21px!important;">
+                                    <div style="zoom: 0.6;">{!! $temp->content !!}
+                                    </div>
+                                </div>
                                 <div class="d-flex align-items-center">
                                     <h4 class="text-white opacity-7 ms-0 ms-md-auto">Achieved</h4>
                                     <h2 class="text-white ms-2 me-auto">
-                                        {{ ($campaign->audience_done / $campaign->total_audience) * 100 }}<small
-                                            class="text-sm align-top"> %</small></h2>
+                                        @if ($campaign->total_audience != 0)
+                                            {{ ($campaign->audience_done / $campaign->total_audience) * 100 }}
+                                        @else
+                                            {{ __('0') }}
+                                        @endif
+                                        <small class="text-sm align-top"> %</small>
+                                    </h2>
                                 </div>
+                                {{-- <div class="temp-snap">
+                                    {!! $temp->content !!}
+
+                                </div> --}}
                             </div>
                             <div class="col-lg-3 col-12 my-auto">
                                 <h4 class="text-white opacity-9">Status</h4>

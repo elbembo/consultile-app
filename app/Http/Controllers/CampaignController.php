@@ -44,7 +44,7 @@ class CampaignController extends Controller
     public function create()
     {
         //
-        $templates = EmailTemplate::all();
+        $templates = EmailTemplate::where('template_type', '!=', 'Campaign')->get();
         $settings = Setting::where('key', 'stmp_sender_name')
             ->orWhere('key', 'stmp_replay_email')
             ->orWhere('key', 'stmp_replay_name')->get();
@@ -118,7 +118,8 @@ class CampaignController extends Controller
     public function show(Campaign $campaign)
     {
         //
-        return view('campaign.view', compact('campaign'));
+        $temp = EmailTemplate::find($campaign->template_id);
+        return view('campaign.view', compact('campaign','temp'));
     }
 
     /**
@@ -130,7 +131,7 @@ class CampaignController extends Controller
     public function edit($id)
     {
         //
-        $templates = EmailTemplate::all();
+        $templates = EmailTemplate::where('template_type', '!=', 'Campaign')->get();
         $campaign = Campaign::find($id);
         if ($campaign)
             return view('campaign.create', compact('campaign', 'templates'));

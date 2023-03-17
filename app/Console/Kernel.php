@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         //
         Commands\SendEmail::class,
         \Webklex\IMAP\Commands\ImapIdleCommand::class,
+        \App\Console\Commands\ReceiveEmails::class,
     ];
 
     /**

@@ -7,6 +7,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\CampaignReportController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\EmailTrakerController;
@@ -141,3 +142,4 @@ Route::get('/email-preview', function () {
 
 Route::get('/newsletters/images/{id}.png', [EmailTrakerController::class, 'index']);
 Route::get('/messages/receipt/{id}.png', [EmailTrakerController::class, 'index']);
+Route::get('/report', [CampaignReportController::class, 'index']);

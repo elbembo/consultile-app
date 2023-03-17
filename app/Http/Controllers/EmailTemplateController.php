@@ -20,11 +20,11 @@ class EmailTemplateController extends Controller
     public function index()
     {
         //
-        $emailTemplates = EmailTemplate::all();
+        $emailTemplates = EmailTemplate::where('template_type', '!=', 'Campaign')->get();
         return view('email-templates.index', compact('emailTemplates'));
     }
 
-    public function preview(Request $request,$id)
+    public function preview(Request $request, $id)
     {
         //
         $template = EmailTemplate::find($id);
@@ -35,7 +35,7 @@ class EmailTemplateController extends Controller
                 'to' => ['email' => 'test1@emadissa.com', 'name' => 'Emad Isaa'],
                 'subject' => 'Send Campaign Emails',
                 'tracking' => 1,
-                'messageId' => md5($request->send_to.now()->timestamp),
+                'messageId' => md5($request->send_to . now()->timestamp),
                 'body' => Helper::parser('cto@emadissa.com', $template->content)
             ];
             // if(Mail::to('test1@emadissa.com','Test user')->send(new SendCampaignEmails($mailData)));
@@ -58,7 +58,7 @@ class EmailTemplateController extends Controller
             'subject' => $request->subject,
             'attachments' => $request->details,
             'tracking' => 1,
-            'messageId' => md5($request->send_to.now()->timestamp),
+            'messageId' => md5($request->send_to . now()->timestamp),
             'body' => Helper::parser($request->send_to, $emailTemplates->content)
         ];
         if (Mail::to($request->send_to)->send(new SendCampaignEmails($mailData)))
@@ -87,13 +87,16 @@ class EmailTemplateController extends Controller
     public function store(Request $request)
     {
         //
-
+        if (!empty($request->cid))
+            $request->request->add(['template_type' => 'Campaign']);
+        else
+            $request->request->add(['template_type' => 'Default select']);
         $emailTemplate = EmailTemplate::create($request->all());
         if ($emailTemplate) {
 
             DB::table('campaigns')->where('id', $request->cid)->update(['template_id' => $emailTemplate->id]);
-
-            return response("please refresh page");
+            if (!empty($request->cid))
+                return response("please refresh page");
         }
 
         return redirect('email/templates/' . $emailTemplate->id . '/edit');
@@ -117,7 +120,7 @@ class EmailTemplateController extends Controller
             'subject' => 'Send Campaign Emails',
             'attachments' => null,
             'tracking' => 1,
-            'messageId' => md5(env('MAIL_FROM_ADDRESS', '').now()->timestamp),
+            'messageId' => md5(env('MAIL_FROM_ADDRESS', '') . now()->timestamp),
             'body' => Helper::parser('cto@emadissa.com', $emailTemplate->content)
         ];
         // if(Mail::to('test1@emadissa.com','Test user')->send(new SendCampaignEmails($mailData)));
@@ -149,11 +152,20 @@ class EmailTemplateController extends Controller
     public function update(Request $request, $id)
     {
         //
+
         $emailTemp = EmailTemplate::find($id);
-        $emailTemp->update($request->all());
-        $emailTemp->save();
+        if ($request->cid && $emailTemp->template_type != 'Campaign') {
+            $request->request->add(['template_type' => 'Campaign']);
+            $emailTemplate = EmailTemplate::create($request->all());
+            if ($emailTemplate) {
+                DB::table('campaigns')->where('id', $request->cid)->update(['template_id' => $emailTemplate->id]);
+            }
+        } else {
+            $emailTemp->update($request->all());
+            $emailTemp->save();
+        }
         if ($request->query('t'))
-            return redirect('/editor?t=' . $request->query('t')."&&c=$request->cid");
+            return redirect('/editor?t=' . $request->query('t') . "&&c=$request->cid");
         return view('email-templates.edit', compact('emailTemp'));
     }
 

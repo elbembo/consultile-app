@@ -29,6 +29,7 @@
                     @endif
                     <input type="hidden" name="template_name" value="{{ Request::get('t') ? ( $et->template_name ?? $campaign->name ?? '' ) : ($campaign->id ?? '') }}">
                     <input type="hidden" name="cid" value="{{ $campaign->id ?? '' }}">
+                    
 
                     <textarea name="content" id="ta-1" cols="30" rows="30">{{ $et->content ?? '' }}</textarea>
                     <button type="submit" class="btn btn-sm btn-primary">Save</button>
