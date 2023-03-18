@@ -9,6 +9,7 @@ use App\Models\Campaign;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class EmailTemplateController extends Controller
 {
@@ -91,9 +92,31 @@ class EmailTemplateController extends Controller
             $request->request->add(['template_type' => 'Campaign']);
         else
             $request->request->add(['template_type' => 'Default select']);
+        $content = $request->content;
+        $dom = new \DomDocument();
+        $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $imageFile = $dom->getElementsByTagName('imageFile');
+
+        foreach ($imageFile as $item => $image) {
+            $data = $image->getAttribute('src');
+            if (count(explode(';', $data)) > 1) {
+                list($type, $data) = explode(';', $data);
+                list(, $data)      = explode(',', $data);
+                $imgeData = base64_decode($data);
+                $image_name = "/upload/" . time() . $item . '.png';
+                $path = public_path() . $image_name;
+                file_put_contents($path, $imgeData);
+
+                $image->removeAttribute('src');
+                $image->setAttribute('src', $image_name);
+            }
+        }
+
+        $content = $dom->saveHTML();
         $emailTemplate = EmailTemplate::create($request->all());
         if ($emailTemplate) {
-
+            $emailTemplate->content = $content;
+            $emailTemplate->save();
             DB::table('campaigns')->where('id', $request->cid)->update(['template_id' => $emailTemplate->id]);
             if (!empty($request->cid))
                 return response("please refresh page");
@@ -152,10 +175,32 @@ class EmailTemplateController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $content = $request->content;
+        $dom = new \DomDocument();
+        $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $imageFile = $dom->getElementsByTagName('img');
 
+        foreach ($imageFile as $item => $image) {
+            $data = $image->getAttribute('src');
+            if (count(explode(';', $data)) > 1) {
+                list($type, $data) = explode(';', $data);
+                list(, $data)      = explode(',', $data);
+                $imgeData = base64_decode($data);
+                $image_name = "public/" . time() . $item . '.png';
+                $path = public_path() . $image_name;
+                // file_put_contents($path, $imgeData);
+                Storage::put($path, $imgeData);
+                $image->removeAttribute('src');
+                $image->setAttribute('src', $image_name);
+            }
+        }
+
+        $content = $dom->saveHTML();
+        $request->merge([ 'content' => $content ]);
         $emailTemp = EmailTemplate::find($id);
         if ($request->cid && $emailTemp->template_type != 'Campaign') {
             $request->request->add(['template_type' => 'Campaign']);
+
             $emailTemplate = EmailTemplate::create($request->all());
             if ($emailTemplate) {
                 DB::table('campaigns')->where('id', $request->cid)->update(['template_id' => $emailTemplate->id]);
@@ -167,6 +212,39 @@ class EmailTemplateController extends Controller
         if ($request->query('t'))
             return redirect('/editor?t=' . $request->query('t') . "&&c=$request->cid");
         return view('email-templates.edit', compact('emailTemp'));
+    }
+    public function fileUpload(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'content' => 'required'
+        ]);
+
+        $content = $request->content;
+        $dom = new \DomDocument();
+        $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $imageFile = $dom->getElementsByTagName('imageFile');
+
+        foreach ($imageFile as $item => $image) {
+            $data = $image->getAttribute('src');
+            list($type, $data) = explode(';', $data);
+            list(, $data)      = explode(',', $data);
+            $imgeData = base64_decode($data);
+            $image_name = "/upload/" . time() . $item . '.png';
+            $path = public_path() . $image_name;
+            file_put_contents($path, $imgeData);
+
+            $image->removeAttribute('src');
+            $image->setAttribute('src', $image_name);
+        }
+
+        $content = $dom->saveHTML();
+        $fileUpload = new Employee;
+        $fileUpload->name = $request->name;
+        $fileUpload->content = $content;
+        $fileUpload->save();
+
+        dd($content);
     }
 
     /**
