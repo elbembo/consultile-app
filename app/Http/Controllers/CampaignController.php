@@ -97,11 +97,11 @@ class CampaignController extends Controller
                 'subject' => $campaign->subject,
                 'attachments' => $campaign->details,
                 'tracking' => $campaign->tracking,
-                'messageId' => $msgId ,
+                'messageId' => $msgId,
                 'body' => Helper::parser($contact->email, $mailTemp->content)
             ];
             if (Mail::to($request->send_to)->send(new SendCampaignEmails($mailData))) {
-                return response()->json([...$request->all(),$msgId ]);
+                return response()->json([...$request->all(), $msgId]);
             }
 
             // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
@@ -118,8 +118,10 @@ class CampaignController extends Controller
     public function show(Campaign $campaign)
     {
         //
+        $sql = "SELECT sum(delivered) as delivered ,sum(opend) as opend ,sum(views) as views FROM softui.email_trakers WHERE capmaign_id = :ID";
+        $tracking = DB::select($sql,['ID'=>$campaign->id]);
         $temp = EmailTemplate::find($campaign->template_id);
-        return view('campaign.view', compact('campaign','temp'));
+        return view('campaign.view', compact('campaign', 'temp','tracking'));
     }
 
     /**
@@ -165,7 +167,11 @@ class CampaignController extends Controller
                         }
                     }
                     $tracking =  isset($request->tracking) ? 1 : 0;
-                    $request->request->add(['total_audience' => $ta,'tracking' => $tracking ]);
+                    $request->request->add(['total_audience' => $ta, 'tracking' => $tracking]);
+                    $campaign = Campaign::find($id);
+                    $campaign->update($request->all());
+                    $campaign->save();
+                    return redirect("campaigns");
 
                 } elseif ($request->status == 'canceled') {
                     DB::table('email_qeues')->where('capmaign_id', $campaign->id)->delete();

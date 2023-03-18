@@ -30,6 +30,8 @@ class CampaignReportController extends Controller
         // $body = $message->getBodies();
         // dd($body);
         $folders = $client->getFolders();
+        
+        
         return view('reports.campaigns.index',compact('folders'));
     }
 

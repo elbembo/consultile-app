@@ -51,14 +51,15 @@
                                 <hr class="horizontal light mt-1 mb-3">
                                 <div class="d-flex">
                                     <div>
-                                        <h6 class="mb-0 text-white">Miclan, DW</h6>
-                                        <h6 class="mb-0 text-white">891 Limarenda road</h6>
+                                        <h6 class="mb-0 text-white">Delivered : {{$tracking[0]->delivered}}</h6>
+                                        <h6 class="mb-0 text-white">Read : {{$tracking[0]->opend}}</h6>
+                                        <h6 class="mb-0 text-white">views : {{$tracking[0]->views}}</h6>
                                     </div>
-                                    <div class="ms-lg-6 ms-4">
+                                    {{-- <div class="ms-lg-6 ms-4">
                                         <button class="btn btn-icon-only btn-rounded btn-outline-white mb-0">
                                             <i class="ni ni-map-big" aria-hidden="true"></i>
                                         </button>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
