@@ -186,12 +186,12 @@ class EmailTemplateController extends Controller
                 list($type, $data) = explode(';', $data);
                 list(, $data)      = explode(',', $data);
                 $imgeData = base64_decode($data);
-                $image_name = "public/uploads/images/emails/" . time() . $item . '.png';
+                $image_name = "uploads/images/emails/" . time() . $item . '.png';
                 // $path = public_path() . $image_name;
                 // file_put_contents($path, $imgeData);
-                Storage::put($image_name, $imgeData);
+                Storage::put("public/".$image_name, $imgeData);
                 $image->removeAttribute('src');
-                $image->setAttribute('src', env('APP_URL').$image_name);
+                $image->setAttribute('src', env('APP_URL')."/storage/".$image_name);
             }
         }
 
