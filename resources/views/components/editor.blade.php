@@ -17,19 +17,24 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="d-flex">
-                    <div class="border bg-warning border-1 btn custom_data shadow-none" data-value="First Name">First Name</div>
-                    <div class="border bg-warning border-1 btn custom_data shadow-none" data-value="Last Name">Last Name</div>
+                    <div class="border bg-warning border-1 btn custom_data shadow-none" data-value="First Name">First
+                        Name</div>
+                    <div class="border bg-warning border-1 btn custom_data shadow-none" data-value="Last Name">Last Name
+                    </div>
                     <div class="border bg-warning border-1 btn custom_data shadow-none" data-value="Title">Title</div>
                     <div class="border bg-warning border-1 btn custom_data shadow-none" data-value="Email">Email</div>
                 </div>
-                <form action="{{Request::get('t') ?'email/templates/'.Request::get('t').'?t='.Request::get('t') : 'email/templates'}}" method="post">
+                <form
+                    action="{{ Request::get('t') ? 'email/templates/' . Request::get('t') . '?t=' . Request::get('t') : 'email/templates' }}"
+                    method="post">
                     @csrf
-                    @if(Request::get('t'))
-                    @method('PUT')
+                    @if (Request::get('t'))
+                        @method('PUT')
                     @endif
-                    <input type="hidden" name="template_name" value="{{ Request::get('t') ? ( $et->template_name ?? $campaign->name ?? '' ) : ($campaign->id ?? '') }}">
+                    <input type="hidden" name="template_name"
+                        value="{{ Request::get('t') ? $et->template_name ?? ($campaign->name ?? '') : $campaign->id ?? '' }}">
                     <input type="hidden" name="cid" value="{{ $campaign->id ?? '' }}">
-                    
+
 
                     <textarea name="content" id="ta-1" cols="30" rows="30">{{ $et->content ?? '' }}</textarea>
                     <button type="submit" class="btn btn-sm btn-primary">Save</button>
@@ -58,6 +63,7 @@
 
 
     <script>
+
         (function() {
             var HelloButton = function(context) {
                 var ui = $.summernote.ui;
@@ -134,7 +140,9 @@
                 $("#content").empty();
             });
             $('.custom_data').on('click', (e) => {
-                $("#ta-1").summernote('insertText', `@{{ ${e.target.dataset.value} }}`)
+                $("#ta-1").summernote('insertText', `@{{ $ {
+    e.target.dataset.value
+} }}`)
 
             })
         })();

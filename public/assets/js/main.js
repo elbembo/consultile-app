@@ -15,6 +15,7 @@ const HelloButton = function (context) {
     return button.render();   // return button as jquery object
 }
 $(document).ready(function () {
+
     $('#summernote').summernote({
         height: 500,
         styleTags: [
@@ -148,11 +149,11 @@ $(document).ready(function () {
     document.querySelectorAll('.moment').forEach((ele) => {
         ele.textContent = moment.unix(ele.textContent).fromNow()
     })
-    
+
     const checkThisBitch = (e) => {
         e.target?.nextElementSibling?.remove()
         e.target.classList.remove('border-danger')
-        document.querySelector('button[type="submit"]').disabled  = false
+        document.querySelector('button[type="submit"]').disabled = false
         if (e.target.value == '')
             return
         const { name, value } = e.target
@@ -162,11 +163,11 @@ $(document).ready(function () {
                 e.target.classList.add('border-danger')
                 e.target.parentNode.insertBefore(span, e.target.nextSibling);
                 span.innerHTML = `<p class="text-danger text-xs mt-2">Its already exist under ${res?.first_name} ${res?.last_name}, click <a href="/contacts/${res?.id}/edit">here</a> to update it.</a></p>`
-                document.querySelector('button[type="submit"]').disabled  = true
+                document.querySelector('button[type="submit"]').disabled = true
             } else {
                 e.target.classList.remove('border-danger')
                 e.target?.nextElementSibling?.remove()
-                document.querySelector('button[type="submit"]').disabled  = false
+                document.querySelector('button[type="submit"]').disabled = false
             }
 
         });
@@ -212,7 +213,7 @@ $(document).ready(function () {
     })
     $s('input[name="email"]').blur(checkThisBitch)
     $s('input[name*="phone"]').blur(checkThisBitch)
-    
+
 })()
 // function resizeIFrameToFitContent(iFrame) {
 

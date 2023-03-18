@@ -17,18 +17,20 @@ class CampaignReportController extends Controller
         //
         $client = Client::account('default');
         $client->connect();
-        // $folders = $client->getFolders($hierarchical = true);
-        // $info = $client->checkFolder($folder = 'INBOX');
-        $folder = $client->getFolderByName('INBOX');
-        $query = $folder->messages();
-        //dd($query->all()->get());
-        // $messages = $query->all()->get();
-        $message = $query->getMessageByUid($uid = 4);
-        $header = $message->getHeader();
-        dd($message->get("references"));
-        $message->parseBody();
-        $body = $message->getBodies();
-        dd($body);
+        // // $folders = $client->getFolders($hierarchical = true);
+        // // $info = $client->checkFolder($folder = 'INBOX');
+        // $folder = $client->getFolderByName('INBOX');
+        // $query = $folder->messages();
+        // //dd($query->all()->get());
+        // // $messages = $query->all()->get();
+        // $message = $query->getMessageByUid($uid = 4);
+        // $header = $message->getHeader();
+        // dd($message->get("references"));
+        // $message->parseBody();
+        // $body = $message->getBodies();
+        // dd($body);
+        $folders = $client->getFolders();
+        return view('reports.campaigns.index',compact('folders'));
     }
 
     /**

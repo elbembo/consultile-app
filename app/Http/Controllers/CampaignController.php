@@ -294,14 +294,9 @@ class CampaignController extends Controller
                         } else {
                             self::qeueHandle($campaign, $contact, $qeue, false);
                         }
-                        if (true) {
-                            self::qeueHandle($campaign, $contact, $qeue, true);
-                        } else {
-                            self::qeueHandle($campaign, $contact, $qeue, false);
-                        }
                     } catch (Throwable $exception) {
                         Log::error($exception);
-                        // self::qeueHandle($campaign, $contact, $qeue, false);
+                        self::qeueHandle($campaign, $contact, $qeue, false);
                     }
                 } else {
                     self::qeueHandle($campaign, $contact, $qeue, false);
