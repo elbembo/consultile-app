@@ -7,6 +7,8 @@ use App\Helpers\VerifyEmail;
 use App\Imports\ContatcImport;
 use App\Imports\ContatcImportCheck;
 use App\Models\Contact;
+use App\Models\EmailTraker;
+use App\Models\Unsubscribe;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -184,17 +186,36 @@ class ContactController extends Controller
     }
     public function search(Request $request)
     {
-        $trim = explode(" ",$request->trim);
+        $trim = explode(" ", $request->trim);
         $firstName = $trim[0];
         $lastName = isset($trim[1]) ?  $trim[1] : $trim[0];
-        $contacts = Contact::where('email', 'like',"%$request->trim%")
-        ->orWhere('work_phone', 'like',"%$request->trim%")
-        ->orWhere('personal_phone', 'like',"%$request->trim%")
-        ->orWhere('company', 'like',"%$request->trim%")
-        ->orWhere('first_name', 'like',"%$firstName%")
-        ->orWhere('last_name', 'like',"%$lastName%")
-        ->groupBy('id')
-        ->orderBy('id', 'desc')->paginate(30);
+        $contacts = Contact::where('email', 'like', "%$request->trim%")
+            ->orWhere('work_phone', 'like', "%$request->trim%")
+            ->orWhere('personal_phone', 'like', "%$request->trim%")
+            ->orWhere('company', 'like', "%$request->trim%")
+            ->orWhere('first_name', 'like', "%$firstName%")
+            ->orWhere('last_name', 'like', "%$lastName%")
+            ->groupBy('id')
+            ->orderBy('id', 'desc')->paginate(30);
         return view('components.contacts-list', compact('contacts'));
+    }
+    public function unsubscribe(Request $request)
+    {
+        $t = $request->input('t');
+        if ($request->method() == "POST") {
+            foreach($request->reason as $reason){
+                Unsubscribe::create([
+                    'massage_id'=>$t,
+                    'reason' => $reason
+                ]);
+            }
+            if($request->type == 'unsubscribe'){
+                EmailTraker::where('massage_id',$t)->get();
+
+            }elseif($request->type == 'notice'){
+
+            }
+        }
+        return view('unsubscribe',compact('t'));
     }
 }

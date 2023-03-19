@@ -72,6 +72,7 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
     Route::get('contacts/export-example', [ContactController::class, 'exportExample'])->name('contacts.export.example');
     Route::get('contacts/import', [ContactController::class, 'import'])->name('contacts.import');
     Route::post('contacts/import', [ContactController::class, 'import'])->name('contacts.import.upload');
+
     Route::resource('contacts', ContactController::class);
 
 
@@ -144,3 +145,5 @@ Route::get('/email-preview', function () {
 Route::get('/newsletters/images/{id}.png', [EmailTrakerController::class, 'index']);
 Route::get('/messages/receipt/{id}.png', [EmailTrakerController::class, 'index']);
 Route::get('/report', [CampaignReportController::class, 'index']);
+Route::get('unsubscribe', [ContactController::class, 'unsubscribe'])->name('contacts.unsubscribe');
+Route::post('unsubscribe', [ContactController::class, 'unsubscribe'])->name('contacts.unsubscribe');

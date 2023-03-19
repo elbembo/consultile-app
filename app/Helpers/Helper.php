@@ -17,6 +17,7 @@ class Helper {
                 '%7B%7B%20Email%20%7D%7D' => $contact->email,
                 '{{ Work Phone }}' => $contact->work_phone,
                 '{{ Traker }}' => $tracker,
+                '%7B%7B%20Traker%20%7D%7D' => $tracker,
             );
             $result = str_replace(array_keys($array), array_values($array), $content);
             return $result;
