@@ -266,6 +266,11 @@
         .checkbox-wrapper-31 input[type=checkbox]:checked+svg .check {
             stroke-dashoffset: 0;
         }
+        @media only screen and (max-width: 430px) {
+            form label {
+                font-size: 1.35rem
+            }
+        }
     </style>
 
 </head>
@@ -455,7 +460,7 @@
                 </g>
             </svg>
             <div class="bottom">
-                <h2 class="title">Do you want to unsubscribe? {{ $email ?? '' }}</h2>
+                {{-- <h2 class="title">Do you want to unsubscribe? </h2> --}}
                 <p class="subtitle">If you unsubscribe, you will stop receiving our weekly newsletter.</p>
                 <div class="buttons">
 
@@ -521,6 +526,8 @@
         </div>
 
     </div>
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js?r=2314"></script>
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/MorphSVGPlugin3.min.js"></script>
     <script>
         const unSubBtn = document.querySelector('#unsubscribe')
         const notSubBtn = document.querySelector('#notice')
@@ -640,7 +647,7 @@
                 openMouth = select("open-mouth"),
                 tongue = select("tongue"),
                 unsubscribeButton = select("unsubscribe"),
-                cancelButton = select("cancel"),
+                cancelButton = select("notice"),
                 goBackButton = select("go-back");
 
             var confettis = document.querySelectorAll('#confetti > *');
