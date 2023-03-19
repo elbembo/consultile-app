@@ -140,9 +140,7 @@
                 $("#content").empty();
             });
             $('.custom_data').on('click', (e) => {
-                $("#ta-1").summernote('insertText', `@{{ $ {
-    e.target.dataset.value
-} }}`)
+                $("#ta-1").summernote('insertText', `@{{ ` +  e.target.dataset.value +` }}`)
 
             })
         })();

@@ -80,7 +80,7 @@ $(document).ready(function () {
 
 });
 (function () {
-    async function post(url = "", data = {}, method = "POST") {
+    async function post(url = "", data = {}, method = "POST", output = 'json') {
         // Default options are marked with *
         const response = await fetch(url, {
             method, // *GET, POST, PUT, DELETE, etc.
@@ -89,7 +89,7 @@ $(document).ready(function () {
             credentials: "same-origin", // include, *same-origin, omit
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/json",
+                "Accept": "*/*",
                 "X-Requested-With": "XMLHttpRequest",
                 "X-CSRF-Token": $('meta[name="csrf-token"]').attr('content')
             },
@@ -97,7 +97,7 @@ $(document).ready(function () {
             referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
             body: JSON.stringify(data), // body data type must match "Content-Type" header
         });
-        return response.json(); // parses JSON response into native JavaScript objects
+        return (output == 'json') ? response.json() : response.text(); // parses JSON response into native JavaScript objects
     }
     const $s = function (selector) {
         if (!(this instanceof $s)) {
@@ -149,7 +149,7 @@ $(document).ready(function () {
     document.querySelectorAll('.moment').forEach((ele) => {
         ele.textContent = moment.unix(ele.textContent).fromNow()
     })
-
+    // check input email and phone dubilcate
     const checkThisBitch = (e) => {
         e.target?.nextElementSibling?.remove()
         e.target.classList.remove('border-danger')
@@ -172,7 +172,6 @@ $(document).ready(function () {
 
         });
     }
-
     $s('.attachment-del').click((ele) => {
         // alert('its work')
         post("/campaigns/attachments", { index: ele.target.dataset.key, id: ele.target.dataset.id }, 'DELETE')
@@ -213,7 +212,18 @@ $(document).ready(function () {
     })
     $s('input[name="email"]').blur(checkThisBitch)
     $s('input[name*="phone"]').blur(checkThisBitch)
-
+    document.querySelector('#search').addEventListener('keypress', (e) => {
+        if (event.key === "Enter") {
+            if (e.target.value.length >= 3) {
+                const first = new URL(location.href).pathname.split("/")[1]
+                post(`/${first}/search`, { trim: e.target.value }, 'POST', 'html')
+                    .then(res => {
+                        document.querySelector('#result').innerHTML = res
+                        console.log(res)
+                    });
+            }
+        }
+    })
 })()
 // function resizeIFrameToFitContent(iFrame) {
 

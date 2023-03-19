@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 
 @if (\Request::is('rtl'))
-<html dir="rtl" lang="ar">
+    <html dir="rtl" lang="ar">
 @else
-<html lang="en">
+    <html lang="en">
 @endif
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- @if (env('IS_DEMO'))
-      <x-demo-metas></x-demo-metas>
-  @endif -->
+    {{-- @if (env('IS_DEMO')) --}}
+        {{-- <x-demo-metas></x-demo-metas> --}}
+    {{-- @endif --}}
 
     <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="/assets/img/favicon.png">
@@ -34,19 +34,19 @@
 </head>
 
 <body
-    class="g-sidenav-show  bg-gray-100 {{ (\Request::is('rtl') ? 'rtl' : (Request::is('virtual-reality') ? 'virtual-reality' : '')) }} ">
+    class="g-sidenav-show  bg-gray-100 {{ \Request::is('rtl') ? 'rtl' : (Request::is('virtual-reality') ? 'virtual-reality' : '') }} ">
     @auth
-    @yield('auth')
+        @yield('auth')
     @endauth
     @guest
-    @yield('guest')
+        @yield('guest')
     @endguest
 
-    @if(session()->has('success'))
-    <div x-data="{ show: true}" x-init="setTimeout(() => show = false, 4000)" x-show="show"
-        class="position-fixed bg-success rounded right-3 text-sm py-2 px-4">
-        <p class="m-0">{{ session('success')}}</p>
-    </div>
+    @if (session()->has('success'))
+        <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 4000)" x-show="show"
+            class="position-fixed bg-success rounded right-3 text-sm py-2 px-4">
+            <p class="m-0">{{ session('success') }}</p>
+        </div>
     @endif
     <!--   Core JS Files   -->
 
@@ -57,7 +57,7 @@
     <script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
     <script src="/assets/js/plugins/fullcalendar.min.js"></script>
     <script src="/assets/js/plugins/chartjs.min.js"></script>
-    
+
 
     @stack('rtl')
     @stack('dashboard')
@@ -69,7 +69,6 @@
             }
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
-
     </script>
 
     <!-- Github buttons -->

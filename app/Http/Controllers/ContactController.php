@@ -182,4 +182,19 @@ class ContactController extends Controller
         $contact = Contact::where($request->name, $request->value)->first();
         return response()->json($contact);
     }
+    public function search(Request $request)
+    {
+        $trim = explode(" ",$request->trim);
+        $firstName = $trim[0];
+        $lastName = isset($trim[1]) ?  $trim[1] : $trim[0];
+        $contacts = Contact::where('email', 'like',"%$request->trim%")
+        ->orWhere('work_phone', 'like',"%$request->trim%")
+        ->orWhere('personal_phone', 'like',"%$request->trim%")
+        ->orWhere('company', 'like',"%$request->trim%")
+        ->orWhere('first_name', 'like',"%$firstName%")
+        ->orWhere('last_name', 'like',"%$lastName%")
+        ->groupBy('id')
+        ->orderBy('id', 'desc')->paginate(30);
+        return view('components.contacts-list', compact('contacts'));
+    }
 }

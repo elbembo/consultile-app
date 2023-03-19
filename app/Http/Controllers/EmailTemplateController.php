@@ -103,20 +103,19 @@ class EmailTemplateController extends Controller
                 list($type, $data) = explode(';', $data);
                 list(, $data)      = explode(',', $data);
                 $imgeData = base64_decode($data);
-                $image_name = "/upload/" . time() . $item . '.png';
-                $path = public_path() . $image_name;
-                file_put_contents($path, $imgeData);
-
+                $image_name = "uploads/images/emails/" . time() . $item . '.png';
+                // $path = public_path() . $image_name;
+                // file_put_contents($path, $imgeData);
+                Storage::put("public/".$image_name, $imgeData);
                 $image->removeAttribute('src');
-                $image->setAttribute('src', $image_name);
+                $image->setAttribute('src', env('APP_URL')."/storage/".$image_name);
             }
         }
 
         $content = $dom->saveHTML();
+        $request->merge([ 'content' => $content ]);
         $emailTemplate = EmailTemplate::create($request->all());
         if ($emailTemplate) {
-            $emailTemplate->content = $content;
-            $emailTemplate->save();
             DB::table('campaigns')->where('id', $request->cid)->update(['template_id' => $emailTemplate->id]);
             if (!empty($request->cid))
                 return response("please refresh page");

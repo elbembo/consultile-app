@@ -120,6 +120,7 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
     // Ajax
     Route::post('/email-validation-dns', [ContactController::class, 'emailValidation'])->name('email.validation.dns');
     Route::post('/check-duplicate', [ContactController::class, 'isDuplicate'])->name('check.duplicate');
+    Route::post('/contacts/search', [ContactController::class, 'search'])->name('contacts.search');
 });
 
 

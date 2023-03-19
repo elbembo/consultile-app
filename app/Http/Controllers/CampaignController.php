@@ -118,7 +118,7 @@ class CampaignController extends Controller
     public function show(Campaign $campaign)
     {
         //
-        $sql = "SELECT sum(delivered) as delivered ,sum(opend) as opend ,sum(views) as views FROM softui.email_trakers WHERE capmaign_id = :ID";
+        $sql = "SELECT sum(delivered) as delivered ,sum(opend) as opend ,sum(views) as views FROM email_trakers WHERE capmaign_id = :ID";
         $tracking = DB::select($sql,['ID'=>$campaign->id]);
         $temp = EmailTemplate::find($campaign->template_id);
         return view('campaign.view', compact('campaign', 'temp','tracking'));
