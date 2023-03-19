@@ -526,8 +526,7 @@
         </div>
 
     </div>
-    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js"></script>
-    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/MorphSVGPlugin3.min.js"></script>
+
     <script>
         const unSubBtn = document.querySelector('#unsubscribe')
         const notSubBtn = document.querySelector('#notice')
