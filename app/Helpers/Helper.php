@@ -14,6 +14,7 @@ class Helper {
                 '{{ Title }}' => $contact->title,
                 '{{ Job Title }}' => $contact->job_title,
                 '{{ Email }}' => $contact->email,
+                '%7B%7B%20Email%20%7D%7D' => $contact->email,
                 '{{ Work Phone }}' => $contact->work_phone,
                 '{{ Traker }}' => $tracker,
             );
