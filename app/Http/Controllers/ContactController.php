@@ -203,19 +203,18 @@ class ContactController extends Controller
     {
         $t = $request->input('t');
         if ($request->method() == "POST") {
-            foreach($request->reason as $reason){
-                Unsubscribe::create([
-                    'massage_id'=>$t,
-                    'reason' => $reason
-                ]);
-            }
-            if($request->type == 'unsubscribe'){
-                EmailTraker::where('massage_id',$t)->get();
-
-            }elseif($request->type == 'notice'){
-
+            if (!empty($request->reason))
+                foreach ($request->reason as $reason) {
+                    Unsubscribe::create([
+                        'massage_id' => $t,
+                        'reason' => $reason
+                    ]);
+                }
+            if ($request->type == 'unsubscribe') {
+                EmailTraker::where('massage_id', $t)->get();
+            } elseif ($request->type == 'notice') {
             }
         }
-        return view('unsubscribe',compact('t'));
+        return view('unsubscribe', compact('t'));
     }
 }

@@ -454,26 +454,6 @@
                     </g>
                 </g>
             </svg>
-
-            <div class="checkbox-wrapper-28">
-                <input id="tmp-28" type="checkbox" class="promoted-input-checkbox" />
-                <svg>
-                    <use xlink:href="#checkmark-28" />
-                </svg>
-                <label for="tmp-28">
-                    Checkbox
-                </label>
-                <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
-                    <symbol id="checkmark-28" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-miterlimit="10" fill="none"
-                            d="M22.9 3.7l-15.2 16.6-6.6-7.1">
-                        </path>
-                    </symbol>
-                </svg>
-            </div>
-
-
-
             <div class="bottom">
                 <h2 class="title">Do you want to unsubscribe? {{ $email ?? '' }}</h2>
                 <p class="subtitle">If you unsubscribe, you will stop receiving our weekly newsletter.</p>
