@@ -17,7 +17,7 @@ class HomeController extends Controller
     }
     public function store (Request $request)
     {
-        $listId = env('MAILCHIMP_LIST_ID');
+        $list_id = env('MAILCHIMP_LIST_ID');
         $mailchimp = new \MailchimpMarketing\ApiClient();
         $mailchimp->setConfig([
             'apiKey' => env('MAILCHIMP_APIKEY'),
@@ -25,7 +25,7 @@ class HomeController extends Controller
         ]);
 
 					try {
-						$response = $mailchimp->lists->addListMember($listId, [
+						$response = $mailchimp->lists->addListMember($list_id, [
 							"email_address" => $request->email,
 							"status" => "subscribed",
 							"merge_fields" => [
@@ -41,7 +41,7 @@ class HomeController extends Controller
 					$subscriber_hash = md5(strtolower($request->email));
 
 					try {
-						$mailchimp->lists->updateListMemberTags($listId, $subscriber_hash, [
+						$mailchimp->lists->updateListMemberTags($list_id, $subscriber_hash, [
 							"tags" => [
 								[
 									"name" => "Newsletter",
