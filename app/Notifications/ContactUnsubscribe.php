@@ -58,7 +58,7 @@ class ContactUnsubscribe extends Notification
         return [
             'event' => $this->type,
             'title' => $this->contact->first_name . ' ' . $this->contact->last_name,
-            'body' => 'Successfuly sent ' . $prec . '% of target keep your eyes on it to know how its performance',
+            'body' => 'One of the newslleters member give a feedback or he is just unsubscribe',
             'time' => now()->timestamp,
             'icon' => $this->type == 'unsubscribe' ? 'fa fa-ban' : 'fa fa-exclamation-triangle',
             'color' => $this->type == 'unsubscribe' ? '#ed2020' : '#edd420',
