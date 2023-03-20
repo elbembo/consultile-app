@@ -36,7 +36,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::domain('subscribe.'.env('APP_DOMAIN','consultile.com'))->group(function () {
     Route::resource('/', SubscribeHomeController::class);
-    
+
 });
 
 Route::group(['middleware' => ['auth', 'permission']], function () {
@@ -159,7 +159,7 @@ Route::get('/email-preview', function () {
 Route::get('/newsletters/images/{id}.png', [EmailTrakerController::class, 'index']);
 Route::get('/messages/receipt/{id}.png', [EmailTrakerController::class, 'index']);
 Route::get('/report', [CampaignReportController::class, 'index']);
-Route::get('unsubscribe', [ContactController::class, 'unsubscribe'])->name('contacts.unsubscribe');
-Route::post('unsubscribe', [ContactController::class, 'unsubscribe'])->name('contacts.unsubscribe');
+Route::get('unsubscribe', [ContactController::class, 'unsubscribe']);
+Route::post('unsubscribe', [ContactController::class, 'unsubscribe']);
 
 
