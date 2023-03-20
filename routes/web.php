@@ -38,7 +38,7 @@ Route::domain('subscribe.'.env('APP_DOMAIN','consultile.com'))->group(function (
     Route::resource('/', SubscribeHomeController::class);
 
 });
-
+Route::domain('app.'.env('APP_DOMAIN','consultile.com'))->group(function () {
 Route::group(['middleware' => ['auth', 'permission']], function () {
     Route::get('/', [HomeController::class, 'home'])->name('home');
     Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
@@ -162,4 +162,4 @@ Route::get('/report', [CampaignReportController::class, 'index']);
 Route::get('unsubscribe', [ContactController::class, 'unsubscribe']);
 Route::post('unsubscribe', [ContactController::class, 'unsubscribe']);
 
-
+});
