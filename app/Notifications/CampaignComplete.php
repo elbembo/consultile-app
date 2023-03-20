@@ -64,7 +64,7 @@ class CampaignComplete extends Notification
             'icon' => 'fa fa-bullhorn',
             'color'=>'#1777af',
             'image'  => null,
-            'action'=> url('campaigns/'.$this->campaign->id)
+            'action'=> 'campaigns/'.$this->campaign->id
             //
         ];
     }
