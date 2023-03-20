@@ -288,7 +288,6 @@ class CampaignController extends Controller
     }
     public static function send()
     {
-
         $check = EmailQeue::where('priority', '>', 0)->first();
         if (!empty($check)) {
             $sec = env('SCHEDULED_SEC', 5);
