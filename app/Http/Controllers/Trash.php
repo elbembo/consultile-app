@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Campaign;
 use App\Models\Contact;
 use App\Models\EmailTemplate;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ class Trash extends Controller
     {
         $emailTemplates = EmailTemplate::onlyTrashed()->paginate(15);
         $contacts = Contact::onlyTrashed()->paginate(15);
-        return view('trash.index',compact('emailTemplates','contacts'));
+        $contacts = Campaign::onlyTrashed()->paginate(15);
+        return view('trash.index',compact('emailTemplates','contacts','contacts'));
     }
 }
