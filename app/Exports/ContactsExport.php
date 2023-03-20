@@ -6,12 +6,11 @@ use App\Models\Contact;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ContactsExport  extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implements FromCollection, ShouldAutoSize, WithStyles, WithHeadings, WithColumnFormatting
+class ContactsExport  extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implements FromCollection, ShouldAutoSize, WithStyles, WithHeadings
 {
     use Exportable;
     public function collection()
@@ -44,11 +43,5 @@ class ContactsExport  extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder i
             'Subscribe'
         ];
     }
-    public function columnFormats(): array
-    {
-        return [
-            'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-            'C' => NumberFormat::FORMAT_CURRENCY_EUR_SIMPLE,
-        ];
-    }
+
 }
