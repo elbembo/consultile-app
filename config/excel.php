@@ -61,15 +61,15 @@ return [
         |
         */
         'properties'             => [
-            'creator'        => '',
+            'creator'        => 'Admin',
             'lastModifiedBy' => '',
             'title'          => '',
             'description'    => '',
             'subject'        => '',
             'keywords'       => '',
             'category'       => '',
-            'manager'        => '',
-            'company'        => '',
+            'manager'        => 'Dr. Mohamed faisl',
+            'company'        => 'Consultile',
         ],
     ],
 
