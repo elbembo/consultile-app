@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ContactsExport;
 use App\Exports\ExampleExport;
 use App\Helpers\VerifyEmail;
 use App\Imports\ContatcImport;
@@ -153,7 +154,7 @@ class ContactController extends Controller
     }
     public function export()
     {
-        return new ExampleExport();
+        return new ContactsExport();
     }
     public function emailValidation(Request $request)
     {
