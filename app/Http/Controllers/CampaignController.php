@@ -289,43 +289,46 @@ class CampaignController extends Controller
     public static function send()
     {
 
-        $qeue = EmailQeue::where('priority', '>', 0)->first();
-        if (!empty($qeue)) {
+        $check = EmailQeue::where('priority', '>', 0)->first();
+        if (!empty($check)) {
             $sec = env('SCHEDULED_SEC', 5);
             for ($i = 0; $i < $sec; $i++) {
-                $contact = DB::table('contacts')->where('id', $qeue->contact_id)->first();
-                if ($contact) {
-                    $campaign = Campaign::find($qeue->capmaign_id);
-                }
-                if ($campaign) {
-                    $mailTemp = DB::table('email_templates')->where('id', $campaign->template_id)->first();
-                }
-                if ($mailTemp) {
-                    $mailData = [
-                        'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => env('MAIL_FROM_NAME', '')],
-                        'replyTo' => ['email' => $campaign->replay_to, 'name' => $campaign->sender_name],
-                        'to' => ['email' => $contact->email, 'name' => $contact->first_name],
-                        'subject' => $campaign->subject,
-                        'attachments' => $campaign->details,
-                        'tracking' => $campaign->tracking,
-                        'messageId' => $qeue->massage_id,
-                        'body' => Helper::parser($contact->email, $mailTemp->content, $qeue->massage_id)
-                    ];
-                    if (preg_match("/(.+)@(.+)\.(.+)/i", $contact->email)) {
-                        try {
-                            if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
-                                self::qeueHandle($campaign, $contact, $qeue, true);
-                            } else {
+                $qeue = EmailQeue::where('priority', '>', 0)->first();
+                if (!empty($qeue)) {
+                    $contact = DB::table('contacts')->where('id', $qeue->contact_id)->first();
+                    if ($contact) {
+                        $campaign = Campaign::find($qeue->capmaign_id);
+                    }
+                    if ($campaign) {
+                        $mailTemp = DB::table('email_templates')->where('id', $campaign->template_id)->first();
+                    }
+                    if ($mailTemp) {
+                        $mailData = [
+                            'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => env('MAIL_FROM_NAME', '')],
+                            'replyTo' => ['email' => $campaign->replay_to, 'name' => $campaign->sender_name],
+                            'to' => ['email' => $contact->email, 'name' => $contact->first_name],
+                            'subject' => $campaign->subject,
+                            'attachments' => $campaign->details,
+                            'tracking' => $campaign->tracking,
+                            'messageId' => $qeue->massage_id,
+                            'body' => Helper::parser($contact->email, $mailTemp->content, $qeue->massage_id)
+                        ];
+                        if (preg_match("/(.+)@(.+)\.(.+)/i", $contact->email)) {
+                            try {
+                                if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
+                                    self::qeueHandle($campaign, $contact, $qeue, true);
+                                } else {
+                                    self::qeueHandle($campaign, $contact, $qeue, false);
+                                }
+                            } catch (Throwable $exception) {
+                                Log::error($exception);
                                 self::qeueHandle($campaign, $contact, $qeue, false);
                             }
-                        } catch (Throwable $exception) {
-                            Log::error($exception);
+                        } else {
                             self::qeueHandle($campaign, $contact, $qeue, false);
                         }
-                    } else {
-                        self::qeueHandle($campaign, $contact, $qeue, false);
+                        // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
                     }
-                    // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
                 }
             }
         }
