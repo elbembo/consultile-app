@@ -154,7 +154,7 @@ $(document).ready(function () {
         e.target?.nextElementSibling?.remove()
         e.target.classList.remove('border-danger')
         document.querySelector('button[type="submit"]').disabled = false
-        if (e.target.value == '')
+        if (e.target.value == '' || e.target.value == e.target.dataset.default )
             return
         const { name, value } = e.target
         post("/check-duplicate", { name, value }).then(res => {
