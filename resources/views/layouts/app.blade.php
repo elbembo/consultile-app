@@ -79,7 +79,7 @@
     <script src="/assets/js/plugins/jquery-3.5.1.min.js"></script>
     <script src="/assets/js/plugins/summernote-bs4.min.js"></script>
     <script src="/assets/js/plugins/moment.min.js"></script>
-    <script src="/assets/js/main.js?v=1.0.3"></script>
+    <script src="/assets/js/main.js?v=1.0.4"></script>
 
 </body>
 
