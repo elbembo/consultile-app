@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::domain('subscribe.consultile.com')->group(function () {
-    Route::get('/', function ($account, $id) {
+    Route::get('/', function () {
         //
         return view('domains.subscribe.index');
     });
