@@ -11,7 +11,7 @@
     <link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
     <link id="appstyle" href="/assets/css/core.css?v=1.0.3" rel="stylesheet" />
     <link id="pagestyle" href="/assets/css/style.css?v=1.0.4" rel="stylesheet" />
-
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <style media="all" id="fa-v4-font-face">
         /*!
