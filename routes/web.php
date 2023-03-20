@@ -122,7 +122,7 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
     Route::post('/email-validation-dns', [ContactController::class, 'emailValidation'])->name('email.validation.dns');
     Route::post('/check-duplicate', [ContactController::class, 'isDuplicate'])->name('check.duplicate');
     Route::post('/contacts/search', [ContactController::class, 'search'])->name('contacts.search');
-    Route::post('/notifcations/{id}/read', [UserController::class, 'read'])->name('notifcations.read');
+
 });
 
 
@@ -148,3 +148,4 @@ Route::get('/messages/receipt/{id}.png', [EmailTrakerController::class, 'index']
 Route::get('/report', [CampaignReportController::class, 'index']);
 Route::get('unsubscribe', [ContactController::class, 'unsubscribe'])->name('contacts.unsubscribe');
 Route::post('unsubscribe', [ContactController::class, 'unsubscribe'])->name('contacts.unsubscribe');
+Route::post('/notifcations/{id}/read', [UserController::class, 'read'])->name('notifcations.read');
