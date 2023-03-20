@@ -75,9 +75,13 @@
                                         <a href="{{url('email/templates/'.$emailTemplate->id.'/edit')}}" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
                                             <i class="fas fa-user-edit text-secondary"></i>
                                         </a>
-                                        <span>
-                                            <i class="cursor-pointer fas fa-trash text-secondary"></i>
-                                        </span>
+                                        <form action="{{ url('email/templates/' . $emailTemplate->id) }}" method="post" style="display: inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn-clear">
+                                                <i class="cursor-pointer fas fa-trash text-secondary"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach

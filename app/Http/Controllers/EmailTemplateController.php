@@ -240,10 +240,10 @@ class EmailTemplateController extends Controller
         }
 
         $content = $dom->saveHTML();
-        $fileUpload = new Employee;
-        $fileUpload->name = $request->name;
-        $fileUpload->content = $content;
-        $fileUpload->save();
+        // $fileUpload = new Employee;
+        // $fileUpload->name = $request->name;
+        // $fileUpload->content = $content;
+        // $fileUpload->save();
 
         dd($content);
     }
@@ -254,8 +254,10 @@ class EmailTemplateController extends Controller
      * @param  \App\Models\EmailTemplate  $emailTemplate
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EmailTemplate $emailTemplate)
+    public function destroy(EmailTemplate $emailTemplate,$id)
     {
         //
+        $emailTemplate::find($id)->delete();
+        return back();
     }
 }
