@@ -49,7 +49,7 @@ class HomeController extends Controller
 								]
 							]
 						]);
-					} catch (MailchimpMarketing\ApiException $e) {
+					} catch (Exception $e) {
 						$err = true;
 						//print_r($e);
 					}
