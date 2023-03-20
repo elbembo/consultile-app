@@ -36,11 +36,9 @@ class SendEmail extends Command
      */
     public function handle()
     {
-        $sec = env('SCHEDULED_SEC', 15);
-        for ($i = 0; $i < (60 / $sec); $i++) {
-            CampaignController::send();
-            sleep($sec);
-        }
+
+        CampaignController::send();
+
 
         return Command::SUCCESS;
     }

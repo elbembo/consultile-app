@@ -45,7 +45,7 @@ class CampaignController extends Controller
     public function create()
     {
         //
-         $groups= ContactGroupe::orderBy('group_name')->get()->groupBy(function($data) {
+        $groups = ContactGroupe::orderBy('group_name')->get()->groupBy(function ($data) {
             return $data->group_name;
         });
         $templates = EmailTemplate::where('template_type', '!=', 'Campaign')->get();
@@ -56,7 +56,7 @@ class CampaignController extends Controller
         foreach ($settings as $setting) {
             $headers[$setting['key']] = $setting['value'];
         }
-        return view('campaign.create', compact('templates', 'headers','groups'));
+        return view('campaign.create', compact('templates', 'headers', 'groups'));
     }
 
     /**
@@ -105,7 +105,7 @@ class CampaignController extends Controller
                 'body' => Helper::parser($contact->email, $mailTemp->content)
             ];
             if (Mail::to($request->send_to)->send(new SendCampaignEmails($mailData))) {
-                return response()->json([...$request->all(),'messageId' => $msgId]);
+                return response()->json([...$request->all(), 'messageId' => $msgId]);
             }
 
             // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
@@ -123,9 +123,9 @@ class CampaignController extends Controller
     {
         //
         $sql = "SELECT sum(delivered) as delivered ,sum(opend) as opend ,sum(views) as views FROM email_trakers WHERE capmaign_id = :ID";
-        $tracking = DB::select($sql,['ID'=>$campaign->id]);
+        $tracking = DB::select($sql, ['ID' => $campaign->id]);
         $temp = EmailTemplate::find($campaign->template_id);
-        return view('campaign.view', compact('campaign', 'temp','tracking'));
+        return view('campaign.view', compact('campaign', 'temp', 'tracking'));
     }
 
     /**
@@ -137,13 +137,13 @@ class CampaignController extends Controller
     public function edit($id)
     {
         //
-        $groups= ContactGroupe::orderBy('group_name')->get()->groupBy(function($data) {
+        $groups = ContactGroupe::orderBy('group_name')->get()->groupBy(function ($data) {
             return $data->group_name;
         });
         $templates = EmailTemplate::where('template_type', '!=', 'Campaign')->get();
         $campaign = Campaign::find($id);
         if ($campaign)
-            return view('campaign.create', compact('campaign', 'templates','groups'));
+            return view('campaign.create', compact('campaign', 'templates', 'groups'));
     }
 
     /**
@@ -162,11 +162,11 @@ class CampaignController extends Controller
             if ($request->action == 'update_status') {
                 if ($request->status == 'processing') {
                     $ta = 0;
-                    if($campaign->group_name != '0'){
-                        $contactGroup = ContactGroupe::where('group_name','=',$campaign->group_name)->pluck('contact_id');
-                        $contacts = Contact::whereIn('id',$contactGroup )->where('subscribe',1)->get();
-                    }else{
-                        $contacts = Contact::where('subscribe',1)->get();
+                    if ($campaign->group_name != '0') {
+                        $contactGroup = ContactGroupe::where('group_name', '=', $campaign->group_name)->pluck('contact_id');
+                        $contacts = Contact::whereIn('id', $contactGroup)->where('subscribe', 1)->get();
+                    } else {
+                        $contacts = Contact::where('subscribe', 1)->get();
                     }
                     foreach ($contacts as $contact) {
                         if (preg_match("/(.+)@(.+)\.(.+)/i", $contact->email)) {
@@ -185,7 +185,6 @@ class CampaignController extends Controller
                     $campaign->update($request->all());
                     $campaign->save();
                     return redirect("campaigns");
-
                 } elseif ($request->status == 'canceled') {
                     DB::table('email_qeues')->where('capmaign_id', $campaign->id)->delete();
                 } elseif ($request->status == 'replicate') {
@@ -291,39 +290,43 @@ class CampaignController extends Controller
     {
 
         $qeue = EmailQeue::where('priority', '>', 0)->first();
-        if ($qeue) {
-            $contact = DB::table('contacts')->where('id',  $qeue->contact_id)->first();
-            if ($contact)
-                $campaign = Campaign::find($qeue->capmaign_id);
-            if ($campaign)
-                $mailTemp = DB::table('email_templates')->where('id', $campaign->template_id)->first();
-            if ($mailTemp) {
-                $mailData = [
-                    'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => env('MAIL_FROM_NAME', '')],
-                    'replyTo' => ['email' => $campaign->replay_to, 'name' => $campaign->sender_name],
-                    'to' => ['email' => $contact->email, 'name' => $contact->first_name],
-                    'subject' => $campaign->subject,
-                    'attachments' => $campaign->details,
-                    'tracking' => $campaign->tracking,
-                    'messageId' => $qeue->massage_id,
-                    'body' => Helper::parser($contact->email, $mailTemp->content, $qeue->massage_id)
-                ];
-                if (preg_match("/(.+)@(.+)\.(.+)/i", $contact->email)) {
-                    try {
-                        if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
-                            self::qeueHandle($campaign, $contact, $qeue, true);
-                        } else {
+        if (!empty($qeue)) {
+            $sec = env('SCHEDULED_SEC', 5);
+            for ($i = 0; $i < $sec; $i++) {
+                $contact = DB::table('contacts')->where('id', $qeue->contact_id)->first();
+                if ($contact) {
+                    $campaign = Campaign::find($qeue->capmaign_id);
+                }
+                if ($campaign) {
+                    $mailTemp = DB::table('email_templates')->where('id', $campaign->template_id)->first();
+                }
+                if ($mailTemp) {
+                    $mailData = [
+                        'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => env('MAIL_FROM_NAME', '')],
+                        'replyTo' => ['email' => $campaign->replay_to, 'name' => $campaign->sender_name],
+                        'to' => ['email' => $contact->email, 'name' => $contact->first_name],
+                        'subject' => $campaign->subject,
+                        'attachments' => $campaign->details,
+                        'tracking' => $campaign->tracking,
+                        'messageId' => $qeue->massage_id,
+                        'body' => Helper::parser($contact->email, $mailTemp->content, $qeue->massage_id)
+                    ];
+                    if (preg_match("/(.+)@(.+)\.(.+)/i", $contact->email)) {
+                        try {
+                            if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
+                                self::qeueHandle($campaign, $contact, $qeue, true);
+                            } else {
+                                self::qeueHandle($campaign, $contact, $qeue, false);
+                            }
+                        } catch (Throwable $exception) {
+                            Log::error($exception);
                             self::qeueHandle($campaign, $contact, $qeue, false);
                         }
-                    } catch (Throwable $exception) {
-                        Log::error($exception);
+                    } else {
                         self::qeueHandle($campaign, $contact, $qeue, false);
                     }
-                } else {
-                    self::qeueHandle($campaign, $contact, $qeue, false);
+                    // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
                 }
-                // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
-
             }
         }
     }
