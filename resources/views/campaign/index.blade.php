@@ -33,7 +33,7 @@
                                     <h6 class="mb-3 text-sm">{{ $campaign->name }}</h6>
                                     <span class="mb-2 text-xs">Status: {!! statusBadg($campaign->status,' text-white
                                         ms-sm-2 font-weight-bold') !!}</span>
-                                    <span class="mb-2 text-xs">Achieved: <span class="text-dark ms-sm-2 font-weight-bold">{{ $campaign->audience_done."/" }}{{ $campaign->total_audience }}</span></span>
+                                    <span class="mb-2 text-xs">Sent: <span class="text-dark ms-sm-2 font-weight-bold">{{ $campaign->audience_done."/" }}{{ $campaign->total_audience }}</span></span>
                                     <span class="text-xs">Priority: <span class="text-dark ms-sm-2 font-weight-bold">{!!
                                             priority($campaign->campaign_priority) !!}</span></span>
                                 </div>

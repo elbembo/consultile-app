@@ -17,7 +17,7 @@
                                                 class="text-sm align-top"></small></h3>
                                     </div>
                                     <div class="ms-lg-6 ms-4">
-                                        <h6 class="mb-0 text-white opacity-7">Achieved</h6>
+                                        <h6 class="mb-0 text-white opacity-7">Sent</h6>
                                         <h3 class="text-white">{{ $campaign->audience_done }} <small
                                                 class="text-sm align-top"></small></h3>
                                     </div>
@@ -32,7 +32,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <h4 class="text-white opacity-7 ms-0 ms-md-auto">Achieved</h4>
+                                    <h4 class="text-white opacity-7 ms-0 ms-md-auto">Sent</h4>
                                     <h2 class="text-white ms-2 me-auto">
                                         @if ($campaign->total_audience != 0)
                                             {{ ($campaign->audience_done / $campaign->total_audience) * 100 }}

@@ -55,7 +55,7 @@
                             @foreach (auth()->user()->unreadNotifications as $notifications)
                                 <li class="mb-2">
                                     <a class="dropdown-item border-radius-md"
-                                        href="{{ $notifications->data['action'] }}">
+                                        href="{{ $notifications->data['action'] }}" ping="{{env('APP_URL')}}/notifcations/{{$notifications->id}}/read">
                                         <div class="d-flex py-1">
                                             <div class="my-auto">
 

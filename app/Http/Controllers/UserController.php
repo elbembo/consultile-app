@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -18,6 +19,11 @@ class UserController extends Controller
     public function create()
     {
         return view('users.create');
+    }
+    public function read(Request $request, $id)
+    {
+        $notification = Notification::find($id);
+        $notification->markAsRead();
     }
     public function store(User $user, StoreUserRequest $request)
     {
@@ -60,5 +66,4 @@ class UserController extends Controller
         return redirect('/users')
             ->withSuccess(__('User deleted successfully.'));
     }
-
 }

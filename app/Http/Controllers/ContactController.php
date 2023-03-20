@@ -67,7 +67,9 @@ class ContactController extends Controller
     public function show(Contact $contact)
     {
         //
-        return view('contact.view', compact('contact'));
+        $tracker = EmailTraker::where('email_trakers.contact_id',$contact->id)->join('campaigns','email_trakers.capmaign_id' , '=','campaigns.id')->get()
+        ->toArray();
+        return view('contact.view', compact('contact','tracker'));
     }
 
     /**

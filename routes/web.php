@@ -122,6 +122,7 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
     Route::post('/email-validation-dns', [ContactController::class, 'emailValidation'])->name('email.validation.dns');
     Route::post('/check-duplicate', [ContactController::class, 'isDuplicate'])->name('check.duplicate');
     Route::post('/contacts/search', [ContactController::class, 'search'])->name('contacts.search');
+    Route::post('/notifcations/{id}/read', [UserController::class, 'read'])->name('notifcations.read');
 });
 
 
