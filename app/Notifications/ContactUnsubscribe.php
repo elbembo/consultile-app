@@ -63,7 +63,7 @@ class ContactUnsubscribe extends Notification
             'icon' => $this->type == 'unsubscribe' ? 'fa fa-ban' : 'fa fa-exclamation-triangle',
             'color' => $this->type == 'unsubscribe' ? '#ed2020' : '#edd420',
             'image'  => null,
-            'action' => 'contacts/' . $this->contact->id
+            'action' => '/contacts/' . $this->contact->id
             //
         ];
     }
