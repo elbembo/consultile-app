@@ -154,7 +154,8 @@ class ContactController extends Controller
     }
     public function export()
     {
-        return new ContactsExport();
+        // return new ContactsExport();
+        return Excel::download(new ContactsExport, 'All_Contacts.app.consultile.com.xlsx');
     }
     public function emailValidation(Request $request)
     {
