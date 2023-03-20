@@ -149,3 +149,4 @@ Route::get('/report', [CampaignReportController::class, 'index']);
 Route::get('unsubscribe', [ContactController::class, 'unsubscribe'])->name('contacts.unsubscribe');
 Route::post('unsubscribe', [ContactController::class, 'unsubscribe'])->name('contacts.unsubscribe');
 Route::post('/notifcations/{id}/read', [UserController::class, 'read'])->name('notifcations.read');
+Route::get('/notifcations/{id}/read', [UserController::class, 'read'])->name('notifcations.read.get');
