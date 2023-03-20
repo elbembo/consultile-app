@@ -116,8 +116,8 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
     Route::resource('email/templates', EmailTemplateController::class);
     Route::resource('editor', SummernoteController::class);
 
-    Route::resource('roles', RolesController::class);
-    Route::resource('permissions', PermissionsController::class);
+    Route::resource('settings/roles', RolesController::class);
+    Route::resource('settings/permissions', PermissionsController::class);
     // Ajax
     Route::post('/email-validation-dns', [ContactController::class, 'emailValidation'])->name('email.validation.dns');
     Route::post('/check-duplicate', [ContactController::class, 'isDuplicate'])->name('check.duplicate');

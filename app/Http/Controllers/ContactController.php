@@ -9,8 +9,11 @@ use App\Imports\ContatcImportCheck;
 use App\Models\Contact;
 use App\Models\EmailTraker;
 use App\Models\Unsubscribe;
+use App\Models\User;
+use App\Notifications\ContactUnsubscribe;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Role;
@@ -64,7 +67,7 @@ class ContactController extends Controller
     public function show(Contact $contact)
     {
         //
-        return view('contact.create');
+        return view('contact.view', compact('contact'));
     }
 
     /**
@@ -98,6 +101,9 @@ class ContactController extends Controller
         $contact = Contact::find($id);
         $contact->update($request->all());
         $contact->save();
+        if ($request->header('Content-Type') == 'application/json')
+            return response()->json(true);
+        return back();
         return redirect("contacts/$contact->id/edit");
     }
 
@@ -110,20 +116,22 @@ class ContactController extends Controller
     public function destroy(Contact $contact)
     {
         //
+        $contact->delete();
+        return back();
     }
     public function import(Request $request)
     {
 
         if ($request->method() == "POST") {
             $validated = $request->validate([
-                'contacts' => 'max:2000|mimes:xlsx,xlsm,xltx,tsv,csv,xml,xlt,xls,xltm,xltx,xlsm'
+                'contacts' => 'max:3000|mimes:xlsx,xlsm,xltx,tsv,csv,xml,xlt,xls,xltm,xltx,xlsm'
             ]);
             if (!$validated)
                 return back();
             $file = $request->file('contacts');
             $failures = [];
             try {
-                $import = new ContatcImport();
+                $import = new ContatcImport($request->group_name);
                 $import->import($file);
                 $failures = $import->failures();
                 if ($request->debug != 'debug')
@@ -203,16 +211,25 @@ class ContactController extends Controller
     {
         $t = $request->input('t');
         if ($request->method() == "POST") {
-            if (!empty($request->reason))
-                foreach ($request->reason as $reason) {
-                    Unsubscribe::create([
-                        'massage_id' => $t,
-                        'reason' => $reason
-                    ]);
+            $tracker = EmailTraker::where('massage_id', $t)->first();
+            if (!empty($tracker)) {
+                $contact = Contact::find($tracker->contact_id);
+                if (!empty($request->reason))
+                    foreach ($request->reason as $reason) {
+                        Unsubscribe::create([
+                            'contact_id' => $tracker->contact_id,
+                            'massage_id' => $t,
+                            'reason' => $reason
+                        ]);
+                    }
+                if (!empty($contact)) {
+                    if ($request->type == 'unsubscribe') {
+                        $contact->subscribe = 0;
+                        $contact->save();
+                    }
+                    $users = User::all();
+                    Notification::send($users, new ContactUnsubscribe($contact, $request->type));
                 }
-            if ($request->type == 'unsubscribe') {
-                EmailTraker::where('massage_id', $t)->get();
-            } elseif ($request->type == 'notice') {
             }
         }
         return view('unsubscribe', compact('t'));

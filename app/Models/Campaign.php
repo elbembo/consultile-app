@@ -6,9 +6,11 @@ use App\Casts\Json;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Database\Eloquent\SerializesCastableAttributes;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Campaign extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $fillable = [
         'name',
         'subject',
@@ -24,7 +26,8 @@ class Campaign extends Model
         'template_id',
         'audience_done',
         'details',
-        'tracking'
+        'tracking',
+        'group_name'
     ];
     /**
      * The attributes that should be cast.

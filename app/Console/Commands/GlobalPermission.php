@@ -29,7 +29,7 @@ class GlobalPermission extends Command
      */
     public function handle()
     {
-        $permissions = ['check.duplicate', 'email.validation.dns','contacts.search'];
+        $permissions = ['check.duplicate', 'email.validation.dns','contacts.search','mail-preview'];
         foreach ($permissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);
         }

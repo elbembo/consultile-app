@@ -210,6 +210,9 @@ $(document).ready(function () {
                 e.target.classList.add('bg-gradient-faded-warning-vertical')
         });
     })
+    $s('#profileSubscribeCheck').click((e) => {
+        post("/contacts/" + e.target.dataset.id , { subscribe: e.target.checked == true ? 1 : 0 },'PUT');
+    });
     $s('input[name="email"]').blur(checkThisBitch)
     $s('input[name*="phone"]').blur(checkThisBitch)
     document.querySelector('#search').addEventListener('keypress', (e) => {

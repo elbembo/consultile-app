@@ -60,7 +60,7 @@
                                             <div class="my-auto">
 
                                                 <i class="avatar-sm cursor-pointer {{ $notifications->data['icon'] }} me-3 text-5xl"
-                                                    aria-hidden="true"></i>
+                                                    aria-hidden="true" style="color:{{ $notifications->data['color']  ?? '' }}"></i>
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="text-sm font-weight-normal mb-1">

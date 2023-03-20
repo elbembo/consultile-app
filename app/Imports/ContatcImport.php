@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Contact;
+use App\Models\ContactGroupe;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -19,11 +20,16 @@ use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Validators\Failure;
 
-class ContatcImport implements ToCollection, WithHeadingRow,  WithValidation,SkipsOnFailure
+class ContatcImport implements ToCollection, WithHeadingRow,  WithValidation, SkipsOnFailure
 {
-    use Importable,SkipsFailures;
+    use Importable, SkipsFailures;
 
-
+    private $group_name;
+    private $contact;
+    public function  __construct($group_name)
+    {
+        $this->group_name = $group_name;
+    }
 
     public function collection(Collection $rows)
     {
@@ -31,7 +37,7 @@ class ContatcImport implements ToCollection, WithHeadingRow,  WithValidation,Ski
         foreach ($rows as $row) {
 
 
-            Contact::firstOrCreate([
+            $contact = Contact::firstOrCreate([
                 //
                 'title' => $row['salutation'],
                 'first_name' => $row['first_name'],
@@ -44,6 +50,9 @@ class ContatcImport implements ToCollection, WithHeadingRow,  WithValidation,Ski
                 'country' => $row['country'],
                 'source' => $row['source'],
             ]);
+            $contact->restore();
+            if (!empty($contact->id) && !empty($this->group_name))
+                ContactGroupe::create(['contact_id' => $contact->id, 'group_name' => $this->group_name]);
         }
     }
     public function rules(): array
@@ -56,7 +65,6 @@ class ContatcImport implements ToCollection, WithHeadingRow,  WithValidation,Ski
             ]
             //...
         ];
-
     }
     public function customValidationAttributes()
     {

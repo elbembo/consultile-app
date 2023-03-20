@@ -98,6 +98,24 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="email-template"
+                                        class="form-control-label">{{ __('Group name') }}</label>
+                                    <div class="@error('group.group_name') border border-danger rounded-3 @enderror">
+                                        <select class="form-control" name="group_name" id="group_name">
+                                            <option value="0">No group ...</option>
+
+                                            @if (isset($groups))
+                                                @foreach ($groups as $group_name => $group)
+                                                    <option value="{{ $group_name }}"
+                                                        {{ isset($campaign) && $group_name == $campaign->group_name ? 'selected' : '' }}>
+                                                        {{ $group_name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label for="campaign-priority" class="form-control-label">{{ __('Priority') }}</label>
                                     <div class="@error('email.template') border border-danger rounded-3 @enderror">
                                         <select class="form-control" name="campaign_priority" id="campaign-priority">
@@ -145,7 +163,8 @@
                             </div>
                             <div class="col-sm-6 col-md-4">
                                 <div class="form-group">
-                                    <label for="email-subject" class="form-control-label">{{ __('Email Subject') }}</label>
+                                    <label for="email-subject"
+                                        class="form-control-label">{{ __('Email Subject') }}</label>
                                     <div class="@error('email') border border-danger rounded-3 @enderror">
                                         <input class="form-control"
                                             value="{{ isset($campaign) ? $campaign->subject : '' }}"
@@ -323,7 +342,8 @@
                                         @csrf
                                         @method('PATCH')
                                         <div class="text-">
-                                            <input type="checkbox" name='tracking' value="1" id="track-eye" checked>
+                                            <input type="checkbox" name='tracking' value="1" id="track-eye"
+                                                checked>
                                             <label for="track-eye" class="fa text-lg"></label>
                                         </div>
 

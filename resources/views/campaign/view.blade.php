@@ -27,6 +27,7 @@
                                 <div class="mt-n7 mt-lg-n8 d-none d-md-block overflow-hidden"
                                     style="height: 255px;width: 436px;box-shadow:-20px 20px 27px 0 rgba(0,0,0,12%);
                                     border-radius: 0.5rem;margin-bottom: 21px!important;">
+                                    <a href="{{url('email/template/preview/'.$temp->id)}}" target="_blank">View full email</a>
                                     <div style="zoom: 0.6;">{!! $temp->content !!}
                                     </div>
                                 </div>

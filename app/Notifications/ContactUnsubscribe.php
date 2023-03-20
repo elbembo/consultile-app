@@ -7,21 +7,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class CampaignComplete extends Notification
+class ContactUnsubscribe extends Notification
 {
     use Queueable;
-    // private $campaign;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($campaign)
+    public function __construct($contact, $type)
     {
         //
-        $this->campaign = $campaign;
+        $this->contact = $contact;
+        $this->type = $type;
     }
-
     /**
      * Get the notification's delivery channels.
      *
@@ -42,9 +42,9 @@ class CampaignComplete extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->line('The introduction to the notification.')
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     /**
@@ -55,16 +55,15 @@ class CampaignComplete extends Notification
      */
     public function toArray($notifiable)
     {
-        $prec = $this->campaign->audience_done/$this->campaign->total_audience*100;
         return [
-            'event'=>'Campaign completed',
-            'title' => $this->campaign->name,
-            'body' => 'Successfuly sent '.$prec.'% of target keep your eyes on it to know how its performance',
+            'event' => $this->type,
+            'title' => $this->contact->first_name . ' ' . $this->contact->last_name,
+            'body' => 'Successfuly sent ' . $prec . '% of target keep your eyes on it to know how its performance',
             'time' => now()->timestamp,
-            'icon' => 'fa fa-bullhorn',
-            'color'=>'#1777af',
+            'icon' => $this->type == 'unsubscribe' ? 'fa fa-ban' : 'fa fa-exclamation-triangle',
+            'color' => $this->type == 'unsubscribe' ? '#ed2020' : '#edd420',
             'image'  => null,
-            'action'=> url('campaigns/'.$this->campaign->id)
+            'action' => url('contacts/' . $this->contact->id)
             //
         ];
     }

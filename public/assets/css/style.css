@@ -125,7 +125,7 @@ iframe {
 }
 #track-eye + label{
     cursor:pointer
-    
+
 }
 #track-eye:checked ~ label{
     color: #4fbf4f;
@@ -143,13 +143,13 @@ iframe {
 }
 #track-eye + label::after {
     font-family: var(--bs-font-monospace)!important;
-    
+
 }
 #track-eye ~ label::after {
     content: "Tacking off!!";
     margin-left : 5px;
 
-    
+
 
 }
 
@@ -171,4 +171,13 @@ iframe {
     /* right: 0; */
     text-align: center;
     width: 361px;
+}
+.btn-clear {
+    background: transparent ;
+    border: 0;
+
+}
+.form-switch .form-check-input.green:checked {
+    border-color: rgb(70 191 65 / 95%);
+    background-color: rgb(70 191 65 / 95%);
 }

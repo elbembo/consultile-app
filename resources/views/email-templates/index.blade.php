@@ -53,7 +53,10 @@
                                 <tr>
                                     <td>
                                         <div>
-                                            <img src="/assets/img/team-2.jpg" class="avatar avatar-sm me-3">
+                                            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center text-dark me-2 d-flex align-items-center justify-content-center">
+                                                <i style="font-size: 1rem;" class="fas fa-lg fa-file-code top-0 text-center text-dark " aria-hidden="true"></i>
+                                            </div>
+
                                         </div>
                                     </td>
                                     <td class="text-center">

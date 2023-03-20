@@ -6,6 +6,7 @@ use App\Helpers\Helper;
 use App\Mail\SendCampaignEmails;
 use App\Models\EmailTemplate;
 use App\Models\Campaign;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -28,6 +29,7 @@ class EmailTemplateController extends Controller
     public function preview(Request $request, $id)
     {
         //
+        $contact = Contact::first();
         $template = EmailTemplate::find($id);
         if ($template) {
             $mailData = [
@@ -37,7 +39,7 @@ class EmailTemplateController extends Controller
                 'subject' => 'Send Campaign Emails',
                 'tracking' => 1,
                 'messageId' => md5($request->send_to . now()->timestamp),
-                'body' => Helper::parser('cto@emadissa.com', $template->content)
+                'body' => Helper::parser($contact->email, $template->content)
             ];
             // if(Mail::to('test1@emadissa.com','Test user')->send(new SendCampaignEmails($mailData)));
             // $email = Mail::failures();

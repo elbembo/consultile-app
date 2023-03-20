@@ -43,7 +43,14 @@
                                         <a class="btn btn-link text-success px-3 mb-0" href="campaigns/{{$campaign->id}}"><i class="fas  fa-eye text-success me-2" aria-hidden="true"></i>View</a>
 
                                         @else
-                                        <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
+                                        <form action="{{ url('campaigns/' . $campaign->id) }}" method="post" style="display: inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-link text-danger text-gradient px-3 mb-0">
+                                                <i class="far fa-trash-alt me-2"></i>Delete
+                                            </button>
+                                        </form>
+
                                         @endif
                                         <a class="btn btn-link text-dark px-3 mb-0" href="campaigns/{{$campaign->id}}/edit"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
 

@@ -6,6 +6,7 @@ use App\Helpers\Helper;
 use App\Models\Campaign;
 use App\Mail\SendCampaignEmails;
 use App\Models\Contact;
+use App\Models\ContactGroupe;
 use App\Models\EmailQeue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -44,6 +45,9 @@ class CampaignController extends Controller
     public function create()
     {
         //
+         $groups= ContactGroupe::orderBy('group_name')->get()->groupBy(function($data) {
+            return $data->group_name;
+        });
         $templates = EmailTemplate::where('template_type', '!=', 'Campaign')->get();
         $settings = Setting::where('key', 'stmp_sender_name')
             ->orWhere('key', 'stmp_replay_email')
@@ -52,7 +56,7 @@ class CampaignController extends Controller
         foreach ($settings as $setting) {
             $headers[$setting['key']] = $setting['value'];
         }
-        return view('campaign.create', compact('templates', 'headers'));
+        return view('campaign.create', compact('templates', 'headers','groups'));
     }
 
     /**
@@ -133,10 +137,13 @@ class CampaignController extends Controller
     public function edit($id)
     {
         //
+        $groups= ContactGroupe::orderBy('group_name')->get()->groupBy(function($data) {
+            return $data->group_name;
+        });
         $templates = EmailTemplate::where('template_type', '!=', 'Campaign')->get();
         $campaign = Campaign::find($id);
         if ($campaign)
-            return view('campaign.create', compact('campaign', 'templates'));
+            return view('campaign.create', compact('campaign', 'templates','groups'));
     }
 
     /**
@@ -149,12 +156,18 @@ class CampaignController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $contacts = Contact::all();
+
         $campaign = Campaign::find($id);
         if (isset($request->action)) {
             if ($request->action == 'update_status') {
                 if ($request->status == 'processing') {
                     $ta = 0;
+                    if($campaign->group_name != '0'){
+                        $contactGroup = ContactGroupe::where('group_name','=',$campaign->group_name)->pluck('contact_id');
+                        $contacts = Contact::whereIn('id',$contactGroup )->where('subscribe',1)->get();
+                    }else{
+                        $contacts = Contact::where('subscribe',1)->get();
+                    }
                     foreach ($contacts as $contact) {
                         if (preg_match("/(.+)@(.+)\.(.+)/i", $contact->email)) {
                             EmailQeue::create([
@@ -239,6 +252,8 @@ class CampaignController extends Controller
     public function destroy(Campaign $campaign)
     {
         //
+        $campaign->delete();
+        return back();
     }
     public function removeAttachment(Request $request)
     {
