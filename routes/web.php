@@ -9,6 +9,7 @@ use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\CampaignReportController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Domains\Subscribe\HomeController as SubscribeHomeController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\EmailTrakerController;
 use App\Http\Controllers\PermissionsController;
@@ -33,12 +34,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::domain('subscribe.consultile.com')->group(function () {
-    Route::get('/', function () {
-        //
-        return view('domains.subscribe.index');
-    });
+Route::domain('subscribe.'.env('APP_DOMAIN','consultile.com'))->group(function () {
+    Route::resource('/', SubscribeHomeController::class);
+    
 });
+
 Route::group(['middleware' => ['auth', 'permission']], function () {
     Route::get('/', [HomeController::class, 'home'])->name('home');
     Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
