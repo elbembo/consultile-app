@@ -20,10 +20,15 @@ class UserController extends Controller
     {
         return view('users.create');
     }
-    public function read(Request $request, $id)
+    public function read($id)
     {
-        $notification = Notification::find($id);
-        $notification->markAsRead();
+        $user = auth()->user();
+        foreach ($user->unreadNotifications as $notification) {
+            if ($notification->id == $id)
+                $notification->markAsRead();
+            return response()->json(true);
+        }
+        return response()->json(false);
     }
     public function store(User $user, StoreUserRequest $request)
     {

@@ -122,6 +122,7 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
     Route::post('/email-validation-dns', [ContactController::class, 'emailValidation'])->name('email.validation.dns');
     Route::post('/check-duplicate', [ContactController::class, 'isDuplicate'])->name('check.duplicate');
     Route::post('/contacts/search', [ContactController::class, 'search'])->name('contacts.search');
+    Route::post('/notifcations/{id}/read', [UserController::class, 'read'])->name('notifcations.read');
 
 });
 
@@ -136,6 +137,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
     Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
     Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
+    
 });
 Route::get('/email-preview', function () {
     return view('mail.test');
@@ -148,5 +150,5 @@ Route::get('/messages/receipt/{id}.png', [EmailTrakerController::class, 'index']
 Route::get('/report', [CampaignReportController::class, 'index']);
 Route::get('unsubscribe', [ContactController::class, 'unsubscribe'])->name('contacts.unsubscribe');
 Route::post('unsubscribe', [ContactController::class, 'unsubscribe'])->name('contacts.unsubscribe');
-Route::post('/notifcations/{id}/read', [UserController::class, 'read'])->name('notifcations.read');
-Route::get('/notifcations/{id}/read', [UserController::class, 'read'])->name('notifcations.read.get');
+
+

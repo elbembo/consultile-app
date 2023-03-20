@@ -174,7 +174,9 @@ $(document).ready(function () {
     }
     $s('.attachment-del').click((ele) => {
         // alert('its work')
-        post("/campaigns/attachments", { index: ele.target.dataset.key, id: ele.target.dataset.id }, 'DELETE')
+
+        const { key, id } = ele.target.dataset
+        post("/campaigns/" + id + "/attachments", { index: key, id: id }, 'DELETE')
             .then(res => {
                 if (res === true) {
                     $s(`.attachment[data-key=${ele.target.dataset.key}]`).remove()
@@ -211,7 +213,16 @@ $(document).ready(function () {
         });
     })
     $s('#profileSubscribeCheck').click((e) => {
-        post("/contacts/" + e.target.dataset.id , { subscribe: e.target.checked == true ? 1 : 0 },'PUT');
+        post("/contacts/" + e.target.dataset.id, { subscribe: e.target.checked == true ? 1 : 0 }, 'PUT');
+    });
+    $s('.close-noti').click((e) => {
+        const { id } = e.target.dataset
+        post("/notifcations/" + id + '/read', { id: id })
+            .then(res => {
+                if (res == true) {
+                    $s(`.notifications[data-id="${id}"]`).remove()
+                }
+            });
     });
     $s('input[name="email"]').blur(checkThisBitch)
     $s('input[name*="phone"]').blur(checkThisBitch)

@@ -119,6 +119,11 @@ iframe {
     color: #ff0909;
     box-shadow: 0px 0px 3px 1px #ff0909 !important;
 }
+.close-noti{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
 #track-eye {
     visibility: hidden;
     position:absolute;

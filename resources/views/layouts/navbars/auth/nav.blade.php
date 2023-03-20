@@ -53,14 +53,18 @@
                         <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4"
                             aria-labelledby="dropdownMenuButton">
                             @foreach (auth()->user()->unreadNotifications as $notifications)
-                                <li class="mb-2">
+                                <li class="mb-2 notifications" data-id="{{ $notifications->id }}">
+                                    <button data-id="{{ $notifications->id }}" class="btn btn-link close-noti p-1">
+                                        <i  data-id="{{ $notifications->id }}" class="fas fa-times text-black-50" aria-hidden="true"></i>
+                                    </button>
                                     <a class="dropdown-item border-radius-md"
-                                        href="{{ $notifications->data['action'] }}" ping="{{env('APP_URL')}}/notifcations/{{$notifications->id}}/read">
+                                        href="{{ $notifications->data['action'] }}">
                                         <div class="d-flex py-1">
                                             <div class="my-auto">
 
                                                 <i class="avatar-sm cursor-pointer {{ $notifications->data['icon'] }} me-3 text-5xl"
-                                                    aria-hidden="true" style="color:{{ $notifications->data['color']  ?? '' }}"></i>
+                                                    aria-hidden="true"
+                                                    style="color:{{ $notifications->data['color'] ?? '' }}"></i>
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="text-sm font-weight-normal mb-1">
