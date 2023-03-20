@@ -33,7 +33,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+Route::domain('subscribe.consultile.com')->group(function () {
+    Route::get('/', function ($account, $id) {
+        //
+        return view('domains.subscribe.index');
+    });
+});
 Route::group(['middleware' => ['auth', 'permission']], function () {
     Route::get('/', [HomeController::class, 'home'])->name('home');
     Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
