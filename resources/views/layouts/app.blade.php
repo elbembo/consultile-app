@@ -29,7 +29,7 @@
     <link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
     <!-- CSS Files -->
     <link id="appstyle" href="/assets/css/core.css?v=1.0.3" rel="stylesheet" />
-    <link id="pagestyle" href="/assets/css/style.css?v=1.0.3" rel="stylesheet" />
+    <link id="pagestyle" href="/assets/css/style.css?v=1.0.4" rel="stylesheet" />
     <link href="/assets/css/summernote-bs4.min.css" rel="stylesheet">
 </head>
 
@@ -79,7 +79,7 @@
     <script src="/assets/js/plugins/jquery-3.5.1.min.js"></script>
     <script src="/assets/js/plugins/summernote-bs4.min.js"></script>
     <script src="/assets/js/plugins/moment.min.js"></script>
-    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/main.js?v=1.0.2"></script>
 
 </body>
 
