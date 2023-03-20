@@ -100,6 +100,12 @@
                     <div class="collapse   {{ str_contains(url()->current(), 'settings') ? 'show' : '' }}" id="applicationsExamples">
                         <ul class="nav ms-4 ps-3">
                             <li class="nav-item ">
+                                <a class="nav-link " href="{{ url('settings/trash') }}">
+                                    <span class="sidenav-mini-icon"> T </span>
+                                    <span class="sidenav-normal"> Trash </span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
                                 <a class="nav-link " href="{{ url('settings/permissions') }}">
                                     <span class="sidenav-mini-icon"> P </span>
                                     <span class="sidenav-normal"> Permissions </span>

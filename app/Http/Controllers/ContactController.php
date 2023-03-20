@@ -94,6 +94,14 @@ class ContactController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        if($request->restore){
+            Contact::withTrashed()->where('id', $id)->restore();
+            return back();
+        }elseif($request->delete){
+            Contact::withTrashed()->where('id', $id)->forceDelete();
+            return back();
+        }
         if (empty($request->email))
             $request->request->remove('email');
         if (empty($request->personal_phone))

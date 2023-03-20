@@ -1,3 +1,6 @@
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11" id="notifyBase">
+
+</div>
 <footer class="footer pt-3  ">
     <div class="container-fluid">
         <!-- <div class="row align-items-center justify-content-lg-between">

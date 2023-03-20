@@ -105,7 +105,7 @@ class CampaignController extends Controller
                 'body' => Helper::parser($contact->email, $mailTemp->content)
             ];
             if (Mail::to($request->send_to)->send(new SendCampaignEmails($mailData))) {
-                return response()->json([...$request->all(), $msgId]);
+                return response()->json([...$request->all(),'messageId' => $msgId]);
             }
 
             // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));

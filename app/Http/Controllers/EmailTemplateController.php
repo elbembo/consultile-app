@@ -176,6 +176,13 @@ class EmailTemplateController extends Controller
     public function update(Request $request, $id)
     {
         //
+        if($request->restore){
+            EmailTemplate::withTrashed()->where('id', $id)->restore();
+            return back();
+        }elseif($request->delete){
+            EmailTemplate::withTrashed()->where('id', $id)->forceDelete();
+            return back();
+        }
         $content = $request->content;
         $dom = new \DomDocument();
         $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);

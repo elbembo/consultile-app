@@ -14,6 +14,7 @@ use App\Http\Controllers\EmailTrakerController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SummernoteController;
+use App\Http\Controllers\Trash;
 use App\Http\Controllers\UserController;
 use App\Models\Contact;
 use App\Models\EmailTraker;
@@ -116,6 +117,8 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
     Route::resource('email/templates', EmailTemplateController::class);
     Route::resource('editor', SummernoteController::class);
 
+
+    Route::resource('settings/trash', Trash::class);
     Route::resource('settings/roles', RolesController::class);
     Route::resource('settings/permissions', PermissionsController::class);
     // Ajax
@@ -126,7 +129,10 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
 
 });
 
-
+Route::get('/test',  function ()
+{
+    return view('test');
+})->name('test');
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/register', [RegisterController::class, 'create']);
