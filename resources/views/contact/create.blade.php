@@ -73,7 +73,7 @@
                             <div class="form-group">
                                 <label for="caontact-email" class="form-control-label">{{ __('Email') }}</label>
                                 <div class="@error('email') border border-danger rounded-3 @enderror">
-                                    <input class="form-control" value="" type="email" placeholder="{{ isset($contact->email) ? secret($contact->email) : '' }}" id="caontact-email" name="email">
+                                    <input class="form-control" value="@can('secret.contacts'){{ $contact->email ?? ''}} @endcan" type="email" placeholder="{{ isset($contact->email) ? secret($contact->email) : '' }}" id="caontact-email" name="email">
                                     @error('email')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
@@ -86,7 +86,7 @@
                             <div class="form-group col-md-6 ">
                                 <label for="work-phone" class="form-control-label">{{ __('Work Phone') }}</label>
                                 <div class="@error('work_phone')border border-danger rounded-3 @enderror">
-                                    <input class="form-control" type="tel" placeholder="{{ isset($contact->work_phone) ? secret($contact->work_phone) : '' }}" id="work-phone" name="work_phone" value="">
+                                    <input class="form-control" type="tel" placeholder="{{ isset($contact->work_phone) ? secret($contact->work_phone) : '' }}" id="work-phone" name="work_phone" value="@can('secret.contacts'){{ $contact->work_phone ?? ''}} @endcan">
                                     @error('work_phone')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
@@ -95,7 +95,7 @@
                             <div class="form-group col-md-6 ">
                                 <label for="personal-phone" class="form-control-label">{{ __('Mobile') }}</label>
                                 <div class="@error('personal_phone')border border-danger rounded-3 @enderror">
-                                    <input class="form-control" type="tel" placeholder="{{ isset($contact->personal_phone) ? secret($contact->personal_phone) : '' }}" id="personal-phone" name="personal_phone" value="">
+                                    <input class="form-control" type="tel" placeholder="{{ isset($contact->personal_phone) ? secret($contact->personal_phone) : '' }}" id="personal-phone" name="personal_phone" value="@can('secret.contacts'){{ $contact->personal_phone ?? ''}} @endcan">
                                     @error('personal_phone')
                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
