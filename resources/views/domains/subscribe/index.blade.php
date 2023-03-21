@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
     <title>Consultile Subscribre Form</title>
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
@@ -8359,88 +8359,108 @@
 </head>
 
 <body class="g-sidenav-show  bg-gray-100 ">
-    <main class="main-content max-height-vh-100 h-100 ps">
 
         <main class="main-content  mt-0">
             <section>
                 <div class="page-header min-vh-100">
                     <div class="container">
                         <div class="row">
-                            @if($errors->any())
-                            <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
-                            </div>
-                            @else
-                            <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
-                                <div class="card card-plain">
-                                    <div class="card-header pb-0 text-left">
-                                        <h4 class="font-weight-bolder">Sign Up</h4>
-                                        <p class="mb-0">Enter your email and password to register</p>
-                                    </div>
-                                    <div class="card-body pb-3">
-                                        <form role="form" method="post">
-                                            @csrf
-                                            <label>First Name</label>
-                                            <div class="mb-3">
-                                                <input name="first_name" type="text" class="form-control" placeholder="First Name"
-                                                    aria-label="Name">
+                            @if ($errors->any())
+                                <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+                                    <div class="card">
+                                        <div class="card-body px-lg-5 py-lg-5 text-center">
+                                            <div class="info mb-4">
+                                                <img class="max-width-500 w-100 position-relative z-index-2"
+                                                    src="/assets/img/Consultile_Logo_png.png" alt="rocket">
                                             </div>
-                                            <label>Last Name</label>
-                                            <div class="mb-3">
-                                                <input name="first_name" type="text" class="form-control" placeholder="Last Name"
-                                                    aria-label="Name">
+                                            <div class="text-center text-muted mb-4">
+                                                <h2>Thank you for your time, You have successfully subscribed to
+                                                    Consultile Newsletters.</h2>
                                             </div>
-                                            <label>Email</label>
-                                            <div class="mb-3">
-                                                <input type="email" name="email" class="form-control" placeholder="Email"
-                                                    aria-label="Email" required>
-                                            </div>
-                                            <label>Mobile</label>
-                                            <div class="mb-3">
-                                                <input type="tel" name="personal_phone" class="form-control" placeholder="Mobile"
-                                                    aria-label="Mobile" required>
-                                            </div>
-                                            <label>Company</label>
-                                            <div class="mb-3">
-                                                <input name="company" type="text" class="form-control" placeholder="Company"
-                                                    aria-label="Company">
-                                            </div>
-                                            <label>Job title</label>
-                                            <div class="mb-3">
-                                                <input name="job_title" type="text" class="form-control" placeholder="Job title"
-                                                    aria-label="Job title">
-                                            </div>
-                                            <label>Country</label>
-                                            <div class="mb-3">
-                                                <input name="job_title" type="text" class="form-control" placeholder="Country"
-                                                    aria-label="Country">
-                                            </div>
-                                            <div class="form-check form-check-info text-left">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                    id="flexCheckDefault" checked="">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    I agree the <a href="#"
-                                                        class="text-dark font-weight-bolder">Terms and Conditions</a>
-                                                </label>
-                                            </div>
-                                            <div class="text-center">
-                                                <button type="submit"
-                                                    class="btn bg-gradient-primary w-100 mt-4 mb-0">Sign up</button>
-                                            </div>
-                                        </form>
-                                    </div>
 
+                                            <script>
+                                                setTimeout("location.href = 'https://www.consultile.com/';", 3000);
+                                            </script>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+                                    <div class="card card-plain">
+                                        <div class="card-header pb-0 text-left">
+                                            <div class="info mb-4">
+                                                <img class="max-width-500 w-100 position-relative z-index-2"
+                                                    src="/assets/img/Consultile_Logo_png.png" alt="rocket">
+                                            </div>
+                                            <h4 class="font-weight-bolder">Subscribe</h4>
+                                            <p class="mb-0">Please fill in this form</p>
+                                        </div>
+                                        <div class="card-body pb-3">
+                                            <form role="form" method="post">
+                                                @csrf
+                                                <input type="hidden" name="source" value="Subscribr form">
+                                                <label>First Name</label>
+                                                <div class="mb-3">
+                                                    <input name="first_name" type="text" class="form-control"
+                                                        placeholder="First Name" aria-label="Name">
+                                                </div>
+                                                <label>Last Name</label>
+                                                <div class="mb-3">
+                                                    <input name="first_name" type="text" class="form-control"
+                                                        placeholder="Last Name" aria-label="Name">
+                                                </div>
+                                                <label>Email</label>
+                                                <div class="mb-3">
+                                                    <input type="email" name="email" class="form-control"
+                                                        placeholder="Email" aria-label="Email" required>
+                                                </div>
+                                                <label>Mobile</label>
+                                                <div class="mb-3">
+                                                    <input type="tel" name="personal_phone" class="form-control"
+                                                        placeholder="Mobile" aria-label="Mobile" required>
+                                                </div>
+                                                <label>Company</label>
+                                                <div class="mb-3">
+                                                    <input name="company" type="text" class="form-control"
+                                                        placeholder="Company" aria-label="Company">
+                                                </div>
+                                                <label>Job title</label>
+                                                <div class="mb-3">
+                                                    <input name="job_title" type="text" class="form-control"
+                                                        placeholder="Job title" aria-label="Job title">
+                                                </div>
+                                                <label>Country</label>
+                                                <div class="mb-3">
+                                                    <input name="job_title" type="text" class="form-control"
+                                                        placeholder="Country" aria-label="Country">
+                                                </div>
+                                                <div class="form-check form-check-info text-left">
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="flexCheckDefault" checked="">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                        I agree the <a href="#"
+                                                            class="text-dark font-weight-bolder">Terms and
+                                                            Conditions</a>
+                                                    </label>
+                                                </div>
+                                                <div class="text-center">
+                                                    <button type="submit"
+                                                        class="btn bg-gradient-primary w-100 mt-4 mb-0">Subscribe</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
                             @endif
                             <div
                                 class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
                                 <div
                                     class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
-                                    
+
                                     <div class="position-relative">
                                         <img class="max-width-500 w-100 position-relative z-index-2"
-                                            src="/assets/img/Consultile-01_.png"
-                                            alt="rocket">
+                                            src="/assets/img/Consultile-01_.png" alt="rocket">
                                     </div>
                                     <h4 class="mt-5 text-white font-weight-bolder">Your journey starts here</h4>
                                     <p class="text-white">Just as it takes a company to sustain a product, it takes a
@@ -8450,6 +8470,7 @@
                         </div>
                     </div>
                 </div>
+                </div>
             </section>
         </main>
         <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
@@ -8458,7 +8479,6 @@
         <div class="ps__rail-y" style="top: 0px; right: 0px;">
             <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div>
         </div>
-    </main>
 
     <script src="/assets/js/core/popper.min.js"></script>
     <script src="/assets/js/core/bootstrap.min.js"></script>
