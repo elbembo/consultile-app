@@ -14,7 +14,7 @@ class Trash extends Controller
     {
         $emailTemplates = EmailTemplate::onlyTrashed()->paginate(15);
         $contacts = Contact::onlyTrashed()->paginate(15);
-        $contacts = Campaign::onlyTrashed()->paginate(15);
-        return view('trash.index',compact('emailTemplates','contacts','contacts'));
+        $campaigns = Campaign::onlyTrashed()->paginate(15);
+        return view('trash.index',compact('emailTemplates','contacts','campaigns'));
     }
 }

@@ -1,4 +1,181 @@
 
+document.querySelector(".fixed-plugin") && (fixedPlugin = document.querySelector(".fixed-plugin"),
+fixedPluginButton = document.querySelector(".fixed-plugin-button"),
+fixedPluginButtonNav = document.querySelector(".fixed-plugin-button-nav"),
+fixedPluginCard = document.querySelector(".fixed-plugin .card"),
+fixedPluginCloseButton = document.querySelectorAll(".fixed-plugin-close-button"),
+navbar = document.getElementById("navbarBlur"),
+buttonNavbarFixed = document.getElementById("navbarFixed"),
+fixedPluginButton && (fixedPluginButton.onclick = function() {
+    fixedPlugin.classList.contains("show") ? fixedPlugin.classList.remove("show") : fixedPlugin.classList.add("show")
+}
+),
+fixedPluginButtonNav && (fixedPluginButtonNav.onclick = function() {
+    fixedPlugin.classList.contains("show") ? fixedPlugin.classList.remove("show") : fixedPlugin.classList.add("show")
+}
+),
+fixedPluginCloseButton.forEach(function(e) {
+    e.onclick = function() {
+        fixedPlugin.classList.remove("show")
+    }
+}),
+document.querySelector("body").onclick = function(e) {
+    e.target != fixedPluginButton && e.target != fixedPluginButtonNav && e.target.closest(".fixed-plugin .card") != fixedPluginCard && fixedPlugin.classList.remove("show")
+}
+,
+navbar && "true" == navbar.getAttribute("data-scroll") && buttonNavbarFixed && buttonNavbarFixed.setAttribute("checked", "true"));
+var sidenavToggler, sidenavShow, toggleNavbarMinimize, total = document.querySelectorAll(".nav-pills");
+function initNavs() {
+    total.forEach(function(l, e) {
+        var o = document.createElement("div")
+          , t = l.querySelector("li:first-child .nav-link").cloneNode();
+        t.innerHTML = "-",
+        o.classList.add("moving-tab", "position-absolute", "nav-link"),
+        o.appendChild(t),
+        l.appendChild(o);
+        l.getElementsByTagName("li").length;
+        o.style.padding = "0px",
+        o.style.width = l.querySelector("li:nth-child(1)").offsetWidth + "px",
+        o.style.transform = "translate3d(0px, 0px, 0px)",
+        o.style.transition = ".5s ease",
+        l.onmouseover = function(e) {
+            let t = getEventTarget(e)
+              , i = t.closest("li");
+            if (i) {
+                let n = Array.from(i.closest("ul").children)
+                  , a = n.indexOf(i) + 1;
+                l.querySelector("li:nth-child(" + a + ") .nav-link").onclick = function() {
+                    o = l.querySelector(".moving-tab");
+                    let e = 0;
+                    if (l.classList.contains("flex-column")) {
+                        for (var t = 1; t <= n.indexOf(i); t++)
+                            e += l.querySelector("li:nth-child(" + t + ")").offsetHeight;
+                        o.style.transform = "translate3d(0px," + e + "px, 0px)",
+                        o.style.height = l.querySelector("li:nth-child(" + t + ")").offsetHeight
+                    } else {
+                        for (t = 1; t <= n.indexOf(i); t++)
+                            e += l.querySelector("li:nth-child(" + t + ")").offsetWidth;
+                        o.style.transform = "translate3d(" + e + "px, 0px, 0px)",
+                        o.style.width = l.querySelector("li:nth-child(" + a + ")").offsetWidth + "px"
+                    }
+                }
+            }
+        }
+    })
+}
+function getEventTarget(e) {
+    return (e = e || window.event).target || e.srcElement
+}
+setTimeout(function() {
+    initNavs()
+}, 100),
+window.addEventListener("resize", function(e) {
+    total.forEach(function(n, e) {
+        n.querySelector(".moving-tab").remove();
+        var a = document.createElement("div")
+          , i = n.querySelector(".nav-link.active").cloneNode();
+        i.innerHTML = "-",
+        a.classList.add("moving-tab", "position-absolute", "nav-link"),
+        a.appendChild(i),
+        n.appendChild(a),
+        a.style.padding = "0px",
+        a.style.transition = ".5s ease";
+        let l = n.querySelector(".nav-link.active").parentElement;
+        if (l) {
+            let e = Array.from(l.closest("ul").children);
+            i = e.indexOf(l) + 1;
+            let t = 0;
+            if (n.classList.contains("flex-column")) {
+                for (var o = 1; o <= e.indexOf(l); o++)
+                    t += n.querySelector("li:nth-child(" + o + ")").offsetHeight;
+                a.style.transform = "translate3d(0px," + t + "px, 0px)",
+                a.style.width = n.querySelector("li:nth-child(" + i + ")").offsetWidth + "px",
+                a.style.height = n.querySelector("li:nth-child(" + o + ")").offsetHeight
+            } else {
+                for (o = 1; o <= e.indexOf(l); o++)
+                    t += n.querySelector("li:nth-child(" + o + ")").offsetWidth;
+                a.style.transform = "translate3d(" + t + "px, 0px, 0px)",
+                a.style.width = n.querySelector("li:nth-child(" + i + ")").offsetWidth + "px"
+            }
+        }
+    }),
+    window.innerWidth < 991 ? total.forEach(function(a, e) {
+        if (!a.classList.contains("flex-column")) {
+            a.classList.remove("flex-row"),
+            a.classList.add("flex-column", "on-resize");
+            let e = a.querySelector(".nav-link.active").parentElement
+              , t = Array.from(e.closest("ul").children);
+            t.indexOf(e);
+            let n = 0;
+            for (var i = 1; i <= t.indexOf(e); i++)
+                n += a.querySelector("li:nth-child(" + i + ")").offsetHeight;
+            var l = document.querySelector(".moving-tab");
+            l.style.width = a.querySelector("li:nth-child(1)").offsetWidth + "px",
+            l.style.transform = "translate3d(0px," + n + "px, 0px)"
+        }
+    }) : total.forEach(function(a, e) {
+        if (a.classList.contains("on-resize")) {
+            a.classList.remove("flex-column", "on-resize"),
+            a.classList.add("flex-row");
+            let e = a.querySelector(".nav-link.active").parentElement
+              , t = Array.from(e.closest("ul").children);
+            var i = t.indexOf(e) + 1;
+            let n = 0;
+            for (var l = 1; l <= t.indexOf(e); l++)
+                n += a.querySelector("li:nth-child(" + l + ")").offsetWidth;
+            var o = document.querySelector(".moving-tab");
+            o.style.transform = "translate3d(" + n + "px, 0px, 0px)",
+            o.style.width = a.querySelector("li:nth-child(" + i + ")").offsetWidth + "px"
+        }
+    })
+}),
+window.innerWidth < 991 && total.forEach(function(e, t) {
+    e.classList.contains("flex-row") && (e.classList.remove("flex-row"),
+    e.classList.add("flex-column", "on-resize"))
+}),
+document.querySelector(".sidenav-toggler") && (sidenavToggler = document.getElementsByClassName("sidenav-toggler")[0],
+sidenavShow = document.getElementsByClassName("g-sidenav-show")[0],
+toggleNavbarMinimize = document.getElementById("navbarMinimize"),
+sidenavShow && (sidenavToggler.onclick = function() {
+    sidenavShow.classList.contains("g-sidenav-hidden") ? (sidenavShow.classList.remove("g-sidenav-hidden"),
+    sidenavShow.classList.add("g-sidenav-pinned"),
+    toggleNavbarMinimize && (toggleNavbarMinimize.click(),
+    toggleNavbarMinimize.removeAttribute("checked"))) : (sidenavShow.classList.remove("g-sidenav-pinned"),
+    sidenavShow.classList.add("g-sidenav-hidden"),
+    toggleNavbarMinimize && (toggleNavbarMinimize.click(),
+    toggleNavbarMinimize.setAttribute("checked", "true")))
+}
+));
+const iconNavbarSidenav = document.getElementById("iconNavbarSidenav")
+  , iconSidenav = document.getElementById("iconSidenav")
+  , sidenav = document.getElementById("sidenav-main");
+let body = document.getElementsByTagName("body")[0]
+  , className = "g-sidenav-pinned";
+function toggleSidenav() {
+    body.classList.contains(className) ? (body.classList.remove(className),
+    setTimeout(function() {
+        sidenav.classList.remove("bg-white")
+    }, 100),
+    sidenav.classList.remove("bg-transparent")) : (body.classList.add(className),
+    sidenav.classList.add("bg-white"),
+    sidenav.classList.remove("bg-transparent"),
+    iconSidenav.classList.remove("d-none"))
+}
+iconNavbarSidenav && iconNavbarSidenav.addEventListener("click", toggleSidenav),
+iconSidenav && iconSidenav.addEventListener("click", toggleSidenav);
+let referenceButtons = document.querySelector("[data-class]");
+function navbarColorOnResize() {
+    sidenav && (1200 < window.innerWidth ? referenceButtons.classList.contains("active") && "bg-transparent" === referenceButtons.getAttribute("data-class") ? sidenav.classList.remove("bg-white") : sidenav.classList.add("bg-white") : (sidenav.classList.add("bg-white"),
+    sidenav.classList.remove("bg-transparent")))
+}
+function sidenavTypeOnResize() {
+    let e = document.querySelectorAll('[onclick="sidebarType(this)"]');
+    window.innerWidth < 1200 ? e.forEach(function(e) {
+        e.classList.add("disabled")
+    }) : e.forEach(function(e) {
+        e.classList.remove("disabled")
+    })
+}
 const HelloButton = function (context) {
     var ui = $.summernote.ui;
 
@@ -16,55 +193,8 @@ const HelloButton = function (context) {
 }
 $(document).ready(function () {
 
-    $('#summernote').summernote({
-        height: 500,
-        styleTags: [
-            'p',
-            {
-                title: 'Blockquote',
-                tag: 'blockquote',
-                className: 'blockquote',
-                value: 'blockquote'
-            },
-            'pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
-        ],
-        popover: {
-            image: [
-                ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
-                ['float', ['floatLeft', 'floatRight', 'floatNone']],
-                ['remove', ['removeMedia']]
-            ],
-            link: [
-                ['link', ['linkDialogShow', 'unlink']]
-            ],
-            table: [
-                ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
-                ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
-            ],
-            air: [
-                ['color', ['color']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['para', ['ul', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture']]
-            ]
-        },
-        buttons: {
-            hello: HelloButton
-        },
-        toolbar: [
-            // [groupName, [list of button]]
-            ['style', ['style']],
-            ['font', ['bold', 'underline', 'clear']],
-            ['fontname', ['fontname']],
-            ['fontsize', ['fontsize']],
-            ['color', ['red']],
-            ['para', ['style', 'ul', 'ol', 'paragraph']],
-            ['table', ['table']],
-            ['insert', ['link', 'picture', 'video']],
-            ['view', ['fullscreen', 'codeview', 'help']],
-        ]
-    });
+    $('#summernote').summernote(
+    );
     $('.custom_data').on('click', (e) => {
         $('#summernote').summernote('insertText', `{{ ${e.target.dataset.value} }}`)
     })
@@ -73,10 +203,10 @@ $(document).ready(function () {
     // $("#tempCode").on('submit', function () {
     //     $('#tempCodetextarea').html($('#summernote').summernote('code'));
     // });
-    $("form").on('submit', (e) => {
-        $(this).find('button').prop('disabled', true);
+    // $("form").on('submit', (e) => {
+    //     $(this).find('button').prop('disabled', true);
 
-    })
+    // })
 
 });
 (function () {
@@ -111,98 +241,12 @@ $(document).ready(function () {
         //     });
         //    toastList.forEach(toast => toast.show()); // This show them
     }
-    async function post(url = "", data = {}, method = "POST", output = 'json') {
-        // Default options are marked with *
-        const response = await fetch(url, {
-            method, // *GET, POST, PUT, DELETE, etc.
-            mode: "cors", // no-cors, *cors, same-origin
-            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: "same-origin", // include, *same-origin, omit
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "*/*",
-                "X-Requested-With": "XMLHttpRequest",
-                "X-CSRF-Token": $('meta[name="csrf-token"]').attr('content')
-            },
-            redirect: "follow", // manual, *follow, error
-            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify(data), // body data type must match "Content-Type" header
-        });
-        return (output == 'json') ? response.json() : response.text(); // parses JSON response into native JavaScript objects
-    }
-    const $s = function (selector) {
-        if (!(this instanceof $s)) {
-            return new $(selector);
-        }
-        this.el = document.querySelectorAll(selector);
-        return this;
-    }
-
-    $s.prototype.css = function (prop, val) {
-        this.el.forEach(function (element) {
-            element.style[prop] = val;
-        });
-
-        return this;
-    }
-    $s.prototype.click = function (hand) {
-        this.el.forEach(function (element) {
-            element.addEventListener('ckick', hand);
-        });
-
-        return this;
-    }
-    $s.prototype.blur = function (hand) {
-        this.el.forEach(function (element) {
-            element.addEventListener('blur', hand);
-        });
-
-        return this;
-    }
-    $s.prototype.blockSubmit = function () {
-        this.el.forEach(function (element) {
-            console.log(element)
-        });
-
-        return this;
-    }
-    $s.prototype.submitJson = function (action) {
-        this.el.forEach(function (element) {
-            const data = {};
-            for (const pair of new FormData(element)) {
-                data[pair[0]] = pair[1];
-            }
-            post(action, data);
-        });
-
-        return this;
-    }
+    
     document.querySelectorAll('.moment').forEach((ele) => {
         ele.textContent = moment.unix(ele.textContent).fromNow()
     })
     // check input email and phone dubilcate
-    const checkThisBitch = (e) => {
-        e.target?.nextElementSibling?.remove()
-        e.target.classList.remove('border-danger')
-        document.querySelector('button[type="submit"]').disabled = false
-        if (e.target.value.trim() == '' || e.target.value.trim() == e.target.dataset.default.trim())
-            return
-        const { name, value } = e.target
-        post("/check-duplicate", { name, value }).then(res => {
-            let span = document.createElement('span');
-            if (res?.id) {
-                e.target.classList.add('border-danger')
-                e.target.parentNode.insertBefore(span, e.target.nextSibling);
-                span.innerHTML = `<p class="text-danger text-xs mt-2">Its already exist under ${res?.first_name} ${res?.last_name}, click <a href="/contacts/${res?.id}/edit">here</a> to update it.</a></p>`
-                document.querySelector('button[type="submit"]').disabled = true
-            } else {
-                e.target.classList.remove('border-danger')
-                e.target?.nextElementSibling?.remove()
-                document.querySelector('button[type="submit"]').disabled = false
-            }
-
-        });
-    }
+    
     $s('.attachment-del').click((ele) => {
         // alert('its work')
 
@@ -257,8 +301,8 @@ $(document).ready(function () {
                 }
             });
     });
-    $s('input[name="email"]').blur(checkThisBitch)
-    $s('input[name*="phone"]').blur(checkThisBitch)
+    // $s('input[name="email"]').blur(checkThisBitch)
+    // $s('input[name*="phone"]').blur(checkThisBitch)
     document.querySelector('#search').addEventListener('keypress', (e) => {
         if (event.key === "Enter") {
             if (e.target.value.length >= 3) {

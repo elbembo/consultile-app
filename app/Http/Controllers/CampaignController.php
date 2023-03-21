@@ -303,7 +303,7 @@ class CampaignController extends Controller
                     }
                     if ($mailTemp) {
                         $mailData = [
-                            'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => env('MAIL_FROM_NAME', '')],
+                            'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => $campaign->sender_name],
                             'replyTo' => ['email' => $campaign->replay_to, 'name' => $campaign->sender_name],
                             'to' => ['email' => $contact->email, 'name' => $contact->first_name],
                             'subject' => $campaign->subject,

@@ -12,6 +12,7 @@
 
                     </div>
                 </div>
+                
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
@@ -140,19 +141,15 @@
                                     </th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Email
+                                        Subject
                                     </th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Phone
+                                        Status
                                     </th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        job title
-                                    </th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Company
+                                        Details
                                     </th>
 
                                     <th
@@ -165,42 +162,36 @@
                                 @if (isset($campaigns))
                                     @foreach ($campaigns as $campaign)
                                         <tr
-                                            class="{{ $contact->subscribe == 0 ? 'bg-gradient-danger text-white' : '' }}">
+                                            class="{{ $campaign->subscribe == 0 ? 'bg-gradient-danger text-white' : '' }}">
 
                                             <td class="text-center ">
-                                                <a class="" href="{{ url('contacts/' . $contact->id) }}">
-                                                    <p class="text-xs font-weight-bold mb-0 ">{{ $contact->first_name }}
-                                                        {{ $contact->last_name }}</p>
+                                                <a class="" href="{{ url('campaigns/' . $campaign->id) }}">
+                                                    <p class="text-xs font-weight-bold mb-0 ">{{ $campaign->name }}</p>
                                                 </a>
                                             </td>
                                             <td class="text-center">
 
-                                                <a class="" href="{{ url('contacts/' . $contact->id) }}">
-                                                    <p class="text-xs font-weight-bold mb-0">{{ secret($contact->email) }}
+                                                <a class="" href="{{ url('campaigns/' . $campaign->id) }}">
+                                                    <p class="text-xs font-weight-bold mb-0">{{ secret($campaign->subject) }}
                                                     </p>
                                                 </a>
                                             </td>
                                             <td class="text-center ">
-                                                <a class="" href="{{ url('contacts/' . $contact->id) }}">
+                                                <a class="" href="{{ url('campaigns/' . $campaign->id) }}">
                                                     <p class="text-xs font-weight-bold mb-0">
-                                                        {{ secret($contact->personal_phone) }}</p>
+                                                        {{ secret($campaign->status) }}</p>
                                                 </a>
                                             </td>
                                             <td class="text-center">
-                                                <a class="" href="{{ url('contacts/' . $contact->id) }}">
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $contact->job_title }}</p>
-                                                </a>
-                                            </td>
-                                            <td class="text-center">
-                                                <a class="" href="{{ url('contacts/' . $contact->id) }}">
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $contact->company }}</p>
+                                                <a class="" href="{{ url('campaigns/' . $campaign->id) }}">
+                                                    <p class="text-xs font-weight-bold mb-0">{{ $campaign->details }}</p>
                                                 </a>
                                             </td>
 
 
                                             <td class="text-center">
 
-                                                <form action="{{ url('contacts/' . $contact->id) }}" method="post"
+                                                <form action="{{ url('campaigns/' . $campaign->id) }}" method="post"
                                                     style="display: inline;">
                                                     @csrf
                                                     @method('PUT')
@@ -209,7 +200,7 @@
                                                         <i class="cursor-pointer fas fa-undo  text-secondary"></i>
                                                     </button>
                                                 </form>
-                                                <form action="{{ url('contacts/' . $contact->id) }}" method="post"
+                                                <form action="{{ url('campaigns/' . $campaign->id) }}" method="post"
                                                     style="display: inline;">
                                                     @csrf
                                                     @method('PUT')
@@ -230,7 +221,7 @@
 
                     </div>
                     <div class="row">
-                        <div class="d-flex justify-content-center">{{ $contacts->links() }}</div>
+                        <div class="d-flex justify-content-center">{{ $campaigns->links() ?? '' }}</div>
                     </div>
                 </div>
             </div>

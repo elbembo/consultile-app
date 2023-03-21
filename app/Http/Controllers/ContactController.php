@@ -32,7 +32,12 @@ class ContactController extends Controller
         $contacts = Contact::where('id', '>', '0')->orderBy('id', 'desc')->paginate(30);
         return view('contact.index', compact('contacts'));
     }
-
+    public function companies()
+    {
+        # code...
+        $companies = Contact::withTrashed()->groupBy('company')->get();
+        
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -41,7 +46,9 @@ class ContactController extends Controller
     public function create()
     {
         //
-        return view('contact.create');
+        $companies = Contact::withTrashed()->get()->groupBy('company');
+        // dd($companies);
+        return view('contact.create',compact('companies'));
     }
 
     /**
@@ -68,9 +75,9 @@ class ContactController extends Controller
     public function show(Contact $contact)
     {
         //
-        $tracker = EmailTraker::where('email_trakers.contact_id',$contact->id)->join('campaigns','email_trakers.capmaign_id' , '=','campaigns.id')->get()
-        ->toArray();
-        return view('contact.view', compact('contact','tracker'));
+        $tracker = EmailTraker::where('email_trakers.contact_id', $contact->id)->join('campaigns', 'email_trakers.capmaign_id', '=', 'campaigns.id')->get()
+            ->toArray();
+        return view('contact.view', compact('contact', 'tracker'));
     }
 
     /**
@@ -80,8 +87,8 @@ class ContactController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Contact $contact)
-    {
-        return view('contact.create', compact('contact'));
+    {$companies = Contact::withTrashed()->get()->groupBy('company');
+        return view('contact.create', compact('contact','companies'));
     }
 
     /**
@@ -95,10 +102,10 @@ class ContactController extends Controller
     {
         //
 
-        if($request->restore){
+        if ($request->restore) {
             Contact::withTrashed()->where('id', $id)->restore();
             return back();
-        }elseif($request->delete){
+        } elseif ($request->delete) {
             Contact::withTrashed()->where('id', $id)->forceDelete();
             return back();
         }

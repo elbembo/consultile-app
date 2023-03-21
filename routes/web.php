@@ -161,5 +161,6 @@ Route::get('/messages/receipt/{id}.png', [EmailTrakerController::class, 'index']
 Route::get('/report', [CampaignReportController::class, 'index']);
 Route::get('unsubscribe', [ContactController::class, 'unsubscribe']);
 Route::post('unsubscribe', [ContactController::class, 'unsubscribe']);
+Route::get('companies', [ContactController::class, 'companies']);
 
 });
