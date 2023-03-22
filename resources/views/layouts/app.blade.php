@@ -83,8 +83,8 @@
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
-    var pusher = new Pusher('1ed4ee292908da3c9131', {
-        cluster: 'eu'
+    var pusher = new Pusher('e26f3579c24775647413', {
+        cluster: 'mt1'
     });
 
     var channel = pusher.subscribe('notification-send');
