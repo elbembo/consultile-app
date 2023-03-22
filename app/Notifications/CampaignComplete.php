@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Events\NotificationEvent;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -56,7 +57,7 @@ class CampaignComplete extends Notification
     public function toArray($notifiable)
     {
         $prec = $this->campaign->audience_done/$this->campaign->total_audience*100;
-        return [
+        $msg =[
             'event'=>'Campaign completed',
             'title' => $this->campaign->name,
             'body' => 'Successfuly sent '.$prec.'% of target keep your eyes on it to know how its performance',
@@ -67,5 +68,7 @@ class CampaignComplete extends Notification
             'action'=> '/campaigns/'.$this->campaign->id
             //
         ];
+        event(new NotificationEvent($msg));
+        return $msg;
     }
 }
