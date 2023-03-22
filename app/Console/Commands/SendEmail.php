@@ -39,7 +39,7 @@ class SendEmail extends Command
     {
 
         CampaignController::send();
-        event(new CampaignComplete('hello world'));
+
 
         return Command::SUCCESS;
     }
