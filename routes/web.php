@@ -22,6 +22,7 @@ use App\Http\Controllers\UserController;
 use App\Models\Contact;
 use App\Models\EmailTraker;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 
@@ -104,6 +105,14 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
     Route::get('companies', [ContactController::class, 'companies']);
 });
 Route::get('test', function () {
-    event(new App\Events\NotificationEvent('Monika'));
+    // event(new App\Events\NotificationEvent('Monika'));
+    $body = '{"data":"{\"message\":\"hello world\"}","name":"my-event","channel":"my-channel"}';
+    // $body = md5();
+    $response = Http::acceptJson()->withUrlParameters([
+        'data' => ['message' => 'hello world' ],
+        'name' => 'my-event',
+        'channel' => 'my-channel'
+    ])->get('https://api-mt1.pusher.com/apps/1571838/events?body_md5=2c99321eeba901356c4c7998da9be9e0&auth_version=1.0&auth_key=e26f3579c24775647413&auth_timestamp=1679466297&auth_signature=0c957f5f2f6c96bb50238b4958d161262155a4892002a5e9d21ffe9acdee3cb1&');
+    dump($response);
     return 'notification sent';
 });
