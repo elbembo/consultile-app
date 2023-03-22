@@ -95,26 +95,26 @@ class EmailTemplateController extends Controller
         else
             $request->request->add(['template_type' => 'Default select']);
         $content = $request->content;
-        $dom = new \DomDocument();
-        $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        $imageFile = $dom->getElementsByTagName('imageFile');
+        // $dom = new \DomDocument();
+        // $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        // $imageFile = $dom->getElementsByTagName('imageFile');
 
-        foreach ($imageFile as $item => $image) {
-            $data = $image->getAttribute('src');
-            if (count(explode(';', $data)) > 1) {
-                list($type, $data) = explode(';', $data);
-                list(, $data)      = explode(',', $data);
-                $imgeData = base64_decode($data);
-                $image_name = "uploads/images/emails/" . time() . $item . '.png';
-                // $path = public_path() . $image_name;
-                // file_put_contents($path, $imgeData);
-                Storage::put("public/".$image_name, $imgeData);
-                $image->removeAttribute('src');
-                $image->setAttribute('src', env('APP_URL')."/storage/".$image_name);
-            }
-        }
+        // foreach ($imageFile as $item => $image) {
+        //     $data = $image->getAttribute('src');
+        //     if (count(explode(';', $data)) > 1) {
+        //         list($type, $data) = explode(';', $data);
+        //         list(, $data)      = explode(',', $data);
+        //         $imgeData = base64_decode($data);
+        //         $image_name = "uploads/images/emails/" . time() . $item . '.png';
+        //         // $path = public_path() . $image_name;
+        //         // file_put_contents($path, $imgeData);
+        //         Storage::put("public/".$image_name, $imgeData);
+        //         $image->removeAttribute('src');
+        //         $image->setAttribute('src', env('APP_URL')."/storage/".$image_name);
+        //     }
+        // }
 
-        $content = $dom->saveHTML();
+        // $content = $dom->saveHTML();
         $request->merge([ 'content' => $content ]);
         $emailTemplate = EmailTemplate::create($request->all());
         if ($emailTemplate) {
@@ -184,26 +184,26 @@ class EmailTemplateController extends Controller
             return back();
         }
         $content = $request->content;
-        $dom = new \DomDocument();
-        $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        $imageFile = $dom->getElementsByTagName('img');
+        // $dom = new \DomDocument();
+        // $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        // $imageFile = $dom->getElementsByTagName('img');
 
-        foreach ($imageFile as $item => $image) {
-            $data = $image->getAttribute('src');
-            if (count(explode(';', $data)) > 1) {
-                list($type, $data) = explode(';', $data);
-                list(, $data)      = explode(',', $data);
-                $imgeData = base64_decode($data);
-                $image_name = "uploads/images/emails/" . time() . $item . '.png';
-                // $path = public_path() . $image_name;
-                // file_put_contents($path, $imgeData);
-                Storage::put("public/".$image_name, $imgeData);
-                $image->removeAttribute('src');
-                $image->setAttribute('src', env('APP_URL')."/storage/".$image_name);
-            }
-        }
+        // foreach ($imageFile as $item => $image) {
+        //     $data = $image->getAttribute('src');
+        //     if (count(explode(';', $data)) > 1) {
+        //         list($type, $data) = explode(';', $data);
+        //         list(, $data)      = explode(',', $data);
+        //         $imgeData = base64_decode($data);
+        //         $image_name = "uploads/images/emails/" . time() . $item . '.png';
+        //         // $path = public_path() . $image_name;
+        //         // file_put_contents($path, $imgeData);
+        //         Storage::put("public/".$image_name, $imgeData);
+        //         $image->removeAttribute('src');
+        //         $image->setAttribute('src', env('APP_URL')."/storage/".$image_name);
+        //     }
+        // }
 
-        $content = $dom->saveHTML();
+        // $content = $dom->saveHTML();
         $request->merge([ 'content' => $content ]);
         $emailTemp = EmailTemplate::find($id);
         if ($request->cid && $emailTemp->template_type != 'Campaign') {
