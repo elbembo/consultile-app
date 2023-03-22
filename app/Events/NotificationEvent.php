@@ -13,7 +13,7 @@ class NotificationEvent implements ShouldBroadcast
     public $message;
     public function __construct($message)
     {
-        $this->message = 'hello world';
+        $this->message = $message;
 
     }
 
