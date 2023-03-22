@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\CampaignComplete;
+use App\Events\NotificationEvent;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
@@ -106,20 +107,6 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
 });
 Route::get('test2', function () {
 
-    require __DIR__ . '/../vendor/autoload.php';
-
-    $options = array(
-        'cluster' => 'mt1',
-        'useTLS' => true
-    );
-    $pusher = new Pusher\Pusher(
-        'e26f3579c24775647413',
-        'bd4323c99bf947f7003f',
-        '1571838',
-        $options
-    );
-
-    $data['message'] = 'hello world';
-    $pusher->trigger('my-channel', 'my-event', $data);
+    event(new NotificationEvent('dddddddddddd'));
     return 'notification sent';
 });
