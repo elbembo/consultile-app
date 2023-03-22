@@ -235,7 +235,7 @@ class EmailTemplateController extends Controller
             Store $imageName name in DATABASE from HERE
         */
 
-        return response(env('APP_URL').'/uploads/campaigns/'.$imageName);
+        return response(env('APP_URL','https://app.consultile.com').'/uploads/campaigns/'.$imageName);
         // if ($_FILES['file']['name']) {
         //     if (!$_FILES['file']['error']) {
         //       $name = md5(rand(100, 200));
