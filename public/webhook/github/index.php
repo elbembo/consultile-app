@@ -13,8 +13,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         return $result;
     }
     $data[] = execPrint("git pull");
-    $data[] = execPrint("php82 artisan optimize:clear");
-    $data[] = execPrint("php82 /home/u2043-oclzxdlfwlcl/www/app.consultile.com/public_html/artisan optimize");
+    $data[] = execPrint("php82 /home/u2043-oclzxdlfwlcl/www/app.consultile.com/public_html/artisan cache:clear");
+    $data[] = execPrint("php82 /home/u2043-oclzxdlfwlcl/www/app.consultile.com/public_html/artisan route:clear");
+    $data[] = execPrint("php82 /home/u2043-oclzxdlfwlcl/www/app.consultile.com/public_html/artisan view:clear");
+    $data[] = execPrint("php82 /home/u2043-oclzxdlfwlcl/www/app.consultile.com/public_html/artisan config:clear");
+    $data[] = execPrint("php82 /home/u2043-oclzxdlfwlcl/www/app.consultile.com/public_html/artisan event:clear");
+    $data[] = execPrint("php82 /home/u2043-oclzxdlfwlcl/www/app.consultile.com/public_html/artisan optimize:clear");
+    $data[] = execPrint("php82 /home/u2043-oclzxdlfwlcl/www/app.consultile.com/public_html/artisan route:cache");
+    $data[] = execPrint("php82 /home/u2043-oclzxdlfwlcl/www/app.consultile.com/public_html/artisan view:cache");
+    $data[] = execPrint("php82 /home/u2043-oclzxdlfwlcl/www/app.consultile.com/public_html/artisan config:cache");
+    $data[] = execPrint("php82 /home/u2043-oclzxdlfwlcl/www/app.consultile.com/public_html/artisan event:cache");
     $data[] = execPrint("php82 /home/u2043-oclzxdlfwlcl/www/app.consultile.com/public_html/artisan optimize");
     $data[] = __DIR__;
     header('Content-Type: application/json; charset=utf-8');

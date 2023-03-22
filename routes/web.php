@@ -23,6 +23,7 @@ use App\Http\Controllers\UserController;
 use App\Models\Contact;
 use App\Models\EmailTraker;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -111,3 +112,13 @@ Route::get('test2', function () {
     return 'notification sent';
 });
 Route::post('upload',[EmailTemplateController::class,'fileUpload']);
+Route::get('/clear-cache', function() {
+    $data[] = Artisan::call('cache:clear');
+    $data[] = Artisan::call('route:clear');
+    $data[] = Artisan::call('view:clear');
+    $data[] = Artisan::call('config:clear');
+    $data[] = Artisan::call('event:clear');
+    $data[] = Artisan::call('optimize:clear');
+
+    return response("<h1>All Cache Cleared Successfully</h1>");
+});
