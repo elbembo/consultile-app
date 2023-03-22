@@ -108,11 +108,11 @@ Route::get('test', function () {
     // event(new App\Events\NotificationEvent('Monika'));
     $body = '{"data":"{\"message\":\"hello world\"}","name":"my-event","channel":"my-channel"}';
     // $body = md5();
-    $response = Http::acceptJson()->withUrlParameters([
+    $response = Http::acceptJson()->post('https://api-mt1.pusher.com/apps/1571838/events?body_md5=2c99321eeba901356c4c7998da9be9e0&auth_version=1.0&auth_key=e26f3579c24775647413&auth_timestamp=1679466297&auth_signature=0c957f5f2f6c96bb50238b4958d161262155a4892002a5e9d21ffe9acdee3cb1&',[
         'data' => ['message' => 'hello world' ],
         'name' => 'my-event',
         'channel' => 'my-channel'
-    ])->get('https://api-mt1.pusher.com/apps/1571838/events?body_md5=2c99321eeba901356c4c7998da9be9e0&auth_version=1.0&auth_key=e26f3579c24775647413&auth_timestamp=1679466297&auth_signature=0c957f5f2f6c96bb50238b4958d161262155a4892002a5e9d21ffe9acdee3cb1&');
+    ]);
     dump($response);
     return 'notification sent';
 });
