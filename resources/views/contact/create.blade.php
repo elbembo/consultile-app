@@ -208,7 +208,7 @@
         const opts = {
           onSelectItem: console.log,
         };
-    
+
         const src = [
             @forEach($companies as $key => $companiy)
                  '{{ $key }}',
@@ -221,7 +221,7 @@
           highlightTyped: true,
           onSelectItem: (e)=>{console.log(e)},
         });
-        
+
         const formsubmit = document.getElementById('contact-form')
         formsubmit?.addEventListener('submit', handleSubmit)
         async function handleSubmit(e) {
@@ -240,7 +240,7 @@
                 if (ele.value.trim() != '' || ele.value.trim() != ele.dataset.default.trim())
                     await  post("/check-duplicate", { name, value } )
                     .then(json=>{
-                        
+
                         ele.classList.remove('border-danger')
                         ele?.nextElementSibling?.remove()
                         if (json?.id) {
@@ -248,10 +248,9 @@
                             ele.parentNode.insertBefore(span, ele.nextSibling);
                             span.innerHTML = `<p class="text-danger text-xs mt-2">Its already exist under ${json?.first_name} ${json?.last_name}, click <a href="/contacts/${json?.id}/edit">here</a> to update it.</a></p>`
                             err++
-                        } 
-                    })        
+                        }
+                    })
             }
-            @role('supervisor')
             // e.preventDefault()
             let company = form.company
             company.classList.remove('border-danger')
@@ -259,19 +258,20 @@
             if(!src.includes(form.company.value)) {
                 company.classList.add('border-danger')
                 // company.parentNode.insertBefore(span, company.nextSibling)
-                alert('Campany name not found')
+                if(!confirm("Campany name not found.\n Do you want add it as a new one")){
+                    form.submitBtn.disabled = false
+                    return false
+                }
                 // span.innerHTML = `<p class="text-danger text-xs mt-2">Campany name not found</p>`
-                err++
             }
-            @endrole
             console.log(err)
             if(err == 0)
                 form.submit();
             else
                 form.submitBtn.disabled = false
 
-            
+
         }
-        
+
       </script>
 @endsection

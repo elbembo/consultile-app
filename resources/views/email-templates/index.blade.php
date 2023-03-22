@@ -33,9 +33,7 @@
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         role
                                     </th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Creat Capmaign
-                                    </th>
+
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Action
                                     </th>
@@ -62,9 +60,7 @@
                                     <td class="text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{ $emailTemplate->template_type }}</p>
                                     </td>
-                                    <td class="text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">16/06/18</span>
-                                    </td>
+
                                     <td class="text-center">
                                         <a href="{{url('email/templates/'.$emailTemplate->id.'/edit')}}" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
                                             <i class="fas fa-user-edit text-secondary"></i>
