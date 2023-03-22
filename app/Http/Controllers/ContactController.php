@@ -251,6 +251,6 @@ class ContactController extends Controller
                 }
             }
         }
-        return view('unsubscribe', compact('t'));
+        return view('unsubscribe', compact('t'))->with('msg','ok');
     }
 }

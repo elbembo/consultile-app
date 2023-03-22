@@ -2,11 +2,7 @@
 
 @section('content')
     <div>
-        <div class="alert alert-secondary mx-4" role="alert">
-            <span class="text-white">
-                <strong>Add, Edit, Delete marketing campaign </strong>
-            </span>
-        </div>
+
 
         <div class="row">
             <div class="col-12">

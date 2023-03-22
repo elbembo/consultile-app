@@ -49,13 +49,15 @@
                         <i class="fa fa-bell cursor-pointer position-relative"><span
                                 class="ba badge badge-circle badge-notifcation"> </span></i>
                     </a>
-                    @if (count(auth()->user()->unreadNotifications) > 0)
-                        <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4"
-                            aria-labelledby="dropdownMenuButton">
+
+                    <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4"
+                        aria-labelledby="dropdownMenuButton">
+                        @if (count(auth()->user()->unreadNotifications) > 0)
                             @foreach (auth()->user()->unreadNotifications as $notifications)
                                 <li class="mb-2 notifications" data-id="{{ $notifications->id }}">
                                     <button data-id="{{ $notifications->id }}" class="btn btn-link close-noti p-1">
-                                        <i  data-id="{{ $notifications->id }}" class="fas fa-times text-black-50" aria-hidden="true"></i>
+                                        <i data-id="{{ $notifications->id }}" class="fas fa-times text-black-50"
+                                            aria-hidden="true"></i>
                                     </button>
                                     <a class="dropdown-item border-radius-md"
                                         href="{{ $notifications->data['action'] }}">
@@ -83,9 +85,13 @@
                                     </a>
                                 </li>
                             @endforeach
-                    @endif
-            </ul>
-            </li>
+                        @endif
+                        <li class="border-top-sm row">
+                            <a href="/notifications" class="btn-link pt-2 text-center">Show all notifications</a>
+                        </li>
+                    </ul>
+
+                </li>
             </ul>
         </div>
     </div>

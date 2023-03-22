@@ -34,133 +34,69 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::domain('subscribe.'.env('APP_DOMAIN','consultile.com'))->group(function () {
+Route::domain('subscribe.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
     Route::resource('/', SubscribeHomeController::class);
-
 });
-Route::domain('app.'.env('APP_DOMAIN','consultile.com'))->group(function () {
-Route::group(['middleware' => ['auth', 'permission']], function () {
-    Route::get('/', [HomeController::class, 'home'])->name('home');
-    Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
+    Route::group(['middleware' => ['auth', 'permission']], function () {
+        Route::get('/', [HomeController::class, 'home'])->name('home');
+        Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+
+        Route::get('contacts/export', [ContactController::class, 'export'])->name('contacts.export');
+        Route::get('contacts/export-example', [ContactController::class, 'exportExample'])->name('contacts.export.example');
+        Route::get('contacts/import', [ContactController::class, 'import'])->name('contacts.import');
+        Route::post('contacts/import', [ContactController::class, 'import'])->name('contacts.import.upload');
+
+        Route::resource('contacts', ContactController::class);
+
+        Route::get('email/template/preview/{id}', [EmailTemplateController::class, 'preview'])->name('mail-preview');
+
+        Route::get('/logout', [SessionsController::class, 'destroy']);
+
+        Route::post('/send-test-email', [CampaignController::class, 'send_test'])->name('email.send_test');
+        Route::resource('campaigns', CampaignController::class);
+        Route::delete('campaigns/{campaign}/attachments', [CampaignController::class, 'removeAttachment'])->name('campaigns.removeAttachment');
+
+        Route::resource('users', UserController::class);
+        Route::resource('email/templates', EmailTemplateController::class);
+        Route::resource('editor', SummernoteController::class);
 
 
-    // Route::get('dashboard', function () {
-    //     return redirect('campaigns.index');
-    // })->name('dashboard');
+        Route::resource('settings/trash', Trash::class);
+        Route::resource('settings/roles', RolesController::class);
+        Route::resource('settings/permissions', PermissionsController::class);
+        // Ajax
+        Route::post('/email-validation-dns', [ContactController::class, 'emailValidation'])->name('email.validation.dns');
+        Route::post('/check-duplicate', [ContactController::class, 'isDuplicate'])->name('check.duplicate');
+        Route::post('/contacts/search', [ContactController::class, 'search'])->name('contacts.search');
+        Route::post('/notifcations/{id}/read', [UserController::class, 'read'])->name('notifications.read');
+        Route::get('/notifications', [UserController::class, 'notifications'])->name('notifications.index');
+    });
 
-    // Route::get('billing', function () {
-    //     return view('billing');
-    // })->name('billing');
+    Route::get('/test',  function () {
+        return view('test');
+    })->name('test');
 
-    // Route::get('profile', function () {
-    //     return view('profile');
-    // })->name('profile');
+    Route::group(['middleware' => 'guest'], function () {
+        Route::get('/register', [RegisterController::class, 'create']);
+        Route::post('/register', [RegisterController::class, 'store']);
+        Route::get('/login', [SessionsController::class, 'create'])->name('login');
+        Route::post('/session', [SessionsController::class, 'store']);
+        Route::get('/login/forgot-password', [ResetController::class, 'create']);
+        Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
+        Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
+        Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
+    });
+    Route::get('/email-preview', function () {
+        return view('mail.test');
+    })->name('email.preview');
 
-    // Route::get('rtl', function () {
-    //     return view('rtl');
-    // })->name('rtl');
+    // Route::get('/login', [SessionsController::class, 'create'])->name('login');
 
-    // Route::get('contacts/{contact}/edit', function () {
-    // 	return view('laravel-examples/contact');
-    // })->name('contacts-edit');
-
-    // Route::get('contacts/new', function () {
-    // 	return view('laravel-examples/contact');
-    // })->name('contacts-new');
-
-    // Route::get('contacts', function () {
-    // 	return view('laravel-examples/contacts');
-    // })->name('contacts');
-
-
-
-    Route::get('contacts/export', [ContactController::class, 'export'])->name('contacts.export');
-    Route::get('contacts/export-example', [ContactController::class, 'exportExample'])->name('contacts.export.example');
-    Route::get('contacts/import', [ContactController::class, 'import'])->name('contacts.import');
-    Route::post('contacts/import', [ContactController::class, 'import'])->name('contacts.import.upload');
-
-    Route::resource('contacts', ContactController::class);
-
-
-
-
-
-
-    // Route::get('user-management', function () {
-    //     return view('laravel-examples/user-management');
-    // })->name('user-management');
-
-    // Route::get('tables', function () {
-    //     return view('tables');
-    // })->name('tables');
-
-    // Route::get('virtual-reality', function () {
-    //     return view('virtual-reality');
-    // })->name('virtual-reality');
-
-    // Route::get('static-sign-in', function () {
-    //     return view('static-sign-in');
-    // })->name('sign-in');
-
-    // Route::get('static-sign-up', function () {
-    //     return view('static-sign-up');
-    // })->name('sign-up');
-    Route::get('email/template/preview/{id}', [EmailTemplateController::class, 'preview'])->name('mail-preview');
-
-    Route::get('/logout', [SessionsController::class, 'destroy']);
-    // Route::get('/user-profile', [InfoUserController::class, 'create']);
-    // Route::post('/user-profile', [InfoUserController::class, 'store']);
-    // Route::get('/login', function () {
-    //     return view('campaigns');
-    // })->name('sign-up');
-
-    Route::post('/send-test-email', [CampaignController::class, 'send_test'])->name('email.send_test');
-    Route::resource('campaigns', CampaignController::class);
-    Route::delete('campaigns/{campaign}/attachments', [CampaignController::class, 'removeAttachment'])->name('campaigns.removeAttachment');
-
-    Route::resource('users', UserController::class);
-    Route::resource('email/templates', EmailTemplateController::class);
-    Route::resource('editor', SummernoteController::class);
-
-
-    Route::resource('settings/trash', Trash::class);
-    Route::resource('settings/roles', RolesController::class);
-    Route::resource('settings/permissions', PermissionsController::class);
-    // Ajax
-    Route::post('/email-validation-dns', [ContactController::class, 'emailValidation'])->name('email.validation.dns');
-    Route::post('/check-duplicate', [ContactController::class, 'isDuplicate'])->name('check.duplicate');
-    Route::post('/contacts/search', [ContactController::class, 'search'])->name('contacts.search');
-    Route::post('/notifcations/{id}/read', [UserController::class, 'read'])->name('notifcations.read');
-
-});
-
-Route::get('/test',  function ()
-{
-    return view('test');
-})->name('test');
-
-Route::group(['middleware' => 'guest'], function () {
-    Route::get('/register', [RegisterController::class, 'create']);
-    Route::post('/register', [RegisterController::class, 'store']);
-    Route::get('/login', [SessionsController::class, 'create'])->name('login');
-    Route::post('/session', [SessionsController::class, 'store']);
-    Route::get('/login/forgot-password', [ResetController::class, 'create']);
-    Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
-    Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
-    Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
-    
-});
-Route::get('/email-preview', function () {
-    return view('mail.test');
-})->name('email.preview');
-
-// Route::get('/login', [SessionsController::class, 'create'])->name('login');
-
-Route::get('/newsletters/images/{id}.png', [EmailTrakerController::class, 'index']);
-Route::get('/messages/receipt/{id}.png', [EmailTrakerController::class, 'index']);
-Route::get('/report', [CampaignReportController::class, 'index']);
-Route::get('unsubscribe', [ContactController::class, 'unsubscribe']);
-Route::post('unsubscribe', [ContactController::class, 'unsubscribe']);
-Route::get('companies', [ContactController::class, 'companies']);
-
+    Route::get('/newsletters/images/{id}.png', [EmailTrakerController::class, 'index']);
+    Route::get('/messages/receipt/{id}.png', [EmailTrakerController::class, 'index']);
+    Route::get('/report', [CampaignReportController::class, 'index']);
+    Route::get('unsubscribe', [ContactController::class, 'unsubscribe']);
+    Route::post('unsubscribe', [ContactController::class, 'unsubscribe']);
+    Route::get('companies', [ContactController::class, 'companies']);
 });

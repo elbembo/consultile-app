@@ -303,7 +303,7 @@ $(document).ready(function () {
     });
     // $s('input[name="email"]').blur(checkThisBitch)
     // $s('input[name*="phone"]').blur(checkThisBitch)
-    document.querySelector('#search').addEventListener('keypress', (e) => {
+    document.querySelector('#search')?.addEventListener('keypress', (e) => {
         if (event.key === "Enter") {
             if (e.target.value.length >= 3) {
                 const first = new URL(location.href).pathname.split("/")[1]

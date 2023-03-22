@@ -20,6 +20,13 @@ class UserController extends Controller
     {
         return view('users.create');
     }
+    public function notifications()
+    {
+        # code...
+        $notifications = auth()->user()->notifications ;
+        return view('notifications',compact('notifications'));
+
+    }
     public function read($id)
     {
         $user = auth()->user();

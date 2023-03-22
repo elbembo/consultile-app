@@ -67,7 +67,7 @@
                     <span class="nav-link-text ms-1">Email Templates</span>
                 </a>
             </li>
-            @can('trash.index')
+            @role('admin')
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#applicationsExamples" class="nav-link  {{ str_contains(url()->current(), 'settings') ? 'active' : '' }}"
                         aria-controls="applicationsExamples" role="button" aria-expanded="false">
@@ -121,7 +121,7 @@
                         </ul>
                     </div>
                 </li>
-            @endcan
+            @endrole
         </ul>
     </div>
 

@@ -251,6 +251,7 @@
                         } 
                     })        
             }
+            @role('supervisor')
             // e.preventDefault()
             let company = form.company
             company.classList.remove('border-danger')
@@ -262,6 +263,7 @@
                 // span.innerHTML = `<p class="text-danger text-xs mt-2">Campany name not found</p>`
                 err++
             }
+            @endrole
             console.log(err)
             if(err == 0)
                 form.submit();

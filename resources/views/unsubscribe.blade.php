@@ -460,7 +460,15 @@
                 </g>
             </svg>
             <div class="bottom">
+                @if($msg)
                 {{-- <h2 class="title">Do you want to unsubscribe? </h2> --}}
+                <div class="text-center text-muted mb-4">
+                    <h2>Thank you for your feedback.</h2>
+                </div>
+                <script>
+                    setTimeout("location.href = 'https://www.consultile.com/';", 3000);
+                </script>
+                @else
                 <p class="subtitle">If you unsubscribe, you will stop receiving our weekly newsletter.</p>
                 <div class="buttons">
 
@@ -522,6 +530,7 @@
                     <button id="notice">Just notice us</button>
                     <button id="go-back">Go back</button>
                 </div>
+                @endif
             </div>
         </div>
 
