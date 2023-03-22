@@ -14,7 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     $data[] = execPrint("git pull");
     $data[] = execPrint("php82 artisan optimize:clear");
-    $data[] = execPrint("php82 artisan optimize");
+    $data[] = execPrint("php82 /home/u2043-oclzxdlfwlcl/www/app.consultile.com/public_html/artisan optimize");
+    $data[] = execPrint("php82 /home/u2043-oclzxdlfwlcl/www/app.consultile.com/public_html/artisan optimize");
+    $data[] = __DIR__;
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode($data);
 }else{
