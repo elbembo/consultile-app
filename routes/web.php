@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\CampaignComplete;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
@@ -75,10 +76,13 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
         Route::resource('/server', ServerController::class);
     });
 
-    Route::get('/test',  function () {
-        return view('test');
-    })->name('test');
-
+    // Route::get('/test',  function () {
+    //     return view('test');
+    // })->name('test');
+    Route::get('test', function () {
+        event(new CampaignComplete('Someone'));
+        return "Event has been sent!";
+    });
     Route::group(['middleware' => 'guest'], function () {
         Route::get('/register', [RegisterController::class, 'create']);
         Route::post('/register', [RegisterController::class, 'store']);

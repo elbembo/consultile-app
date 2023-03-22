@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Events\CampaignComplete;
 use App\Helpers\Helper;
 use App\Http\Controllers\CampaignController;
 use App\Mail\SendCampaignEmails;
@@ -38,7 +39,7 @@ class SendEmail extends Command
     {
 
         CampaignController::send();
-
+        event(new CampaignComplete('hello world'));
 
         return Command::SUCCESS;
     }
