@@ -81,7 +81,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
     // })->name('test');
     Route::get('test', function () {
         event(new App\Events\NotificationEvent('Monika'));
-        return view('test');
+        return 'notification sent';
     });
     Route::group(['middleware' => 'guest'], function () {
         Route::get('/register', [RegisterController::class, 'create']);
