@@ -95,7 +95,7 @@
                 aria-atomic="true">
                 <div class="toast-header bg-transparent border-0 d-flex">
                     <i class="${data.message.icon} text-white me-2"></i>
-                    <span class="me-auto text-white font-weight-bold toast-title">Campaign ${data.message.titel} </span>
+                    <span class="me-auto text-white font-weight-bold toast-title">Campaign ${data.message.title} </span>
                     <small class="text-white"></small>
                     <i class="fas fa-times text-md text-white ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"
                         aria-hidden="true"></i>
