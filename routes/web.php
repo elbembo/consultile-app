@@ -53,7 +53,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
 
         Route::get('email/template/preview/{id}', [EmailTemplateController::class, 'preview'])->name('mail-preview');
 
-        
+
 
         Route::post('/send-test-email', [CampaignController::class, 'send_test'])->name('email.send_test');
         Route::resource('campaigns', CampaignController::class);
@@ -79,10 +79,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
     // Route::get('/test',  function () {
     //     return view('test');
     // })->name('test');
-    Route::get('test', function () {
-        event(new App\Events\NotificationEvent('Monika'));
-        return 'notification sent';
-    });
+
     Route::group(['middleware' => 'guest'], function () {
         Route::get('/register', [RegisterController::class, 'create']);
         Route::post('/register', [RegisterController::class, 'store']);
@@ -105,4 +102,8 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
     Route::get('unsubscribe', [ContactController::class, 'unsubscribe']);
     Route::post('unsubscribe', [ContactController::class, 'unsubscribe']);
     Route::get('companies', [ContactController::class, 'companies']);
+});
+Route::get('test', function () {
+    event(new App\Events\NotificationEvent('Monika'));
+    return 'notification sent';
 });
