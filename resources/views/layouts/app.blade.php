@@ -29,12 +29,12 @@
     <link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
     <!-- CSS Files -->
     <link id="appstyle" href="/assets/css/core.css?v=1.0.3" rel="stylesheet" />
-    <link id="pagestyle" href="/assets/css/style.css?v=1.0.4" rel="stylesheet" />
+    <link id="pagestyle" href="/assets/css/style.css?v=1.0.5" rel="stylesheet" />
     <link href="/assets/css/summernote.min.css" rel="stylesheet">
     <script src="/assets/js/plugins/jquery-3.5.1.min.js"></script>
     <script src="/assets/js/core/bootstrap.bundle.min.js"></script>
     {{-- <script src="/assets/js/plugins/bootstrap-autocomplete.min.js"></script> --}}
-    <script src="/assets/js/init.js?v=1.0.4"></script>
+    <script src="/assets/js/init.js?v=1.0.5"></script>
     <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
     <script>
         // Enable pusher logging - don't include this in production
@@ -49,6 +49,7 @@
             alert(JSON.stringify(data));
         });
     </script>
+
 </head>
 
 <body
@@ -77,7 +78,7 @@
     {{-- <script src="/assets/js/core.min.js?v=1.0.4"></script> --}}
     <script src="/assets/js/plugins/summernote.min.js"></script>
     <script src="/assets/js/plugins/moment.min.js"></script>
-    <script src="/assets/js/main.js?v=1.0.4"></script>
+    <script src="/assets/js/main.js?v=1.0.5"></script>
 
     @stack('rtl')
     @stack('dashboard')
