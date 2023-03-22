@@ -89,27 +89,8 @@
 
     var channel = pusher.subscribe('my-channel');
     channel.bind('my-event', function(data) {
-        let doc = new DOMParser().parseFromString(
-            `<div class="toast fade p-2 mt-2 bg-gradient-success hide" role="alert" aria-live="assertive" id="notifyMini"
-                aria-atomic="true">
-                <div class="toast-header bg-transparent border-0 d-flex">
-                    <i class="${data.icon} text-white me-2"></i>
-                    <span class="me-auto text-white font-weight-bold toast-title">Campaign ${data.titel} </span>
-                    <small class="text-white"></small>
-                    <i class="fas fa-times text-md text-white ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"
-                        aria-hidden="true"></i>
-                </div>
-                <hr class="horizontal light m-0">
-                <div class="toast-body text-white d-flex">
-                    ${data.body}
-                </div>
-            </div>`, 'text/html')
+        console.log(data)
 
-        let toastEle = doc.body.querySelector('.toast');
-        console.log(toastEle)
-        document.getElementById('notifyBase').appendChild(toastEle)
-        let toast = new bootstrap.Toast(toastEle)
-        toast.show()
     });
 </script>
 
