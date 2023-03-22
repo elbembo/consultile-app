@@ -104,7 +104,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
     Route::post('unsubscribe', [ContactController::class, 'unsubscribe']);
     Route::get('companies', [ContactController::class, 'companies']);
 });
-Route::get('test', function () {
+Route::get('test2', function () {
 
     require __DIR__ . '/../vendor/autoload.php';
 
