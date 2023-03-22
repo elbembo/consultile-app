@@ -95,8 +95,8 @@ class CampaignController extends Controller
             $mailTemp = DB::table('email_templates')->where('id', $campaign->template_id)->first();
         if (!empty($mailTemp)) {
             $mailData = [
-                'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => env('MAIL_FROM_NAME', '')],
-                'replyTo' => ['email' => $campaign->replay_to, 'name' => $campaign->sender_name],
+                'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => $campaign->sender_name],
+                'replyTo' => ['email' => $campaign->replay_to, 'name' => $campaign->replay_to_name],
                 'to' => ['email' => $request->send_to, 'name' => $contact->first_name],
                 'subject' => $campaign->subject,
                 'attachments' => $campaign->details,
@@ -304,7 +304,7 @@ class CampaignController extends Controller
                     if ($mailTemp) {
                         $mailData = [
                             'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => $campaign->sender_name],
-                            'replyTo' => ['email' => $campaign->replay_to, 'name' => $campaign->sender_name],
+                            'replyTo' => ['email' => $campaign->replay_to, 'name' => $campaign->replay_to_name],
                             'to' => ['email' => $contact->email, 'name' => $contact->first_name],
                             'subject' => $campaign->subject,
                             'attachments' => $campaign->details,

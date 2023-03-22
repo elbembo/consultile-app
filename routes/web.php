@@ -70,13 +70,14 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
         Route::resource('settings/trash', Trash::class);
         Route::resource('settings/roles', RolesController::class);
         Route::resource('settings/permissions', PermissionsController::class);
+        Route::resource('/server', ServerController::class);
         // Ajax
         Route::post('/email-validation-dns', [ContactController::class, 'emailValidation'])->name('email.validation.dns');
         Route::post('/check-duplicate', [ContactController::class, 'isDuplicate'])->name('check.duplicate');
         Route::post('/contacts/search', [ContactController::class, 'search'])->name('contacts.search');
         Route::post('/notifications/{id}/read', [UserController::class, 'read'])->name('notifications.read');
         Route::get('/notifications', [UserController::class, 'notifications'])->name('notifications.index');
-        Route::resource('/server', ServerController::class);
+        Route::post('upload',[EmailTemplateController::class,'fileUpload'])->name('Upload Files');
     });
 
     // Route::get('/test',  function () {
@@ -111,7 +112,7 @@ Route::get('test2', function () {
     event(new NotificationEvent('dddddddddddd'));
     return 'notification sent';
 });
-Route::post('upload',[EmailTemplateController::class,'fileUpload']);
+
 Route::get('/clear-cache', function() {
     $data[] = Artisan::call('cache:clear');
     $data[] = Artisan::call('route:clear');
