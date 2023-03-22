@@ -35,7 +35,7 @@
     <script src="/assets/js/core/bootstrap.bundle.min.js"></script>
     {{-- <script src="/assets/js/plugins/bootstrap-autocomplete.min.js"></script> --}}
     <script src="/assets/js/init.js?v=1.0.5"></script>
-    
+
 
 </head>
 
@@ -87,8 +87,8 @@
         cluster: 'mt1'
     });
 
-    var channel = pusher.subscribe('notification-send');
-    channel.bind('notification-event', function(data) {
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
         alert(JSON.stringify(data));
     });
 </script>

@@ -19,11 +19,11 @@ class NotificationEvent implements ShouldBroadcast
     public function broadcastOn()
     {
         //it is a broadcasting channel you need to add this route in channels.php file
-        return ['notification-send'];
+        return ['my-channel'];
     }
 
     public function broadcastAs()
     {
-        return 'notification-event';
+        return 'my-event';
     }
 }
