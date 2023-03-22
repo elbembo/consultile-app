@@ -53,7 +53,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
 
         Route::get('email/template/preview/{id}', [EmailTemplateController::class, 'preview'])->name('mail-preview');
 
-        Route::get('/logout', [SessionsController::class, 'destroy']);
+        
 
         Route::post('/send-test-email', [CampaignController::class, 'send_test'])->name('email.send_test');
         Route::resource('campaigns', CampaignController::class);
@@ -96,7 +96,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
     Route::get('/email-preview', function () {
         return view('mail.test');
     })->name('email.preview');
-
+    Route::get('/logout', [SessionsController::class, 'destroy']);
     // Route::get('/login', [SessionsController::class, 'create'])->name('login');
 
     Route::get('/newsletters/images/{id}.png', [EmailTrakerController::class, 'index']);
