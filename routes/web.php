@@ -80,7 +80,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
     //     return view('test');
     // })->name('test');
     Route::get('test', function () {
-        event(new CampaignComplete('Someone'));
+        event(new App\Events\NotificationEvent('Monika'));
         return view('test');
     });
     Route::group(['middleware' => 'guest'], function () {
