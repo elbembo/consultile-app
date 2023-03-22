@@ -223,36 +223,33 @@ class EmailTemplateController extends Controller
     }
     public function fileUpload(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'content' => 'required'
+        $request->validate([
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+        $imageName = time().'.'.$request->file->extension();
 
-        $content = $request->content;
-        $dom = new \DomDocument();
-        $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        $imageFile = $dom->getElementsByTagName('imageFile');
+        $request->file->move(public_path('uploads/campaigns'), $imageName);
 
-        foreach ($imageFile as $item => $image) {
-            $data = $image->getAttribute('src');
-            list($type, $data) = explode(';', $data);
-            list(, $data)      = explode(',', $data);
-            $imgeData = base64_decode($data);
-            $image_name = "/upload/" . time() . $item . '.png';
-            $path = public_path() . $image_name;
-            file_put_contents($path, $imgeData);
+        /*
+            Write Code Here for
+            Store $imageName name in DATABASE from HERE
+        */
 
-            $image->removeAttribute('src');
-            $image->setAttribute('src', $image_name);
-        }
-
-        $content = $dom->saveHTML();
-        // $fileUpload = new Employee;
-        // $fileUpload->name = $request->name;
-        // $fileUpload->content = $content;
-        // $fileUpload->save();
-
-        dd($content);
+        return response(env('APP_URL').'/uploads/campaigns/'.$imageName);
+        // if ($_FILES['file']['name']) {
+        //     if (!$_FILES['file']['error']) {
+        //       $name = md5(rand(100, 200));
+        //       $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+        //       $filename = $name.
+        //       '.'.$ext;
+        //       $destination = '/public/assets/img/newsletter/'.$filename; //change this directory
+        //       $location = $_FILES["file"]["tmp_name"];
+        //       move_uploaded_file($location, $destination);
+        //       return response('http://app.localhost:8000/assets/img/newsletter/'.$filename); //change this URL
+        //     } else {
+        //         return response('Ooops!  Your upload triggered the following error:  '.$_FILES['file']['error']);
+        //     }
+        //   }
     }
 
     /**

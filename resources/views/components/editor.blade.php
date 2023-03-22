@@ -63,7 +63,6 @@
 
 
     <script>
-
         (function() {
             var HelloButton = function(context) {
                 var ui = $.summernote.ui;
@@ -98,6 +97,11 @@
                     buttons: {
                         hello: HelloButton
                     },
+                    callbacks: {
+                        onImageUpload: function(files, editor, welEditable) {
+                            sendFile(files[0], editor, welEditable);
+                        }
+                    },
                     tableClassName: function() {
                         alert("tbl");
                         $(this)
@@ -119,6 +123,25 @@
                 .data("summernote");
 
             //get
+            function sendFile(file, editor, welEditable) {
+                data = new FormData();
+                data.append("file", file);
+                $.ajax({
+                    data: data,
+                    headers: {
+                        'X-CSRF-Token': '{{ csrf_token() }}'
+                    },
+                    type: "POST",
+                    url: "upload",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(url) {
+                        var image = $('<img>').attr('src', url);
+                        $('#ta-1').summernote("insertNode", image[0]);
+                    }
+                });
+            }
             $("#btn-get-content").on("click", function() {
                 var y = $($sumNote.code());
 

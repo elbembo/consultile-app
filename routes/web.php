@@ -110,3 +110,4 @@ Route::get('test2', function () {
     event(new NotificationEvent('dddddddddddd'));
     return 'notification sent';
 });
+Route::post('upload',[EmailTemplateController::class,'fileUpload']);
