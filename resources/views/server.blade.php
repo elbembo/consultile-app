@@ -1,6 +1,14 @@
 @extends('layouts.user_type.auth')
 
 @section('content')
+<div class="alert alert-danger " role="alert">
+    <span class="text-white">
+        <strong>Warning don't change anything if you don't know what you do , any unknown change can make a huge damage.</strong>
+        <strong>This part has a sensitive data be careful.</strong>
+
+
+    </span>
+</div>
     <div class="row">
         <div class="card">
             <div class="card-body p-3">
