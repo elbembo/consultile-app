@@ -12,7 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // print("</pre>");
         return $result;
     }
-    $data = execPrint("git pull");
+    $data[] = execPrint("git pull");
+    $data[] = execPrint("php82 artisan optimize:clear");
+    $data[] = execPrint("php82 artisan optimize");
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode($data);
 }else{
