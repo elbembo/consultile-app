@@ -35,21 +35,7 @@
     <script src="/assets/js/core/bootstrap.bundle.min.js"></script>
     {{-- <script src="/assets/js/plugins/bootstrap-autocomplete.min.js"></script> --}}
     <script src="/assets/js/init.js?v=1.0.5"></script>
-    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
-    <script>
-        // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
-
-        var pusher = new Pusher('1ed4ee292908da3c9131', {
-            cluster: 'eu'
-        });
-
-        var channel = pusher.subscribe('campaign-complete');
-
-        channel.bind('complete-event', function(data) {
-            alert(JSON.stringify(data));
-        });
-    </script>
+    
 
 </head>
 
@@ -92,7 +78,20 @@
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
     </script>
+<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+<script>
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
 
+    var pusher = new Pusher('1ed4ee292908da3c9131', {
+        cluster: 'eu'
+    });
+
+    var channel = pusher.subscribe('notification-send');
+    channel.bind('notification-event', function(data) {
+        alert(JSON.stringify(data));
+    });
+</script>
 
 </body>
 
