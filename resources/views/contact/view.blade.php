@@ -10,7 +10,7 @@
                             <h6 class="mb-0">Contact Information</h6>
                         </div>
                         <div class="col-md-4 text-end">
-                            <a href="{{ url('contact/' . $contact->id) }}">
+                            <a href="{{ url('contacts/' . $contact->id.'/edit') }}">
                                 <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip"
                                     data-bs-placement="top" title="" aria-hidden="true"
                                     data-bs-original-title="Edit Profile" aria-label="Edit Profile"></i><span
@@ -59,6 +59,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="col-md-4 mt-md-0 mt-4">
             <div class="card h-100">
                 <div class="card-header pb-0 p-3">
@@ -77,6 +78,29 @@
                                         <h6 class="mb-0 text-sm">{{ $data['name'] }}</h6>
                                         <p class="mb-0 text-xs">{{ $data['subject'] }}</p>
                                         <p class="mb-0 text-xs">{{date('d-m-Y', strtotime( $data['created_at'] ))}}</p>
+                                    </div>
+                                </li>
+                            @endforeach
+                        @endif
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mt-md-0 mt-4">
+            <div class="card h-100">
+                <div class="card-header pb-0 p-3">
+                    <h6 class="mb-0">Feedback</h6>
+                </div>
+                <div class="card-body p-3">
+                    <ul class="list-group">
+                        @if (!empty($feedback))
+
+                            @foreach ($feedback as $key=> $data)
+                                <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+                                    <div class="d-flex align-items-start flex-column justify-content-center">
+                                        <h6 class="mb-0 text-sm">{{ $key }}</h6>
+                                        <p class="mb-0 text-xs">{{date('d-m-Y', strtotime( $data[0]['created_at'] ))}}</p>
                                     </div>
                                 </li>
                             @endforeach

@@ -460,7 +460,7 @@
                 </g>
             </svg>
             <div class="bottom">
-                @if($msg)
+                @if(empty($t))
                 {{-- <h2 class="title">Do you want to unsubscribe? </h2> --}}
                 <div class="text-center text-muted mb-4">
                     <h2>Thank you for your feedback.</h2>
@@ -598,7 +598,7 @@
         var eyeFollow = function() {
 
             function getOffset(el) {
-                console.log(el);
+                // console.log(el);
                 el = el.getBoundingClientRect();
                 return {
                     x: el.left + window.scrollX,
@@ -643,8 +643,8 @@
                 mouthHappy = select("mouth-happy"),
                 mouthScared = select("mouth-scared"),
                 mouthSad = select("mouth-sad"),
-                eyeLeft = MorphSVGPlugin.convertToPath(select("eye-left")),
-                eyeRight = MorphSVGPlugin.convertToPath(select("eye-right")),
+                // eyeLeft = MorphSVGPlugin.convertToPath(select("eye-left")),
+                // eyeRight = MorphSVGPlugin.convertToPath(select("eye-right")),
                 eyeLaughingLeft = select("eye-laughing-left"),
                 eyeLaughingRight = select("eye-laughing-right"),
                 eyebrowHappyLeft = select("eyebrow-happy-left"),
@@ -663,19 +663,19 @@
             var title = document.querySelector('.title'),
                 subtitle = document.querySelector('.subtitle');
 
-            var masterTl = new TimelineMax();
+            // var masterTl = new TimelineMax();
 
-            unsubscribeButton.addEventListener("mouseover", willUnsubscribe);
-            cancelButton.addEventListener("mouseover", willCancel);
-            unsubscribeButton.addEventListener("touchstart", willUnsubscribe);
-            cancelButton.addEventListener("touchstart", willCancel);
-            unsubscribeButton.addEventListener("click", hasUnsubscribed);
-            cancelButton.addEventListener("click", hasCancelled);
-            unsubscribeButton.addEventListener("mouseout", initFace);
-            cancelButton.addEventListener("mouseout", initFace);
-            unsubscribeButton.addEventListener("touchleave", initFace);
-            cancelButton.addEventListener("touchleave", initFace);
-            goBackButton.addEventListener("click", goBack);
+            // unsubscribeButton.addEventListener("mouseover", willUnsubscribe);
+            // cancelButton.addEventListener("mouseover", willCancel);
+            // unsubscribeButton.addEventListener("touchstart", willUnsubscribe);
+            // cancelButton.addEventListener("touchstart", willCancel);
+            // unsubscribeButton.addEventListener("click", hasUnsubscribed);
+            // cancelButton.addEventListener("click", hasCancelled);
+            // unsubscribeButton.addEventListener("mouseout", initFace);
+            // cancelButton.addEventListener("mouseout", initFace);
+            // unsubscribeButton.addEventListener("touchleave", initFace);
+            // cancelButton.addEventListener("touchleave", initFace);
+            // goBackButton.addEventListener("click", goBack);
 
             function animateBlob() {
                 var speed = 10;
@@ -774,9 +774,9 @@
                 return shakeTl;
             }
 
-            var doJump = happyJump();
-            var doShake = shake();
-            var addConfetti = makeConfetti();
+            // var doJump = happyJump();
+            // var doShake = shake();
+            // var addConfetti = makeConfetti();
 
             function willUnsubscribe() {
                 masterTl.add(doShake.play());
@@ -996,8 +996,8 @@
 
             function initAnimations() {
                 clicked = false;
-                initFace();
-                animateBlob();
+                // initFace();
+                // animateBlob();
             }
 
             return {

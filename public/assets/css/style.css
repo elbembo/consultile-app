@@ -186,3 +186,6 @@ iframe {
     border-color: rgb(70 191 65 / 95%);
     background-color: rgb(70 191 65 / 95%);
 }
+.alert-light {
+    background-image: linear-gradient(310deg,#e5ebf1 0%,#f5f9ff 100%)!important;
+}

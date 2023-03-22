@@ -71,7 +71,7 @@
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="text-sm font-weight-normal mb-1">
                                                     <span
-                                                        class="font-weight-bold">{{ $notifications->data['event'] }}</span>{{ $notifications->data['title'] }}
+                                                        class="font-weight-bold text-capitalize">{{ $notifications->data['event'] }} </span>{{ $notifications->data['title'] }}
                                                 </h6>
                                                 <p class="text-xs text-secondary mb-1 text-wrap">
                                                     {{ $notifications->data['body'] }}

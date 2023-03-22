@@ -294,7 +294,7 @@ $(document).ready(function () {
     });
     $s('.close-noti').click((e) => {
         const { id } = e.target.dataset
-        post("/notifcations/" + id + '/read', { id: id })
+        post("/notifications/" + id + '/read', { id: id })
             .then(res => {
                 if (res == true) {
                     $s(`.notifications[data-id="${id}"]`).remove()

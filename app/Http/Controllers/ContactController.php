@@ -77,7 +77,9 @@ class ContactController extends Controller
         //
         $tracker = EmailTraker::where('email_trakers.contact_id', $contact->id)->join('campaigns', 'email_trakers.capmaign_id', '=', 'campaigns.id')->get()
             ->toArray();
-        return view('contact.view', compact('contact', 'tracker'));
+            $feedback = Unsubscribe::where('contact_id',$contact->id)->get()->groupBy('reason')->toArray();
+            // dd($feedback);
+        return view('contact.view', compact('contact', 'tracker','feedback'));
     }
 
     /**
@@ -250,7 +252,8 @@ class ContactController extends Controller
                     Notification::send($users, new ContactUnsubscribe($contact, $request->type));
                 }
             }
+            return view('unsubscribe');
         }
-        return view('unsubscribe', compact('t'))->with('msg','ok');
+        return view('unsubscribe', compact('t'));
     }
 }

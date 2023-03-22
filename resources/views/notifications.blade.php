@@ -20,7 +20,7 @@
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="text-sm font-weight-normal mb-1">
                                                     <span
-                                                        class="font-weight-bold">{{ $notification->data['event'] }}</span>{{ $notification->data['title'] }}
+                                                        class="font-weight-bold text-capitalize">{{ $notification->data['event'] }} </span>{{ $notification->data['title'] }}
                                                 </h6>
                                                 <p class="text-xs text-dark mb-1 text-wrap">
                                                     {{ $notification->data['body'] }}

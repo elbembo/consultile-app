@@ -35,6 +35,20 @@
     <script src="/assets/js/core/bootstrap.bundle.min.js"></script>
     {{-- <script src="/assets/js/plugins/bootstrap-autocomplete.min.js"></script> --}}
     <script src="/assets/js/init.js?v=1.0.4"></script>
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('1ed4ee292908da3c9131', {
+            cluster: 'eu'
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            alert(JSON.stringify(data));
+        });
+    </script>
 </head>
 
 <body
@@ -53,9 +67,9 @@
         </div>
     @endif
     <!--   Core JS Files   -->
-    
-    
-    
+
+
+
     <script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
     <script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
     <script src="/assets/js/plugins/fullcalendar.min.js"></script>
@@ -77,7 +91,7 @@
         }
     </script>
 
-    
+
 </body>
 
 </html>

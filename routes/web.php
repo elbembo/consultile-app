@@ -14,6 +14,7 @@ use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\EmailTrakerController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\ServerController;
 use App\Http\Controllers\SummernoteController;
 use App\Http\Controllers\Trash;
 use App\Http\Controllers\UserController;
@@ -69,8 +70,9 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
         Route::post('/email-validation-dns', [ContactController::class, 'emailValidation'])->name('email.validation.dns');
         Route::post('/check-duplicate', [ContactController::class, 'isDuplicate'])->name('check.duplicate');
         Route::post('/contacts/search', [ContactController::class, 'search'])->name('contacts.search');
-        Route::post('/notifcations/{id}/read', [UserController::class, 'read'])->name('notifications.read');
+        Route::post('/notifications/{id}/read', [UserController::class, 'read'])->name('notifications.read');
         Route::get('/notifications', [UserController::class, 'notifications'])->name('notifications.index');
+        Route::resource('/server', ServerController::class);
     });
 
     Route::get('/test',  function () {

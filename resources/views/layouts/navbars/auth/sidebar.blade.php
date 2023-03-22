@@ -117,6 +117,12 @@
                                     <span class="sidenav-normal"> Roles </span>
                                 </a>
                             </li>
+                            <li class="nav-item ">
+                                <a class="nav-link " href="{{ url('server') }}">
+                                    <span class="sidenav-mini-icon"> S </span>
+                                    <span class="sidenav-normal"> Server </span>
+                                </a>
+                            </li>
 
                         </ul>
                     </div>
