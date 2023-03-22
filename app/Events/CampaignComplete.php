@@ -30,9 +30,5 @@ class CampaignComplete implements ShouldBroadcast
     {
         return ['campaign-complete'];
     }
-    public function broadcastAs()
-    {
 
-        return 'complete-event';
-    }
 }

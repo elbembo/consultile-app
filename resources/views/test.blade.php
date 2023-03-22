@@ -1,56 +1,115 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <!-- Required meta tags -->
+  <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-    <title>Hello, world!</title>
-</head>
-
-<body>
-    <h1>Hello, world!</h1>
-    <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
-
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-
-        <div class="toast fade p-2 mt-2 bg-gradient-info show" role="alert" aria-live="assertive" id="infoToast"
-            aria-atomic="true">
-            <div class="toast-header bg-transparent border-0">
-                <i class="ni ni-bell-55 text-white me-2"></i>
-                <span class="me-auto text-white font-weight-bold">Soft UI Dashboard</span>
-                <small class="text-white">11 mins ago</small>
-                <i class="fas fa-times text-md text-white ms-3 cursor-pointer" data-bs-dismiss="toast"
-                    aria-label="Close" aria-hidden="true"></i>
-            </div>
-            <hr class="horizontal light m-0">
-            <div class="toast-body text-white">
-                Hello, world! This is a notification message.
-            </div>
+    <title>Demo Application</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="
+    https://cdn.jsdelivr.net/npm/bootstrap-notifications@1.0.3/dist/stylesheets/bootstrap-notifications.min.css
+    " rel="stylesheet">    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-9" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Demo App</a>
         </div>
-    </div>
 
-    <!-- Optional JavaScript; choose one of the two! -->
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown dropdown-notifications">
+              <a href="#notifications-panel" class="dropdown-toggle" data-toggle="dropdown">
+                <i data-count="0" class="glyphicon glyphicon-bell notification-icon"></i>
+              </a>
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+              <div class="dropdown-container">
+                <div class="dropdown-toolbar">
+                  <div class="dropdown-toolbar-actions">
+                    <a href="#">Mark all as read</a>
+                  </div>
+                  <h3 class="dropdown-toolbar-title">Notifications (<span class="notif-count">0</span>)</h3>
+                </div>
+                <ul class="dropdown-menu">
+                </ul>
+                <div class="dropdown-footer text-center">
+                  <a href="#">View All</a>
+                </div>
+              </div>
+            </li>
+            <li><a href="#">Timeline</a></li>
+            <li><a href="#">Friends</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//js.pusher.com/3.1/pusher.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+      var notificationsWrapper   = $('.dropdown-notifications');
+      var notificationsToggle    = notificationsWrapper.find('a[data-toggle]');
+      var notificationsCountElem = notificationsToggle.find('i[data-count]');
+      var notificationsCount     = parseInt(notificationsCountElem.data('count'));
+      var notifications          = notificationsWrapper.find('ul.dropdown-menu');
+
+      if (notificationsCount <= 0) {
+        notificationsWrapper.hide();
+      }
+
+      // Enable pusher logging - don't include this in production
+      // Pusher.logToConsole = true;
+
+      var pusher = new Pusher('1ed4ee292908da3c9131', {
+        encrypted: true,
+        cluster: 'eu'
+      });
+
+      // Subscribe to the channel we specified in our Laravel Event
+      var channel = pusher.subscribe('campaign-complete');
+
+      // Bind a function to a Event (the full Laravel class)
+      channel.bind('App\\Events\\CampaignComplete', function(data) {
+        alert('ddddddddddddddddddddddddddddd')
+        var existingNotifications = notifications.html();
+        var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
+        var newNotificationHtml = `
+          <li class="notification active">
+              <div class="media">
+                <div class="media-left">
+                  <div class="media-object">
+                    <img src="https://api.adorable.io/avatars/71/`+avatar+`.png" class="img-circle" alt="50x50" style="width: 50px; height: 50px;">
+                  </div>
+                </div>
+                <div class="media-body">
+                  <strong class="notification-title">`+data.message+`</strong>
+                  <!--p class="notification-desc">Extra description can go here</p-->
+                  <div class="notification-meta">
+                    <small class="timestamp">about a minute ago</small>
+                  </div>
+                </div>
+              </div>
+          </li>
+        `;
+        notifications.html(newNotificationHtml + existingNotifications);
+
+        notificationsCount += 1;
+        notificationsCountElem.attr('data-count', notificationsCount);
+        notificationsWrapper.find('.notif-count').text(notificationsCount);
+        notificationsWrapper.show();
+      });
     </script>
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
-    </script>
-    -->
-</body>
-
+  </body>
 </html>
