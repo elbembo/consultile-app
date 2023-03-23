@@ -156,7 +156,13 @@ class CampaignController extends Controller
     public function update(Request $request, $id)
     {
         //
-
+        if ($request->restore) {
+            Campaign::withTrashed()->where('id', $id)->restore();
+            return back();
+        } elseif ($request->delete) {
+            Campaign::withTrashed()->where('id', $id)->forceDelete();
+            return redirect('/campaigns');
+        }
         $campaign = Campaign::find($id);
         if (isset($request->action)) {
             if ($request->action == 'update_status') {
@@ -252,7 +258,8 @@ class CampaignController extends Controller
     {
         //
         $campaign->delete();
-        return back();
+        return redirect('/campaigns');
+
     }
     public function removeAttachment(Request $request)
     {
