@@ -78,6 +78,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
         Route::post('/notifications/{id}/read', [UserController::class, 'read'])->name('notifications.read');
         Route::get('/notifications', [UserController::class, 'notifications'])->name('notifications.index');
         Route::post('upload',[EmailTemplateController::class,'fileUpload'])->name('Upload Files');
+        Route::post('companies',[ContactController::class,'companies'])->name('Companies List');
     });
 
     // Route::get('/test',  function () {

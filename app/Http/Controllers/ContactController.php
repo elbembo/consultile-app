@@ -35,8 +35,12 @@ class ContactController extends Controller
     public function companies()
     {
         # code...
-        $companies = Contact::withTrashed()->groupBy('company')->get();
-        
+        $list = [];
+        $companies = Contact::withTrashed()->get()->groupBy('company')->toArray();
+        foreach($companies as $company=>$data){
+        array_push($list,$company);
+        }
+        return response()->json($list);
     }
     /**
      * Show the form for creating a new resource.
