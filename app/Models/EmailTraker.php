@@ -15,6 +15,9 @@ class EmailTraker extends Model
         'contact_id',
         'priority',
         'massage_id',
+        'delivered',
+        'opend',
+        'views'
     ];
 
 }
