@@ -320,7 +320,7 @@ class CampaignController extends Controller
                     if ($mailTemp) {
                         $emailto = trim(trim($contact->email, "‎"));
                         $mailData = [
-                            'from' => ['email' => env('MAIL_FROM_ADDRESS', 'newsletters@consultile-mea.com'), 'name' => $campaign->sender_name],
+                            'from' => ['email' => env('MAIL_FROM_ADDRESS', 'newsletter@consultile-mea.com'), 'name' => $campaign->sender_name],
                             'replyTo' => ['email' => $campaign->replay_to, 'name' => $campaign->replay_to_name],
                             'to' => ['email' => $emailto, 'name' => $contact->first_name],
                             'subject' => $campaign->subject,
