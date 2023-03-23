@@ -17,7 +17,7 @@
                                                 class="text-sm align-top"></small></h3>
                                     </div>
                                     <div class="ms-lg-6 ms-4">
-                                        <h6 class="mb-0 text-white opacity-7">Sent</h6>
+                                        <h6 class="mb-0 text-white opacity-7">Completed</h6>
                                         <h3 class="text-white">{{ $campaign->audience_done }} <small
                                                 class="text-sm align-top"></small></h3>
                                     </div>
@@ -52,7 +52,7 @@
                                 <hr class="horizontal light mt-1 mb-3">
                                 <div class="d-flex">
                                     <div>
-                                        <h6 class="mb-0 text-white">Delivered : {{$tracking[0]->delivered}}</h6>
+                                        <h6 class="mb-0 text-white">Sent : {{$tracking[0]->delivered}}</h6>
                                         <h6 class="mb-0 text-white">Read : {{$tracking[0]->opend}}</h6>
                                         <h6 class="mb-0 text-white">views : {{$tracking[0]->views}}</h6>
                                     </div>
