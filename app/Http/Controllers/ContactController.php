@@ -12,6 +12,7 @@ use App\Models\EmailTraker;
 use App\Models\Unsubscribe;
 use App\Models\User;
 use App\Notifications\ContactUnsubscribe;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
@@ -29,16 +30,24 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::where('id', '>', '0')->orderBy('id', 'desc')->paginate(30);
-        return view('contact.index', compact('contacts'));
+        $contacts = Contact::where('contacts.id', '>', '0')->orderBy('contacts.id', 'desc')->paginate(30);
+        // dd($contacts);
+        $views = [];
+        foreach($contacts as $contact){
+
+            $views[$contact->id] = EmailTraker::where('contact_id',$contact->id)->sum('email_trakers.views');
+
+        }
+
+        return view('contact.index', compact('contacts','views'));
     }
     public function companies()
     {
         # code...
         $list = [];
         $companies = Contact::withTrashed()->get()->groupBy('company')->toArray();
-        foreach($companies as $company=>$data){
-        array_push($list,$company);
+        foreach ($companies as $company => $data) {
+            array_push($list, $company);
         }
         return response()->json($list);
     }
@@ -52,7 +61,7 @@ class ContactController extends Controller
         //
         $companies = Contact::withTrashed()->get()->groupBy('company');
         // dd($companies);
-        return view('contact.create',compact('companies'));
+        return view('contact.create', compact('companies'));
     }
 
     /**
@@ -81,9 +90,9 @@ class ContactController extends Controller
         //
         $tracker = EmailTraker::where('email_trakers.contact_id', $contact->id)->join('campaigns', 'email_trakers.capmaign_id', '=', 'campaigns.id')->get()
             ->toArray();
-            $feedback = Unsubscribe::where('contact_id',$contact->id)->get()->groupBy('reason')->toArray();
-            // dd($feedback);
-        return view('contact.view', compact('contact', 'tracker','feedback'));
+        $feedback = Unsubscribe::where('contact_id', $contact->id)->get()->groupBy('reason')->toArray();
+        // dd($feedback);
+        return view('contact.view', compact('contact', 'tracker', 'feedback'));
     }
 
     /**
@@ -93,8 +102,9 @@ class ContactController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Contact $contact)
-    {$companies = Contact::withTrashed()->get()->groupBy('company');
-        return view('contact.create', compact('contact','companies'));
+    {
+        $companies = Contact::withTrashed()->get()->groupBy('company');
+        return view('contact.create', compact('contact', 'companies'));
     }
 
     /**

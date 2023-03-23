@@ -1,7 +1,9 @@
     @if (isset($contacts))
         @foreach ($contacts as $contact)
             <tr class="{{ ($contact->subscribe == 0) ? 'bg-gradient-danger text-white' : '' }}">
-
+                <td class="text-center ">
+                    <i class="fa fa-solid fa-star text-xs {{ (isset($views[$contact->id]) &&  $views[$contact->id] > 0  ) ? ' text-warning':' text-lighter' }}"></i>
+                </td>
                 <td class="text-center ">
                     <a class="" href="{{ url('contacts/' . $contact->id) }}">
                         <p class="text-xs font-weight-bold mb-0 ">{{ $contact->first_name }} {{ $contact->last_name }}</p>
@@ -43,7 +45,7 @@
                             <i class="cursor-pointer fas fa-trash text-secondary"></i>
                         </button>
                     </form>
-                    
+
 
                 </td>
             </tr>
