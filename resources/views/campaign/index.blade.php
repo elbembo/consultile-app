@@ -39,9 +39,10 @@
                                 </div>
                                 <div class="ms-auto text-end d-flex justify-content-between  flex-column">
                                     <div class="">
-                                        @if($campaign->status == 'completed')
-                                        <a class="btn btn-link text-success px-3 mb-0" href="campaigns/{{$campaign->id}}"><i class="fas  fa-eye text-success me-2" aria-hidden="true"></i>View</a>
-
+                                        @if($campaign->status == 'completed' || $campaign->status == 'processing' )
+                                        <a class="btn btn-link text-success px-3 mb-0" href="campaigns/{{$campaign->id}}">
+                                            <i class="fas  fa-eye text-success me-2" aria-hidden="true"></i>View
+                                        </a>
                                         @else
                                         <form action="{{ url('campaigns/' . $campaign->id) }}" method="post" style="display: inline;">
                                             @csrf
@@ -50,7 +51,6 @@
                                                 <i class="far fa-trash-alt me-2"></i>Delete
                                             </button>
                                         </form>
-
                                         @endif
                                         <a class="btn btn-link text-dark px-3 mb-0" href="campaigns/{{$campaign->id}}/edit"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
 

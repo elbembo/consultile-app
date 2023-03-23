@@ -56,11 +56,18 @@
                                         <h6 class="mb-0 text-white">Read : {{$tracking[0]->opend}}</h6>
                                         <h6 class="mb-0 text-white">views : {{$tracking[0]->views}}</h6>
                                     </div>
-                                    {{-- <div class="ms-lg-6 ms-4">
-                                        <button class="btn btn-icon-only btn-rounded btn-outline-white mb-0">
+                                    <div class="ms-lg-6 ms-4">
+                                        {{-- <button class="btn btn-icon-only btn-rounded btn-outline-white mb-0">
                                             <i class="ni ni-map-big" aria-hidden="true"></i>
-                                        </button>
-                                    </div> --}}
+                                        </button> --}}
+                                        <form action="{{ url('campaigns/' . $campaign->id) }}" method="post" style="display: inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-icon-only btn-rounded btn-outline-white mb-0">
+                                                <i class="far fa-trash-alt me-2"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>

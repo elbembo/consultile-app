@@ -302,19 +302,20 @@ class CampaignController extends Controller
                         $mailTemp = DB::table('email_templates')->where('id', $campaign->template_id)->first();
                     }
                     if ($mailTemp) {
+                        $emailto = trim(trim($contact->email,"‎"));
                         $mailData = [
-                            'from' => ['email' => env('MAIL_FROM_ADDRESS', ''), 'name' => $campaign->sender_name],
+                            'from' => ['email' => env('MAIL_FROM_ADDRESS', 'newsletters@consultile-mea.com'), 'name' => $campaign->sender_name],
                             'replyTo' => ['email' => $campaign->replay_to, 'name' => $campaign->replay_to_name],
-                            'to' => ['email' => $contact->email, 'name' => $contact->first_name],
+                            'to' => ['email' =>$emailto, 'name' => $contact->first_name],
                             'subject' => $campaign->subject,
                             'attachments' => $campaign->details,
                             'tracking' => $campaign->tracking,
                             'messageId' => $qeue->massage_id,
-                            'body' => Helper::parser($contact->email, $mailTemp->content, $qeue->massage_id)
+                            'body' => Helper::parser($emailto, $mailTemp->content, $qeue->massage_id)
                         ];
-                        if (preg_match("/(.+)@(.+)\.(.+)/i", $contact->email)) {
+                        if (preg_match("/(.+)@(.+)\.(.+)/i", $emailto)) {
                             try {
-                                if (Mail::to($contact->email)->send(new SendCampaignEmails($mailData))) {
+                                if (Mail::to($emailto)->send(new SendCampaignEmails($mailData))) {
                                     self::qeueHandle($campaign, $contact, $qeue, true);
                                 } else {
                                     self::qeueHandle($campaign, $contact, $qeue, false);

@@ -179,7 +179,7 @@
                                     <label for="sender-name" class="form-control-label">{{ __('Sender Name') }}</label>
                                     <div class="@error('email')border border-danger rounded-3 @enderror">
                                         <input class="form-control"
-                                            value="{{ isset($campaign) ? $campaign->sender_name : $headers['stmp_sender_name'] ?? '' }}"
+                                            value="{{ isset($campaign) ? $campaign->sender_name : env('MAIL_FROM_NAME','Consultile Middle East') }}"
                                             type="text" placeholder="Sender Name" id="sender-name" name="sender_name"
                                             required>
                                         @error('sender_name')
@@ -192,7 +192,7 @@
                                         class="form-control-label">{{ __('Reply to (Email)') }}</label>
                                     <div class="@error('email')border border-danger rounded-3 @enderror">
                                         <input class="form-control"
-                                            value="{{ isset($campaign) ? $campaign->replay_to : $headers['stmp_replay_email'] ?? '' }}"
+                                            value="{{ isset($campaign) ? $campaign->replay_to :   env('MAIL_REPLY_ADDRESS','info@consultile.com')}}"
                                             type="email" placeholder="Reply to (Email)" id="replay-to"
                                             name="replay_to" required>
                                         @error('sender_name')
@@ -205,7 +205,7 @@
                                         class="form-control-label">{{ __('Reply to (Name)') }}</label>
                                     <div class="@error('email')border border-danger rounded-3 @enderror">
                                         <input class="form-control"
-                                            value="{{ isset($campaign) ? $campaign->replay_to_name : $headers['stmp_replay_name'] ?? '' }}"
+                                            value="{{ isset($campaign) ? $campaign->replay_to_name : env('MAIL_REPLY_NAME','Consultile Middle East') }}"
                                             type="text" placeholder="Reply to (Name)" id="replay-to-name"
                                             name="replay_to_name" required>
                                         @error('sender_name')

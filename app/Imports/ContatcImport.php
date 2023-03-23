@@ -42,7 +42,7 @@ class ContatcImport implements ToCollection, WithHeadingRow,  WithValidation, Sk
                 'title' => $row['salutation'],
                 'first_name' => $row['first_name'],
                 'last_name' => $row['last_name'],
-                'email' => $row['work_e_mail'],
+                'email' => trim(trim($row['work_e_mail'], "‎")),
                 'work_phone' => $row['work_phone'],
                 'personal_phone' => $row['mobile'],
                 'company' => $row['company'],
