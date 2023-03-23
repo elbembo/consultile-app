@@ -33,7 +33,8 @@
         let validationFileds = [form.email, form.work_phone, form.personal_phone]
         for (const ele  of validationFileds) {
             const { name, value } = ele
-            if (ele.value.trim() != '' || ele.value.trim() != ele.dataset.default.trim())
+            if (ele.value.trim() == '' || ele.value.trim() == ele.dataset.default.trim())
+            continue
                 await  post("/check-duplicate", { name, value } )
                 .then(json=>{
 

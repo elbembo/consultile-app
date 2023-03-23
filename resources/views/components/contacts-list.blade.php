@@ -2,9 +2,9 @@
         @foreach ($contacts as $contact)
             <tr class="{{ ($contact->subscribe == 0) ? 'bg-gradient-danger text-white' : '' }}">
                 <td class="text-center ">
-                    <i class="fa fa-solid  text-xs {{ (isset($views[$contact->id]) &&  $views[$contact->id] > 0  ) ? ' fa-eye  text-success':'  text-black-50' }}"></i>
+
                 </td>
-                <td class="text-center ">
+                <td class="text-center "><i class="fa fa-solid  text-xs {{ (isset($views[$contact->id]) &&  $views[$contact->id] > 0  ) ? ' fa-eye  text-success':'  text-black-50' }}"></i>
                     <a class="" href="{{ url('contacts/' . $contact->id) }}">
                         <p class="text-xs font-weight-bold mb-0 ">{{ $contact->first_name }} {{ $contact->last_name }}</p>
                     </a>
