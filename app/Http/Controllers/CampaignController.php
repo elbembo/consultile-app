@@ -214,12 +214,11 @@ class CampaignController extends Controller
                     DB::table('email_qeues')->where('capmaign_id', $campaign->id)->update([
                         'priority' => 0,
                     ]);
-                }elseif ($request->status == 'resume') {
+                } elseif ($request->status == 'resume') {
                     DB::table('email_qeues')->where('capmaign_id', $campaign->id)->update([
                         'priority' => 2,
                     ]);
                     $request->merge(['status' => 'processing']);
-
                 }
             } elseif ($request->action == 'uploads' && $request->hasFile('attachmens')) {
 
@@ -265,7 +264,6 @@ class CampaignController extends Controller
         //
         $campaign->delete();
         return redirect('/campaigns');
-
     }
     public function removeAttachment(Request $request)
     {
@@ -282,12 +280,17 @@ class CampaignController extends Controller
     }
     public static function qeueHandle($campaign, $contact, $qeue, $sent)
     {
+        if ($sent)
+            $delivered = 1;
+        else {
+            $delivered = 0;
+        }
         if (EmailTraker::create([
             'capmaign_id' => $campaign->id,
             'contact_id' => $contact->id,
             'priority' => $campaign->campaign_priority,
             'massage_id' => $qeue->massage_id,
-            'delivered' => $sent ?  0 : null
+            'delivered' => $delivered
         ])) {
             DB::table('email_qeues')->where('id', $qeue->id)->delete();
             $campaign->audience_done = $campaign->audience_done + 1;
@@ -315,11 +318,11 @@ class CampaignController extends Controller
                         $mailTemp = DB::table('email_templates')->where('id', $campaign->template_id)->first();
                     }
                     if ($mailTemp) {
-                        $emailto = trim(trim($contact->email,"‎"));
+                        $emailto = trim(trim($contact->email, "‎"));
                         $mailData = [
                             'from' => ['email' => env('MAIL_FROM_ADDRESS', 'newsletters@consultile-mea.com'), 'name' => $campaign->sender_name],
                             'replyTo' => ['email' => $campaign->replay_to, 'name' => $campaign->replay_to_name],
-                            'to' => ['email' =>$emailto, 'name' => $contact->first_name],
+                            'to' => ['email' => $emailto, 'name' => $contact->first_name],
                             'subject' => $campaign->subject,
                             'attachments' => $campaign->details,
                             'tracking' => $campaign->tracking,
