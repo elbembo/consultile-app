@@ -287,7 +287,7 @@ class CampaignController extends Controller
             'contact_id' => $contact->id,
             'priority' => $campaign->campaign_priority,
             'massage_id' => $qeue->massage_id,
-            'delivered' => $sent ? null : 0
+            'delivered' => $sent ?  0 : null
         ])) {
             DB::table('email_qeues')->where('id', $qeue->id)->delete();
             $campaign->audience_done = $campaign->audience_done + 1;
