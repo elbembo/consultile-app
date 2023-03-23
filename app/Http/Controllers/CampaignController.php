@@ -210,10 +210,16 @@ class CampaignController extends Controller
 
                     $newCampaign->save();
                     return redirect("campaigns/$newCampaign->id/edit");
-                } elseif ($request->status == 'pending') {
+                } elseif ($request->status == 'pause') {
                     DB::table('email_qeues')->where('capmaign_id', $campaign->id)->update([
                         'priority' => 0,
                     ]);
+                }elseif ($request->status == 'resume') {
+                    DB::table('email_qeues')->where('capmaign_id', $campaign->id)->update([
+                        'priority' => 2,
+                    ]);
+                    $request->merge(['status' => 'processing']);
+
                 }
             } elseif ($request->action == 'uploads' && $request->hasFile('attachmens')) {
 

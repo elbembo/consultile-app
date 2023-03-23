@@ -14,7 +14,7 @@ if (!function_exists('statusBadg')) {
             case 'processing':
                 $color =  "#52ab4a";
                 break;
-            case 'pending':
+            case 'pause':
                 $color =  "#c3c249";
                 break;
             case 'completed':
