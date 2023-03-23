@@ -35,7 +35,7 @@
                                     <h4 class="text-white opacity-7 ms-0 ms-md-auto">Sent</h4>
                                     <h2 class="text-white ms-2 me-auto">
                                         @if ($campaign->total_audience != 0)
-                                            {{ ($campaign->audience_done / $campaign->total_audience) * 100 }}
+                                            {{ floor(($campaign->audience_done / $campaign->total_audience) * 100) }}
                                         @else
                                             {{ __('0') }}
                                         @endif
