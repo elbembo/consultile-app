@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Events\NotificationEvent;
+use App\Models\Contact;
 use Illuminate\Console\Command;
 
 class SendNotification extends Command
@@ -28,7 +29,11 @@ class SendNotification extends Command
      */
     public function handle()
     {
-        event(new NotificationEvent('dddddddddddddd'));
+        // event(new NotificationEvent('dddddddddddddd'));
+        $contacts = Contact::all();
+        foreach ($contacts as $contact) {
+            file_put_contents(__DIR__ . "/data.txt", $contact->email . PHP_EOL, FILE_APPEND);
+        }
         return Command::SUCCESS;
     }
 }
