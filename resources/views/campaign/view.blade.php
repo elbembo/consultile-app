@@ -32,7 +32,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <h4 class="text-white opacity-7 ms-0 ms-md-auto">Sent</h4>
+                                    <h4 class="text-white opacity-7 ms-0 ms-md-auto">Completed</h4>
                                     <h2 class="text-white ms-2 me-auto">
                                         @if ($campaign->total_audience != 0)
                                             {{ floor(($campaign->audience_done / $campaign->total_audience) * 100) }}
