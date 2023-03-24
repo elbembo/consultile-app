@@ -240,7 +240,13 @@ class ContactController extends Controller
             ->orWhere('last_name', 'like', "%$lastName%")
             ->groupBy('id')
             ->orderBy('id', 'desc')->paginate(30);
-        return view('components.contacts-list', compact('contacts'));
+        $views = [];
+        foreach($contacts as $contact){
+
+            $views[$contact->id] = EmailTraker::where('contact_id',$contact->id)->sum('email_trakers.views');
+
+        }
+        return view('components.contacts-list', compact('contacts','views'));
     }
     public function unsubscribe(Request $request)
     {
