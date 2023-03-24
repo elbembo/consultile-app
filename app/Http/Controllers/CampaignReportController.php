@@ -35,17 +35,18 @@ class CampaignReportController extends Controller
         // $body = $message->getBodies();
         // dd($body);
         $fails = [];
+        $reads = '';
         $folders = $client->getFolders();
         foreach ($folders as $folder) {
             $query = $folder->search();
-            $messages = $query->text('was read on')->get();
-            foreach ($messages as $message) {
-                $parts = explode('@', $message->references);
-                $msgid = $parts[0];
-                DB::table('contacts')
-                    ->where('massage_id', str_replace("<", "", $msgid))
-                    ->update(['delivered' => 1, 'opend' => 1, 'views' => 1,]);
-            }
+            $reads = $query->text('Read:')->get();
+            // foreach ($messages as $message) {
+            //     $parts = explode('@', $message->references);
+            //     $msgid = $parts[0];
+            //     DB::table('contacts')
+            //         ->where('massage_id', str_replace("<", "", $msgid))
+            //         ->update(['delivered' => 1, 'opend' => 1, 'views' => 1,]);
+            // }
             $messages = $query->text('could not be delivered')->get();
 
             foreach ($messages as $message) {
