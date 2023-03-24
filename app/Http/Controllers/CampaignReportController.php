@@ -39,6 +39,7 @@ class CampaignReportController extends Controller
         foreach ($folders as $folder) {
             $query = $folder->search();
             $messages = $query->text('message that you sent could not be delivered')->get();
+            $query->markAsRead();
             foreach ($messages as $message) {
                 $parts = explode('@', $message->references);
                 $msgid = $parts[0];
