@@ -7,5 +7,11 @@
                 {{ $contact->email ?? 'no' }}
             </div>
         @endforeach
+        @foreach ($messages as $message)
+        @$message->parseBody()
+        <div>
+            {{$message->getBodies()}}
+        </div>
+        @endforeach
     </div>
 @endsection

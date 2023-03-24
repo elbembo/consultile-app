@@ -39,7 +39,7 @@ class CampaignReportController extends Controller
         foreach ($folders as $folder) {
             $query = $folder->search();
             $messages = $query->text('No action is required on your part')->get();
-            $query->markAsRead();
+
             foreach ($messages as $message) {
                 $parts = explode('@', $message->references);
                 $msgid = $parts[0];
