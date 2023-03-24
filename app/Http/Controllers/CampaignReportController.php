@@ -67,7 +67,7 @@ class CampaignReportController extends Controller
                 ->update(['email' => ""]);
         }
 
-        return view('reports.campaigns.index', compact('contscts', 'messages'));
+        return view('reports.campaigns.index', compact('contscts', 'messages','reads'));
     }
 
     /**
