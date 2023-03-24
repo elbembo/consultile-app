@@ -7,6 +7,7 @@ use App\Models\Contact;
 use App\Models\EmailTraker;
 use Illuminate\Http\Request;
 use Webklex\IMAP\Facades\Client;
+
 class CampaignReportController extends Controller
 {
     /**
@@ -32,29 +33,29 @@ class CampaignReportController extends Controller
         // $message->parseBody();
         // $body = $message->getBodies();
         // dd($body);
-        $fails =[];
+        $fails = [];
         $folders = $client->getFolders();
-        foreach ($folders as $folder){
+        foreach ($folders as $folder) {
             $query = $folder->search();
             $messages = $query->text('message that you sent could not be delivered')->get();
-            foreach ($messages as $message){
-                $parts = explode('@', $message->references );
+            foreach ($messages as $message) {
+                $parts = explode('@', $message->references);
                 $msgid = $parts[0];
-                $fails[] = str_replace("<","",$msgid);
+                $fails[] = str_replace("<", "", $msgid);
             }
-
-
         }
-        $contscts = EmailTraker::whereIn('email_trakers.massage_id',$fails)->join('contacts','email_trakers.contact_id','=','contacts.id')->get('email');
-        file_put_contents('fails_emails.txt',"");
-        foreach($contscts as $contsct){
-            file_put_contents('fails_emails.txt',$contsct->email."\n",FILE_APPEND);
-            $update = Contact::where('email',$contsct->email)->get();
-            $update->email = '';
-            $update->save();
+        $contscts = EmailTraker::whereIn('email_trakers.massage_id', $fails)->join('contacts', 'email_trakers.contact_id', '=', 'contacts.id')->get('email');
+        file_put_contents('fails_emails.txt', "");
+        foreach ($contscts as $contsct) {
+            file_put_contents('fails_emails.txt', $contsct->email . "\n", FILE_APPEND);
+            $update = Contact::where('email', $contsct->email)->get();
+            if (!empty($update)) {
+                $update->email = '';
+                $update->save();
+            }
         }
 
-        return view('reports.campaigns.index',compact('contscts'));
+        return view('reports.campaigns.index', compact('contscts'));
     }
 
     /**
