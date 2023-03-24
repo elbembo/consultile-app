@@ -35,7 +35,7 @@ class CampaignReportController extends Controller
         // $body = $message->getBodies();
         // dd($body);
         $fails = [];
-        $reads = '';
+        $reads = [];
         $folders = $client->getFolders();
         foreach ($folders as $folder) {
             $query = $folder->search();
