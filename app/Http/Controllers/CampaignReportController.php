@@ -16,7 +16,7 @@ class CampaignReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
         set_time_limit(0);
@@ -47,7 +47,7 @@ class CampaignReportController extends Controller
             //         ->where('massage_id', str_replace("<", "", $msgid))
             //         ->update(['delivered' => 1, 'opend' => 1, 'views' => 1,]);
             // }
-            $messages = $query->text('Mail delivery failed:')->get();
+            $messages = $query->text($request->input('msg'))->get();
 
             foreach ($messages as $message) {
 
