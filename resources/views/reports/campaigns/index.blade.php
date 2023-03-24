@@ -3,7 +3,8 @@
 @section('content')
     <div>
         @foreach($contscts as $contact)
-        @dump($contact)
+        $contact->email
+
         {{-- @foreach ($folders as $folder)
             @php
                 $query = $folder->search();
