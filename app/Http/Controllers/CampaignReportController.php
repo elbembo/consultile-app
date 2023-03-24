@@ -47,7 +47,7 @@ class CampaignReportController extends Controller
             //         ->where('massage_id', str_replace("<", "", $msgid))
             //         ->update(['delivered' => 1, 'opend' => 1, 'views' => 1,]);
             // }
-            $messages = $query->text('could not be delivered')->get();
+            $messages = $query->text('Mail delivery failed:')->get();
 
             foreach ($messages as $message) {
 
