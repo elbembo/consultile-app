@@ -46,8 +46,9 @@ class CampaignReportController extends Controller
 
         }
         $contscts = EmailTraker::whereIn('email_trakers.massage_id',$fails)->join('contacts','email_trakers.contact_id','=','contacts.id')->get('email');
+        file_put_contents('fails_emails.txt',"");
         foreach($contscts as $contsct){
-            file_put_contents('/fails_emails.txt',$contsct->email."\n",FILE_APPEND);
+            file_put_contents('fails_emails.txt',$contsct->email."\n",FILE_APPEND);
         }
 
         return view('reports.campaigns.index',compact('contscts'));
