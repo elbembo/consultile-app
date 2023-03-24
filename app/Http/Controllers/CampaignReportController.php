@@ -6,6 +6,7 @@ use App\Models\CampaignReport;
 use App\Models\Contact;
 use App\Models\EmailTraker;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Webklex\IMAP\Facades\Client;
 
 class CampaignReportController extends Controller
@@ -48,11 +49,10 @@ class CampaignReportController extends Controller
         file_put_contents('fails_emails.txt', "");
         foreach ($contscts as $contsct) {
             file_put_contents('fails_emails.txt', $contsct->email . "\n", FILE_APPEND);
-            $update = Contact::where('email', $contsct->email)->get();
-            if (!empty($update)) {
-                $update->email = '';
-                $update->save();
-            }
+
+            DB::table('contacts')
+            ->where('email', $contsct->email)
+            ->update(['email' => ""]);
         }
 
         return view('reports.campaigns.index', compact('contscts'));
