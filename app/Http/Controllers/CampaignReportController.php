@@ -38,7 +38,7 @@ class CampaignReportController extends Controller
         $folders = $client->getFolders();
         foreach ($folders as $folder) {
             $query = $folder->search();
-            $messages = $query->text('No action is required on your part')->get();
+            $messages = $query->text('could not be delivered')->get();
 
             foreach ($messages as $message) {
 
