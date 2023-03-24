@@ -41,6 +41,7 @@ class CampaignReportController extends Controller
             $messages = $query->text('No action is required on your part')->get();
 
             foreach ($messages as $message) {
+                $message->move($folder_path = "INBOX/fail");
                 $parts = explode('@', $message->references);
                 $msgid = $parts[0];
                 $fails[] = str_replace("<", "", $msgid);
