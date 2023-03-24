@@ -12,7 +12,7 @@
             $message->parseBody()
         @endphp
         <div>
-            {{print_r($message->getBodies())}}
+            {{print_r($message->getBodies()['text'])}}
             {{-- @foreach(preg_split("/((\r?\n)|(\r\n?))/", $message->getBodies()->text) as $line)
                 {{$line}}
             @endforeach --}}
