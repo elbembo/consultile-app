@@ -5,7 +5,7 @@
         @foreach ($folders as $folder)
             @php
                 $query = $folder->search();
-                $messages = $query->text('This is')->get();
+                $messages = $query->text('message that you sent could not be delivered')->get();
                 // dd($messages);
             @endphp
             @foreach ($messages as $message)
@@ -22,9 +22,9 @@
                     </div>
                     <div class="col-md-2">{{ $message->uid }}</div>
                     <div class="col-md-4">
-                        @foreach ($message->getBodies() as $body)
+                        {{-- @foreach ($message->getBodies() as $body)
                             {{ $body }}
-                        @endforeach
+                        @endforeach --}}
                     </div>
 
                 </div>

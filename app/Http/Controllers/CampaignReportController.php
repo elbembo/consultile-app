@@ -15,6 +15,7 @@ class CampaignReportController extends Controller
     public function index()
     {
         //
+        set_time_limit(0);
         $client = Client::account('default');
         $client->connect();
         // // $folders = $client->getFolders($hierarchical = true);
@@ -30,8 +31,8 @@ class CampaignReportController extends Controller
         // $body = $message->getBodies();
         // dd($body);
         $folders = $client->getFolders();
-        
-        
+
+
         return view('reports.campaigns.index',compact('folders'));
     }
 
