@@ -49,7 +49,7 @@ class CampaignReportController extends Controller
         file_put_contents('fails_emails.txt',"");
         foreach($contscts as $contsct){
             file_put_contents('fails_emails.txt',$contsct->email."\n",FILE_APPEND);
-            $update = Contact::where('email',$contsct->email);
+            $update = Contact::where('email',$contsct->email)->get();
             $update->email = '';
             $update->save();
         }
