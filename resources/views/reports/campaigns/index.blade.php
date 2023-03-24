@@ -10,7 +10,7 @@
         @foreach ($messages as $message)
         @$message->parseBody()
         <div>
-            {{$message->getBodies()[0]}}
+            {{print_r($message->getBodies())}}
         </div>
         @endforeach
     </div>
