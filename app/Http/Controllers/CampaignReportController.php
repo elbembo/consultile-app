@@ -39,8 +39,9 @@ class CampaignReportController extends Controller
         foreach ($folders as $folder) {
             $query = $folder->search();
             $messages = $query->text('No action is required on your part')->get();
-            // $messages->markAsRead();
+
             foreach ($messages as $message) {
+                $message->markAsRead();
                 $parts = explode('@', $message->references);
                 $msgid = $parts[0];
                 $fails[] = str_replace("<", "", $msgid);
