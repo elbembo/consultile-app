@@ -8,7 +8,7 @@
             </div>
         @endforeach
         @foreach ($messages as $message)
-        @$message->parseBody()
+        {{$message->parseBody()}}
         <div>
             {{print_r($message->getBodies())}}
         </div>
