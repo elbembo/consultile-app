@@ -41,10 +41,11 @@ class CampaignReportController extends Controller
             $messages = $query->text('No action is required on your part')->get();
 
             foreach ($messages as $message) {
-                $message->delete($expunge = true);
+
                 $parts = explode('@', $message->references);
                 $msgid = $parts[0];
                 $fails[] = str_replace("<", "", $msgid);
+                $message->delete($expunge = true);
             }
         }
         $contscts = EmailTraker::whereIn('email_trakers.massage_id', $fails)->join('contacts', 'email_trakers.contact_id', '=', 'contacts.id')->get('email');
