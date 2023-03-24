@@ -38,6 +38,14 @@ class CampaignReportController extends Controller
         $folders = $client->getFolders();
         foreach ($folders as $folder) {
             $query = $folder->search();
+            $messages = $query->text('was read on')->get();
+            foreach ($messages as $message) {
+                $parts = explode('@', $message->references);
+                $msgid = $parts[0];
+                DB::table('contacts')
+                    ->where('massage_id', str_replace("<", "", $msgid))
+                    ->update(['delivered' => 1, 'opend' => 1, 'views' => 1,]);
+            }
             $messages = $query->text('could not be delivered')->get();
 
             foreach ($messages as $message) {
@@ -54,11 +62,11 @@ class CampaignReportController extends Controller
             file_put_contents('fails_emails.txt', $contsct->email . "\n", FILE_APPEND);
 
             DB::table('contacts')
-            ->where('email', $contsct->email)
-            ->update(['email' => ""]);
+                ->where('email', $contsct->email)
+                ->update(['email' => ""]);
         }
 
-        return view('reports.campaigns.index', compact('contscts','messages'));
+        return view('reports.campaigns.index', compact('contscts', 'messages'));
     }
 
     /**
