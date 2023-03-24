@@ -39,7 +39,7 @@ class CampaignReportController extends Controller
         $folders = $client->getFolders();
         foreach ($folders as $folder) {
             $query = $folder->search();
-            $reads = $query->text('Read:')->get();
+            // $reads = $query->text('Read:')->get();
             // foreach ($messages as $message) {
             //     $parts = explode('@', $message->references);
             //     $msgid = $parts[0];

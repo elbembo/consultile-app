@@ -7,19 +7,6 @@
                 {{ $contact->email ?? 'no' }}
             </div>
         @endforeach
-        @foreach ($reads as $message).
-        @php
-            $message->parseBody()
-        @endphp
-        <div>
-            {{-- {{print_r($message->getBodies()['text'])}} --}}
-            @foreach(preg_split("/((\r?\n)|(\r\n?))/", $message->getBodies()['text']) as $line)
-            <div>
-                {{$line}}
-            </div>
-            @endforeach
 
-        </div>
-        @endforeach
     </div>
 @endsection
