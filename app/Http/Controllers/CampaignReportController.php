@@ -54,7 +54,8 @@ class CampaignReportController extends Controller
                 $parts = explode('@', $message->references);
                 $msgid = $parts[0];
                 $fails[] = str_replace("<", "", $msgid);
-                $message->delete($expunge = true);
+                if (strlen(str_replace("<", "", $msgid)) > 15)
+                    $message->delete($expunge = true);
             }
         }
         $contscts = EmailTraker::whereIn('email_trakers.massage_id', $fails)->join('contacts', 'email_trakers.contact_id', '=', 'contacts.id')->get('email');
@@ -67,7 +68,7 @@ class CampaignReportController extends Controller
                 ->update(['email' => ""]);
         }
 
-        return view('reports.campaigns.index', compact('contscts', 'messages','reads'));
+        return view('reports.campaigns.index', compact('contscts', 'messages', 'reads'));
     }
 
     /**
