@@ -2,7 +2,9 @@
 
 @section('content')
     <div>
-        @foreach ($folders as $folder)
+        @foreach($contscts as $contact)
+        @dump($contact)
+        {{-- @foreach ($folders as $folder)
             @php
                 $query = $folder->search();
                 $messages = $query->text('message that you sent could not be delivered')->get();
@@ -25,10 +27,11 @@
                         {{-- @foreach ($message->getBodies() as $body)
                             {{ $body }}
                         @endforeach --}}
-                    </div>
+                    {{-- </div>
 
                 </div>
-            @endforeach
+            @endforeach --}} --}}
+        @endforeach
     </div>
-    @endforeach
+
 @endsection

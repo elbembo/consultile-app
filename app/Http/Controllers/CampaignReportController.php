@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\CampaignReport;
+use App\Models\Contact;
+use App\Models\EmailTraker;
 use Illuminate\Http\Request;
 use Webklex\IMAP\Facades\Client;
 class CampaignReportController extends Controller
@@ -30,10 +32,21 @@ class CampaignReportController extends Controller
         // $message->parseBody();
         // $body = $message->getBodies();
         // dd($body);
+        $fails =[];
         $folders = $client->getFolders();
+        foreach ($folders as $folder){
+            $query = $folder->search();
+            $messages = $query->text('message that you sent could not be delivered')->get();
+            foreach ($messages as $message){
+                $parts = explode('@', $message->references );
+                $msgid = $parts[0];
+                $fails[] = str_replace("<","",$msgid);
+            }
+            $contscts = EmailTraker::where('email_trakers.massage_id','in',$fails)->join('contacts','email_trakers.contact_id','=','contacts.id')->get('email');
 
+        }
 
-        return view('reports.campaigns.index',compact('folders'));
+        return view('reports.campaigns.index',compact('contscts'));
     }
 
     /**
