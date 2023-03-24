@@ -38,7 +38,7 @@ class CampaignReportController extends Controller
         $folders = $client->getFolders();
         foreach ($folders as $folder) {
             $query = $folder->search();
-            $messages = $query->text('message that you sent could not be delivered')->get();
+            $messages = $query->text('No action is required on your part')->get();
             // $messages->markAsRead();
             foreach ($messages as $message) {
                 $parts = explode('@', $message->references);
