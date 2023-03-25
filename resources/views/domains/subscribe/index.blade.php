@@ -15,7 +15,7 @@
                             </div>
                             <div class="d-flex flex-row justify-content-end">
 
-                                <a href="{{ url('contacts/export') }}"
+                                <a href="{{ url('subscribes/export') }}"
                                     class="btn bg-gray-50 btn-sm m-1">{{ __('Export') }}</a>
 
                             </div>

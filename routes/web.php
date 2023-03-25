@@ -63,7 +63,9 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
         Route::resource('campaigns', CampaignController::class);
         Route::delete('campaigns/{campaign}/attachments', [CampaignController::class, 'removeAttachment'])->name('campaigns.removeAttachment');
 
+        Route::get('subscribes/export', [SubscribeHomeController::class,'export']);
         Route::resource('subscribes', SubscribeHomeController::class);
+
         Route::resource('users', UserController::class);
         Route::resource('email/templates', EmailTemplateController::class);
         Route::resource('editor', SummernoteController::class);

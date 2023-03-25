@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Domains\Subscribe;
 
+use App\Exports\SubscriberExport;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use Exception;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HomeController extends Controller
 {
@@ -62,5 +64,10 @@ class HomeController extends Controller
         $data = request()->except(['_token']);
         Contact::firstOrCreate($data);
         return back()->withErrors(['msg' => 'The Message']);
+    }
+    public function export()
+    {
+        # code...
+        return Excel::download(new SubscriberExport, 'All_subscriber.consultile.com.xlsx');
     }
 }
