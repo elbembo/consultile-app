@@ -13,7 +13,13 @@ class HomeController extends Controller
     public function index()
     {
         # code...
-        return view('domains.subscribe.index');
+        $contacts = Contact::where('source','Subscribr form')->orderBy('contacts.id', 'desc')->paginate(30);
+        return view('domains.subscribe.index',compact('contacts'));
+    }
+    public function home()
+    {
+        # code...
+        return view('domains.subscribe.home');
     }
     public function store (Request $request)
     {

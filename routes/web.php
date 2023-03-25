@@ -40,7 +40,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::domain('subscribe.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
-    Route::resource('/', SubscribeHomeController::class);
+    Route::get('/', [SubscribeHomeController::class,'home']);
+    Route::post('/', [SubscribeHomeController::class,'store']);
 });
 Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
     Route::group(['middleware' => ['auth', 'permission']], function () {
@@ -62,6 +63,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
         Route::resource('campaigns', CampaignController::class);
         Route::delete('campaigns/{campaign}/attachments', [CampaignController::class, 'removeAttachment'])->name('campaigns.removeAttachment');
 
+        Route::resource('subscribes', SubscribeHomeController::class);
         Route::resource('users', UserController::class);
         Route::resource('email/templates', EmailTemplateController::class);
         Route::resource('editor', SummernoteController::class);
