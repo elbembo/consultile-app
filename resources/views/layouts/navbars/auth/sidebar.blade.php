@@ -91,29 +91,18 @@
                     id="feedback">
                     <ul class="nav ms-4 ps-3">
                         <li class="nav-item ">
-                            <a class="nav-link " href="{{ url('settings/trash') }}">
-                                <span class="sidenav-mini-icon"> T </span>
-                                <span class="sidenav-normal"> Trash </span>
+                            <a class="nav-link " href="{{ url('#') }}">
+                                <span class="sidenav-mini-icon"> F </span>
+                                <span class="sidenav-normal"> Feedback list </span>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link " href="{{ url('settings/permissions') }}">
-                                <span class="sidenav-mini-icon"> P </span>
-                                <span class="sidenav-normal"> Permissions </span>
+                            <a class="nav-link " href="{{ url('#') }}">
+                                <span class="sidenav-mini-icon"> F </span>
+                                <span class="sidenav-normal"> Fields </span>
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link " href="{{ url('settings/roles') }}">
-                                <span class="sidenav-mini-icon"> R </span>
-                                <span class="sidenav-normal"> Roles </span>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link " href="{{ url('server') }}">
-                                <span class="sidenav-mini-icon"> S </span>
-                                <span class="sidenav-normal"> Server </span>
-                            </a>
-                        </li>
+
 
                     </ul>
                 </div>
