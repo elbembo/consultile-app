@@ -11,7 +11,7 @@
                 <div class="card-header pb-0">
                     <div class="d-flex flex-row justify-content-between">
                         <div>
-                            <h5 class="mb-0">All Contacts - {{ $count ?? ''}} - {{ $countWithEmail ?? '0' }} with email </h5>
+                            <h5 class="mb-0">All Contacts - {{ $count ?? ''}} - {{ $countWithEmail ?? '0' }} has email </h5>
                         </div>
                         <div class="d-flex flex-row justify-content-end">
 
