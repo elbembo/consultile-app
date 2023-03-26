@@ -120,25 +120,30 @@
                                                     <div class="modal fade" id="exampleModal" tabindex="-1"
                                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered">
+
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">Add note on</h5>
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Add note
+                                                                        on</h5>
                                                                     <button type="button" class="btn-close"
                                                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
-                                                                <div class="modal-body">
-                                                                    <form action="" method="post">
+                                                                <form action="/contacts/{{ $contact->id }}/note" method="post">
+                                                                    @csrf
+                                                                    <div class="modal-body">
+
                                                                         <div class="form-group">
-                                                                            <input class="form-control" type="text" name="" id="addNote">
+                                                                            <textarea class="form-control" type="text" name="note" id="addNote" rows="5"></textarea>
                                                                         </div>
-                                                                    </form>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Close</button>
-                                                                    <button type="button" class="btn btn-primary">Save
-                                                                        changes</button>
-                                                                </div>
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary">Save
+                                                                            changes</button>
+                                                                    </div>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>

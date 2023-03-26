@@ -10,7 +10,7 @@
                             <h6 class="mb-0">Contact Information</h6>
                         </div>
                         <div class="col-md-4 text-end">
-                            <a href="{{ url('contacts/' . $contact->id.'/edit') }}">
+                            <a href="{{ url('contacts/' . $contact->id . '/edit') }}">
                                 <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip"
                                     data-bs-placement="top" title="" aria-hidden="true"
                                     data-bs-original-title="Edit Profile" aria-label="Edit Profile"></i><span
@@ -59,7 +59,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-4 mt-md-0 mt-4">
             <div class="card h-100">
                 <div class="card-header pb-0 p-3">
@@ -77,7 +77,7 @@
                                     <div class="d-flex align-items-start flex-column justify-content-center">
                                         <h6 class="mb-0 text-sm">{{ $data['name'] }}</h6>
                                         <p class="mb-0 text-xs">{{ $data['subject'] }}</p>
-                                        <p class="mb-0 text-xs">{{date('d-m-Y', strtotime( $data['created_at'] ))}}</p>
+                                        <p class="mb-0 text-xs">{{ date('d-m-Y', strtotime($data['created_at'])) }}</p>
                                     </div>
                                 </li>
                             @endforeach
@@ -95,12 +95,72 @@
                 <div class="card-body p-3">
                     <ul class="list-group">
                         @if (!empty($feedback))
-
-                            @foreach ($feedback as $key=> $data)
+                            @foreach ($feedback as $key => $data)
                                 <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
                                     <div class="d-flex align-items-start flex-column justify-content-center">
                                         <h6 class="mb-0 text-sm">{{ $key }}</h6>
-                                        <p class="mb-0 text-xs">{{date('d-m-Y', strtotime( $data[0]['created_at'] ))}}</p>
+                                        <p class="mb-0 text-xs">{{ date('d-m-Y', strtotime($data[0]['created_at'])) }}
+                                        </p>
+                                    </div>
+                                </li>
+                            @endforeach
+                        @endif
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6 mt-md-0 mt-4">
+            <div class="card h-100">
+                <div class="card-header pb-0 p-3">
+                    <div class="d-flex justify-content-between">
+                        <h6 class="mb-0">Notes</h6>
+                        <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#exampleModal" class="mx-2"
+                            data-bs-toggle="tooltip" title="Add note">
+                            <i class="fas fa-sticky-note text-warning"> +</i>
+                        </a>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add note on</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form action="{{$contact->id}}/note" method="post">
+                                    @csrf
+                                    <div class="modal-body">
+
+                                        <div class="form-group">
+                                            <textarea class="form-control" type="text" name="note" id="addNote" rows="5"></textarea>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save
+                                            changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-3">
+                    <ul class="list-group">
+                        @if (!empty($notes))
+                            @foreach ($notes as $key => $note)
+                                <li class="list-group-item border-0 d-flex align-items-center px-2 mb-2 bg-gradient-faded-light-vertical ">
+                                    <div class=" w-100">
+                                        <p class="mb-0 text-lg-center">{{ $note->note }}</p>
+                                        <p class="mb-0 text-xs">{{ date('d-m-Y', strtotime($note->created_at)) }}</p>
                                     </div>
                                 </li>
                             @endforeach

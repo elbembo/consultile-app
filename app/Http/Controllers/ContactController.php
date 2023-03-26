@@ -92,7 +92,8 @@ class ContactController extends Controller
             ->toArray();
         $feedback = Unsubscribe::where('contact_id', $contact->id)->get()->groupBy('reason')->toArray();
         // dd($feedback);
-        return view('contact.view', compact('contact', 'tracker', 'feedback'));
+        $notes = $contact->notes;
+        return view('contact.view', compact('contact', 'tracker', 'feedback','notes'));
     }
 
     /**

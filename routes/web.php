@@ -17,11 +17,13 @@ use App\Http\Controllers\EmailTrakerController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\ServerController;
+use App\Http\Controllers\StickyNoteController;
 use App\Http\Controllers\SummernoteController;
 use App\Http\Controllers\Trash;
 use App\Http\Controllers\UserController;
 use App\Models\Contact;
 use App\Models\EmailTraker;
+use App\Models\StickyNote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
@@ -53,6 +55,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
         Route::get('contacts/import', [ContactController::class, 'import'])->name('contacts.import');
         Route::post('contacts/import', [ContactController::class, 'import'])->name('contacts.import.upload');
 
+        Route::resource('contacts/{contact}/note', StickyNoteController::class);
         Route::resource('contacts', ContactController::class);
 
         Route::get('email/template/preview/{id}', [EmailTemplateController::class, 'preview'])->name('mail-preview');
