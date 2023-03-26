@@ -65,7 +65,8 @@ class SendCampaignEmails extends Mailable
     public function content()
     {
         return new Content(
-            view: 'mail.base',
+            text: 'mail.text',
+            html: 'mail.base',
             with: ['body' => $this->mailData['body'],
              'tracking' => $this->mailData['tracking'],
              'trackingId' => $this->mailData['messageId']],

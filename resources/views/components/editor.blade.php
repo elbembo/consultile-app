@@ -97,6 +97,14 @@
                     buttons: {
                         hello: HelloButton
                     },
+                    popover: {
+                        image: [
+                            ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                            ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                            ['remove', ['removeMedia']],
+                            ['custom', ['imageTitle']],
+                        ],
+                    },
                     callbacks: {
                         onImageUpload: function(files, editor, welEditable) {
                             sendFile(files[0], editor, welEditable);
@@ -138,6 +146,7 @@
                     processData: false,
                     success: function(url) {
                         var image = $('<img>').attr('src', url);
+                        image.attr('alt', "");
                         $('#ta-1').summernote("insertNode", image[0]);
                     }
                 });
