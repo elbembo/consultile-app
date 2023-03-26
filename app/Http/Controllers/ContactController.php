@@ -32,6 +32,9 @@ class ContactController extends Controller
     {
         $contacts = Contact::where('contacts.id', '>', '0')->orderBy('contacts.id', 'desc')->paginate(30);
         // dd($contacts);
+        $count  = $contacts->total();
+
+        $countWithEmail  =  Contact::where('email', '!=', '')->count();
         $views = [];
         foreach($contacts as $contact){
 
@@ -39,7 +42,7 @@ class ContactController extends Controller
 
         }
 
-        return view('contact.index', compact('contacts','views'));
+        return view('contact.index', compact('contacts','views','count','countWithEmail'));
     }
     public function companies()
     {
