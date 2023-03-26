@@ -112,12 +112,12 @@
                                                 <td class="text-center">
 
                                                     <a href="javascript:;" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal" class="mx-2"
+                                                        data-bs-target="#snote{{ $contact->id }}" class="mx-2"
                                                         data-bs-toggle="tooltip" title="Add note">
                                                         <i class="fas fa-sticky-note text-secondary"></i>
                                                     </a>
                                                     <!-- Modal -->
-                                                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                    <div class="modal fade" id="snote{{ $contact->id }}" tabindex="-1"
                                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered">
 

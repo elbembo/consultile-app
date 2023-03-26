@@ -88,7 +88,7 @@ class ContactController extends Controller
     public function show(Contact $contact)
     {
         //
-        $tracker = EmailTraker::where('email_trakers.contact_id', $contact->id)->join('campaigns', 'email_trakers.capmaign_id', '=', 'campaigns.id')->get()
+        $tracker = EmailTraker::where('email_trakers.contact_id', $contact->id)->join('campaigns', 'email_trakers.capmaign_id', '=', 'campaigns.id')->orderBy('email_trakers.id','desc')->take(5)->get()
             ->toArray();
         $feedback = Unsubscribe::where('contact_id', $contact->id)->get()->groupBy('reason')->toArray();
         // dd($feedback);

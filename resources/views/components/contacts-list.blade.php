@@ -33,7 +33,42 @@
 
 
                 <td class="text-center">
+                    <a href="javascript:;" data-bs-toggle="modal"
+                    data-bs-target="#addnote{{ $contact->id }}" class="mx-2"
+                    data-bs-toggle="tooltip" title="Add note">
+                    <i class="fas fa-sticky-note text-secondary"></i>
+                </a>
+                <!-- Modal -->
+                <div class="modal fade" id="addnote{{ $contact->id }}" tabindex="-1"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
 
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Add note
+                                    on</h5>
+                                <button type="button" class="btn-close"
+                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form action="/contacts/{{ $contact->id }}/note" method="post">
+                                @csrf
+                                <div class="modal-body">
+
+                                    <div class="form-group">
+                                        <textarea class="form-control" type="text" name="note" id="addNote" rows="5"></textarea>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save
+                                        changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                     <a href="{{ url('contacts/' . $contact->id . '/edit') }}" class="mx-3" data-bs-toggle="tooltip"
                         data-bs-original-title="Edit user">
                         <i class="fas fa-user-edit text-secondary"></i>

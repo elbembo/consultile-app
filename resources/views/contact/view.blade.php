@@ -54,6 +54,9 @@
                             <a class="btn btn-instagram btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
                                 <i class="fab fa-instagram fa-lg" aria-hidden="true"></i>
                             </a>
+                            <a class="btn btn-instagram btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
+                                <i class="fab fa-linkedin-in fa-lg" aria-hidden="true"></i>
+                            </a>
                         </li>
                     </ul>
                 </div>
