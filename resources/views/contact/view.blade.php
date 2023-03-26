@@ -73,7 +73,7 @@
                         @if (!empty($tracker))
                             @foreach ($tracker as $data)
                                 <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                                    <div class="avatar me-3 " style="background-color: {{ ranlor() }}">
+                                    <div class="avatar me-3 text-2xl" style="background-color: {{ ranlor() }}">
 
                                         {{ $data['views'] }}
                                     </div>

@@ -49,9 +49,9 @@ class SendCampaignEmails extends Mailable
         return new Headers(
             messageId: $this->mailData['messageId'] . '@consultile-mea.com',
             text: [
-
-                'X-Confirm-Reading-To' => '<' . $this->mailData['from']['email'] . '>',
-                'Disposition-Notification-To' => '<' . $this->mailData['from']['email'] . '>',
+                'X-SES-CONFIGURATION-SET' => 'consultile_set',
+                'X-Confirm-Reading-To' => '<' . $this->mailData['replyTo']['email'] . '>',
+                'Disposition-Notification-To' => '<' . $this->mailData['replyTo']['email'] . '>',
                 'List-Unsubscribe' => env('APP_URL') . '/unsubscribe/?email=' . $this->mailData['to']['email'],
             ],
         );
