@@ -52,7 +52,7 @@ class SendCampaignEmails extends Mailable
                 'X-SES-CONFIGURATION-SET' => 'consultile_set',
                 'X-Confirm-Reading-To' => '<' . $this->mailData['replyTo']['email'] . '>',
                 'Disposition-Notification-To' => '<' . $this->mailData['replyTo']['email'] . '>',
-                'List-Unsubscribe' => env('APP_URL') . '/unsubscribe/?email=' . $this->mailData['to']['email'],
+                'List-Unsubscribe' => env('APP_URL') . '/unsubscribe/?t=' . $this->mailData['messageId'] ,
             ],
         );
     }
