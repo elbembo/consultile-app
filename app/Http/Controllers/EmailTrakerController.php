@@ -37,7 +37,7 @@ class EmailTrakerController extends Controller
         // imagedestroy($img);
         // return response("", 200, ['Content-Type' => "image/png"]);
         // return redirect('https://app.consultile.com/1x1-00000000.png');
-        return  response()->file(Storage::get('1x1-00000000.png'), ['Content-Type' => 'image/png']);
+        return  response()->file(public_path().'1x1-00000000.png', ['Content-Type' => 'image/png']);
     }
 
     /**
