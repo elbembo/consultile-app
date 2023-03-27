@@ -67,6 +67,36 @@
         </div>
     </div>
     <script>
+        var GalleryButton = function (context) {
+        var ui = $.summernote.ui;
+
+        // create button
+        var button = ui.button({
+            contents: '<i class="fa fa-images"/>',
+            // tooltip: 'Gallery',
+            click: function () {
+            // invoke insertText method with 'hello' on editor module.
+            // context.invoke('editor.insertText', 'hello');
+
+            $.ajax({
+                    headers: {
+                        'X-CSRF-Token': '{{ csrf_token() }}'
+                    },
+                    type: "GET",
+                    url: "/gallery",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+
+                        $('main').append(data)
+                    }
+                });
+            }
+        });
+
+        return button.render();   // return button as jquery object
+        }
         $(document).ready(function() {
 
             function sendFile(file, editor, welEditable) {
@@ -97,17 +127,16 @@
 
                 toolbar: [
                     ['style'],
-                    ['undo', ['undo', ]],
-                    ['redo', ['redo', ]],
-                    ['style', ['bold', 'italic', 'underline', ]],
-                    ['font', ['strikethrough', ]],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['table'],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['codeview', ['codeview']]
+                        ['undo', ['undo','redo' ]],
+                        ['style', ['bold', 'italic', 'underline', ]],
+                        ['font', ['strikethrough','fontname','fontsize', 'color']],
+                        ['table'],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['picture', ['picture','gallery' ,'link', 'codeview']],
                 ],
+                buttons: {
+                    gallery: GalleryButton
+                },
                 callbacks: {
                     onImageUpload: function(files, editor, welEditable) {
                         sendFile(files[0], editor, welEditable);

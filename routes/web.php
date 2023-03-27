@@ -14,6 +14,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Domains\Subscribe\HomeController as SubscribeHomeController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\EmailTrakerController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\ServerController;
@@ -85,9 +86,10 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
         Route::post('/notifications/{id}/read', [UserController::class, 'read'])->name('notifications.read');
         Route::get('/notifications', [UserController::class, 'notifications'])->name('notifications.index');
         Route::post('upload',[EmailTemplateController::class,'fileUpload'])->name('Upload Files');
+
         Route::post('companies',[ContactController::class,'companies'])->name('Companies List');
     });
-
+    Route::get('/gallery',[GalleryController::class,'index'])->name('gallery');
     // Route::get('/test',  function () {
     //     return view('test');
     // })->name('test');

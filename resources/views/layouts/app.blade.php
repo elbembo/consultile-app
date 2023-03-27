@@ -35,6 +35,33 @@
         .note-modal.open {
             opacity: 1 !important;
         }
+
+        #mini-gallery {
+
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 90%;
+            overflow: scroll;
+            width: 90%;
+            z-index: 999;
+            background-color: #cbcbcb;
+
+        }
+        #mini-gallery img{
+            cursor: pointer;
+        }
+        .overlay-gallery {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background: #000000bf;
+            top: 0;
+            left: 0;
+            z-index: 999;
+        }
+
     </style>
     <script src="/assets/js/plugins/jquery-3.5.1.min.js"></script>
     <script src="/assets/js/core/bootstrap.bundle.min.js"></script>

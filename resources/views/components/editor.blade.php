@@ -8,8 +8,42 @@
     <title>Document</title>
     <link id="appstyle" href="/assets/css/core.css?v=1.0.3" rel="stylesheet" />
     <script src="/assets/js/plugins/jquery-3.5.1.min.js"></script>
-        <link href="/assets/css/summernote-lite.min.css" rel="stylesheet">
+    <link href="/assets/css/summernote-lite.min.css" rel="stylesheet">
     <script src="/assets/js/plugins/summernote-lite.min.js"></script>
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <script src="/assets/js/init.js?v=1.0.5"></script>
+    <style>
+        .note-modal.open {
+            opacity: 1 !important;
+        }
+
+        #mini-gallery {
+
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 90%;
+            overflow: scroll;
+            width: 90%;
+            z-index: 999;
+            background-color: #cbcbcb;
+
+        }
+        #mini-gallery img{
+            cursor: pointer;
+        }
+        .overlay-gallery {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background: #000000bf;
+            top: 0;
+            left: 0;
+            z-index: 999;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -42,7 +76,7 @@
                     <input type="hidden" name="cid" value="{{ $campaign->id ?? '' }}">
 
 
-                    <textarea name="content" id="ta-1" cols="30" rows="30">{{ $et->content ?? '<center><table class="table table-bordered" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; table-layout: fixed; max-width: 600px;"><tbody><tr><td style="border-color: rgb(204, 204, 204); padding: 4px;"><br></td></tr></tbody></table></center>' }}</textarea>
+                    <textarea name="content" id="summernote" cols="30" rows="30">{{ $et->content ?? '<center><table class="table table-bordered" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; table-layout: fixed; max-width: 600px;"><tbody><tr><td style="border-color: rgb(204, 204, 204); padding: 4px;"><br></td></tr></tbody></table></center>' }}</textarea>
                     <button type="submit" class="btn btn-sm btn-primary">Save</button>
                 </form>
             </div>
@@ -64,80 +98,55 @@
 
 
     <script>
-        (function() {
-            var HelloButton = function(context) {
+        $(document).ready(function() {
+            const GalleryButton = function(context) {
                 var ui = $.summernote.ui;
 
                 // create button
                 var button = ui.button({
-                    contents: '<i class="fa fa-child"/> Hello',
-                    tooltip: 'hello',
+                    contents: '<i class="fa fa-images"/>',
+                    // tooltip: 'Gallery',
                     click: function() {
                         // invoke insertText method with 'hello' on editor module.
-                        context.invoke('editor.insertText', 'hello');
+                        // context.invoke('editor.insertText', 'hello');
+
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-Token': '{{ csrf_token() }}'
+                            },
+                            type: "GET",
+                            url: "/gallery",
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            success: function(data) {
+
+                                $('.container-fluid').append(data)
+                            }
+                        });
                     }
                 });
 
                 return button.render(); // return button as jquery object
             }
-            $("#ta-1")
+            $("#summernote")
                 .summernote({
-                    // callbacks: {
-                    //     onPaste: function(e, x, d) {
-                    //         $sumNote.code(($($sumNote.code()).find("font").remove()));
-                    //     }
-                    // },
-
-                    // dialogsInBody: true,
                     dialogsFade: true,
                     disableDragAndDrop: true,
-                    //                disableResizeEditor:true,
                     height: "500px",
-                    // buttons: {
-                    //     hello: HelloButton
-                    // },
-                    // popover: {
-                    //     image: [
-                    //         ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
-                    //         ['float', ['floatLeft', 'floatRight', 'floatNone']],
-                    //         ['remove', ['removeMedia']],
-                    //         ['custom', ['imageTitle']],
-                    //     ],
-                    // },
+
                     toolbar: [
                         ['style'],
-                        ['undo', ['undo', ]],
-                        ['redo', ['redo', ]],
+                        ['undo', ['undo', 'redo']],
                         ['style', ['bold', 'italic', 'underline', ]],
-                        ['font', ['strikethrough', ]],
-                        ['fontsize', ['fontsize']],
-                        ['color', ['color']],
+                        ['font', ['strikethrough', 'fontname', 'fontsize', 'color']],
                         ['table'],
                         ['para', ['ul', 'ol', 'paragraph']],
-                        ['picture', ['picture', 'link', 'codeview']]
+                        ['picture', ['picture', 'gallery', 'link', 'codeview']],
                     ],
-
-                    // popover: {
-                    //     image: [
-                    //         ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
-                    //         ['float', ['floatLeft', 'floatRight', 'floatNone']],
-                    //         ['remove', ['removeMedia']]
-                    //     ],
-                    //     link: [
-                    //         ['link', ['linkDialogShow', 'unlink']]
-                    //     ],
-                    //     table: [
-                    //         ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
-                    //         ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
-                    //     ],
-                    //     air: [
-                    //         ['color', ['color']],
-                    //         ['font', ['bold', 'underline', 'clear']],
-                    //         ['para', ['ul', 'paragraph']],
-                    //         ['table', ['table']],
-                    //         ['insert', ['link', 'picture']]
-                    //     ]
-                    // },
+                    buttons: {
+                        gallery: GalleryButton
+                    },
                     callbacks: {
                         onImageUpload: function(files, editor, welEditable) {
                             sendFile(files[0], editor, welEditable);
@@ -178,23 +187,26 @@
                     success: function(url) {
                         var image = $('<img>').attr('src', url);
                         image.attr('alt', "");
-                        $('#ta-1').summernote("insertNode", image[0]);
+                        $('#summernote').summernote("insertNode", image[0]);
                     }
                 });
             }
+            $('#summernote').summernote({
+                fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Merriweather'],
+            });
             $('.custom_data').on('click', (e) => {
-                $("#ta-1").summernote('insertText', `@{{ ` +  e.target.dataset.value +` }}`)
+                $("#summernote").summernote('insertText', `@{{ ` +  e.target.dataset.value +` }}`)
 
             })
             $('.unsubscribe-btn').on('click', (e) => {
-                $("#ta-1").summernote('createLink', {
+                $("#summernote").summernote('createLink', {
                     text: "Unsubscribe",
                     url: 'https://app.consultile.com/unsubscribe/?t=@{{ Traker }}',
                     isNewWindow: true
                 })
 
             })
-        })();
+        });
     </script>
 </body>
 
