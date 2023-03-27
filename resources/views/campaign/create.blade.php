@@ -133,6 +133,8 @@
                                 </div>
                                 <fieldset class="form-group">
                                     <legend>Advanced targeting</legend>
+                                    <button type="button" class="btn btn-link p-1" id='targeting'>Check audience<i class="fa fa-user ms-2" aria-hidden="true"></i><span class="ms-2" id="target-count"></span></button>
+
                                     <div class="form-group">
                                         <label for="target-location"
                                             class="form-control-label">{{ __('Location') }}</label>
@@ -148,11 +150,10 @@
                                             class="form-control-label">{{ __('Tags') }}</label>
                                         <div class="@error('user.phone')border border-danger rounded-3 @enderror">
                                             <div class="form-control form-control-tags">
-                                                <span>All</span>
                                                 <input class="m-0 p-0 border-0 mx-1" placeholder="Contacts Tags..."
                                                     style="outline: none;" type="text" id="target-audience">
                                             </div>
-                                            <input type="hidden" name="tags"  value="{{ $campaign->target_audience ?? ''}}" >
+                                            <input type="hidden" name="target_audience" id="target-audience"  value="{{ $campaign->target_audience ?? ''}}" >
 
 
                                             @error('phone')
@@ -162,6 +163,17 @@
                                     </div>
 
                                 </fieldset>
+                                <script>
+                                    $s('#targeting').click((e)=>{
+                                        const target_location = document.getElementById('target-location').value
+                                        const target_audience = document.getElementById('target-audience').value
+                                        post("/targeting", { target_location,target_audience }).then(res=>{
+                                            document.getElementById('target-count').innerHTML = res.count
+                                        })
+
+                                    })
+
+                                </script>
                             </div>
                             <div class="col-sm-6 col-md-4">
                                 <div class="form-group">

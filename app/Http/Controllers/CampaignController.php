@@ -274,6 +274,19 @@ class CampaignController extends Controller
         $campaign->delete();
         return redirect('/campaigns');
     }
+    public function targeting(Request $request)
+    {
+        $contacts = Contact::where('email', '!=', '')->where('subscribe', 1);
+        if (!empty($request->target_location))
+            $contacts = $contacts->where('country', $request->target_location);
+        if (!empty($request->target_audience) && $request->target_audience != 'All') {
+            foreach (explode(',', $request->target_audience) as $tag) {
+                $contacts = $contacts->where('tags', 'like',  "%$tag%");
+            };
+        }
+        $contacts = $contacts->count();
+        return response()->json(['count' => $contacts]);
+    }
     public function removeAttachment(Request $request)
     {
         //

@@ -115,6 +115,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
     Route::post('unsubscribe', [ContactController::class, 'unsubscribe']);
     Route::get('companies', [ContactController::class, 'companies']);
     Route::get('countries', [ContactController::class, 'countries']);
+    Route::post('targeting', [CampaignController::class, 'targeting']);
 });
 Route::get('test2', function () {
 
