@@ -30,9 +30,16 @@
     <!-- CSS Files -->
     <link id="appstyle" href="/assets/css/core.css?v=1.0.3" rel="stylesheet" />
     <link id="pagestyle" href="/assets/css/style.css?v=1.0.5" rel="stylesheet" />
-    <link href="/assets/css/summernote.min.css" rel="stylesheet">
+    <link href="/assets/css/summernote-lite.min.css" rel="stylesheet">
+    <style>
+        .note-modal.open {
+            opacity: 1 !important;
+        }
+    </style>
     <script src="/assets/js/plugins/jquery-3.5.1.min.js"></script>
     <script src="/assets/js/core/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/plugins/summernote-lite.min.js"></script>
+
     {{-- <script src="/assets/js/plugins/bootstrap-autocomplete.min.js"></script> --}}
     <script src="/assets/js/init.js?v=1.0.5"></script>
     <script type="module">
@@ -145,7 +152,7 @@
     <script src="/assets/js/plugins/fullcalendar.min.js"></script>
     <script src="/assets/js/plugins/chartjs.min.js"></script>
     {{-- <script src="/assets/js/core.min.js?v=1.0.4"></script> --}}
-    <script src="/assets/js/plugins/summernote.min.js"></script>
+    <script src="/assets/js/plugins/summernote-lite.min.js"></script>
     <script src="/assets/js/plugins/moment.min.js"></script>
     <script src="/assets/js/main.js?v=1.0.6"></script>
 

@@ -176,39 +176,8 @@ function sidenavTypeOnResize() {
         e.classList.remove("disabled")
     })
 }
-const HelloButton = function (context) {
-    var ui = $.summernote.ui;
 
-    // create button
-    var button = ui.button({
-        contents: '<i class="fa fa-child"/> Hello',
-        tooltip: 'hello',
-        click: function () {
-            // invoke insertText method with 'hello' on editor module.
-            context.invoke('editor.insertText', 'hello');
-        }
-    });
 
-    return button.render();   // return button as jquery object
-}
-$(document).ready(function () {
-
-    $('#summernote').summernote(
-    );
-    $('.custom_data').on('click', (e) => {
-        $('#summernote').summernote('insertText', `{{ ${e.target.dataset.value} }}`)
-    })
-    // $('.moment').text(moment.unix($(this).text()).fromNow())
-
-    // $("#tempCode").on('submit', function () {
-    //     $('#tempCodetextarea').html($('#summernote').summernote('code'));
-    // });
-    // $("form").on('submit', (e) => {
-    //     $(this).find('button').prop('disabled', true);
-
-    // })
-
-});
 (function () {
     function notifyMini(titel, msg, type) {
         let doc = new DOMParser().parseFromString(
@@ -223,7 +192,7 @@ $(document).ready(function () {
                 </div>
                 <hr class="horizontal light m-0">
                 <div class="toast-body text-white d-flex">
-                ${msg} 
+                ${msg}
                 </div>
             </div>`, 'text/html')
 
@@ -241,12 +210,12 @@ $(document).ready(function () {
         //     });
         //    toastList.forEach(toast => toast.show()); // This show them
     }
-    
+
     document.querySelectorAll('.moment').forEach((ele) => {
         ele.textContent = moment.unix(ele.textContent).fromNow()
     })
     // check input email and phone dubilcate
-    
+
     $s('.attachment-del').click((ele) => {
         // alert('its work')
 

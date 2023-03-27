@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css">
+    <link id="appstyle" href="/assets/css/core.css?v=1.0.3" rel="stylesheet" />
+    <script src="/assets/js/plugins/jquery-3.5.1.min.js"></script>
+        <link href="/assets/css/summernote-lite.min.css" rel="stylesheet">
+    <script src="/assets/js/plugins/summernote-lite.min.js"></script>
 </head>
 
 <body>
@@ -17,12 +17,18 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="d-flex">
-                    <div class="border bg-warning border-1 btn custom_data shadow-none" data-value="First Name">First
+                    <div class=" bg-light btn btn-link custom_data  p-2 m-1 " data-value="First Name">
+                        First
                         Name</div>
-                    <div class="border bg-warning border-1 btn custom_data shadow-none" data-value="Last Name">Last Name
+                    <div class=" bg-light btn btn-link custom_data p-2 m-1 " data-value="Last Name">
+                        Last Name
                     </div>
-                    <div class="border bg-warning border-1 btn custom_data shadow-none" data-value="Title">Title</div>
-                    <div class="border bg-warning border-1 btn custom_data shadow-none" data-value="Email">Email</div>
+                    <div class=" bg-light btn btn-link custom_data  p-2 m-1 " data-value="Title">Title
+                    </div>
+                    <div class=" bg-light btn btn-link custom_data  p-2 m-1 " data-value="Email">Email
+                    </div>
+                    <div class=" bg-light btn btn-link unsubscribe-btn  p-2 m-1 " data-value="Email">
+                        Unsubscribe link</div>
                 </div>
                 <form
                     action="{{ Request::get('t') ? 'email/templates/' . Request::get('t') . '?t=' . Request::get('t') : 'email/templates' }}"
@@ -36,7 +42,7 @@
                     <input type="hidden" name="cid" value="{{ $campaign->id ?? '' }}">
 
 
-                    <textarea name="content" id="ta-1" cols="30" rows="30">{{ $et->content ?? '' }}</textarea>
+                    <textarea name="content" id="ta-1" cols="30" rows="30">{{ $et->content ?? '<center><table class="table table-bordered" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; table-layout: fixed; max-width: 600px;"><tbody><tr><td style="border-color: rgb(204, 204, 204); padding: 4px;"><br></td></tr></tbody></table></center>' }}</textarea>
                     <button type="submit" class="btn btn-sm btn-primary">Save</button>
                 </form>
             </div>
@@ -55,11 +61,6 @@
             </code>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
-
 
 
     <script>
@@ -79,9 +80,7 @@
 
                 return button.render(); // return button as jquery object
             }
-            var content =
-                "<p><img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzC_Ho_08G0m7PyxJOPLpPujM9UTLxvaE-5nXewscnqa3GMWjGwg' alt='Image result for summernote.js'></p><h1>Summernote</h1>";
-            var $sumNote = $("#ta-1")
+            $("#ta-1")
                 .summernote({
                     // callbacks: {
                     //     onPaste: function(e, x, d) {
@@ -89,35 +88,68 @@
                     //     }
                     // },
 
-                    dialogsInBody: true,
+                    // dialogsInBody: true,
                     dialogsFade: true,
                     disableDragAndDrop: true,
                     //                disableResizeEditor:true,
-                    height: "400px",
-                    buttons: {
-                        hello: HelloButton
-                    },
-                    popover: {
-                        image: [
-                            ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
-                            ['float', ['floatLeft', 'floatRight', 'floatNone']],
-                            ['remove', ['removeMedia']],
-                            ['custom', ['imageTitle']],
-                        ],
-                    },
+                    height: "500px",
+                    // buttons: {
+                    //     hello: HelloButton
+                    // },
+                    // popover: {
+                    //     image: [
+                    //         ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                    //         ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                    //         ['remove', ['removeMedia']],
+                    //         ['custom', ['imageTitle']],
+                    //     ],
+                    // },
+                    toolbar: [
+                        ['style'],
+                        ['undo', ['undo', ]],
+                        ['redo', ['redo', ]],
+                        ['style', ['bold', 'italic', 'underline', ]],
+                        ['font', ['strikethrough', ]],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        ['table'],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['picture', ['picture', 'link', 'codeview']]
+                    ],
+
+                    // popover: {
+                    //     image: [
+                    //         ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                    //         ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                    //         ['remove', ['removeMedia']]
+                    //     ],
+                    //     link: [
+                    //         ['link', ['linkDialogShow', 'unlink']]
+                    //     ],
+                    //     table: [
+                    //         ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                    //         ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+                    //     ],
+                    //     air: [
+                    //         ['color', ['color']],
+                    //         ['font', ['bold', 'underline', 'clear']],
+                    //         ['para', ['ul', 'paragraph']],
+                    //         ['table', ['table']],
+                    //         ['insert', ['link', 'picture']]
+                    //     ]
+                    // },
                     callbacks: {
                         onImageUpload: function(files, editor, welEditable) {
                             sendFile(files[0], editor, welEditable);
                         }
                     },
                     tableClassName: function() {
-                        alert("tbl");
                         $(this)
                             .addClass("table table-bordered")
 
                             .attr("cellpadding", 0)
                             .attr("cellspacing", 0)
-                            .attr("border", 1)
+                            .attr("border", 0)
                             .css("borderCollapse", "collapse")
                             .css("table-layout", "fixed")
                             .css("width", "100%");
@@ -125,10 +157,9 @@
                         $(this)
                             .find("td")
                             .css("borderColor", "#ccc")
-                            .css("padding", "4px");
+                        // .css("padding", "4px");
                     }
-                })
-                .data("summernote");
+                });
 
             //get
             function sendFile(file, editor, welEditable) {
@@ -151,28 +182,16 @@
                     }
                 });
             }
-            $("#btn-get-content").on("click", function() {
-                var y = $($sumNote.code());
-
-                console.log(y[0]);
-                console.log(y.find("p> font"));
-                var x = y.find("font").remove();
-                $("#content").text($("#ta-1").val());
-            });
-            //get text$($sumNote.code()).find("font").remove()$($sumNote.code()).find("font").remove()
-            $("#btn-get-text").on("click", function() {
-                $("#content").html($($sumNote.code()).text());
-            });
-            //set
-            $("#btn-set-content").on("click", function() {
-                $sumNote.code(content);
-            }); //reset
-            $("#btn-reset").on("click", function() {
-                $sumNote.reset();
-                $("#content").empty();
-            });
             $('.custom_data').on('click', (e) => {
                 $("#ta-1").summernote('insertText', `@{{ ` +  e.target.dataset.value +` }}`)
+
+            })
+            $('.unsubscribe-btn').on('click', (e) => {
+                $("#ta-1").summernote('createLink', {
+                    text: "Unsubscribe",
+                    url: 'https://app.consultile.com/unsubscribe/?t=@{{ Traker }}',
+                    isNewWindow: true
+                })
 
             })
         })();
