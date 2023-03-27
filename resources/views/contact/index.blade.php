@@ -7,13 +7,13 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="card mb-4 mx-4">
+            <div class="card mb-4 mx-md-4">
                 <div class="card-header pb-0">
-                    <div class="d-flex flex-row justify-content-between">
+                    <div class="d-md-flex flex-md-row justify-content-between">
                         <div>
                             <h5 class="mb-0">All Contacts - {{ $count ?? ''}} - {{ $countWithEmail ?? '0' }} has email </h5>
                         </div>
-                        <div class="d-flex flex-row justify-content-end">
+                        <div class="d-md-flex flex-md-row justify-content-end">
 
                             <a href="{{url('contacts/export')}}" class="btn bg-gray-50 btn-sm m-1">{{ __('Export') }}</a>
                             <a href="{{url('contacts/import')}}" class="btn bg-gray-50 btn-sm m-1">{{ __('Import') }}</a>

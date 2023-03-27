@@ -35,7 +35,88 @@
     <script src="/assets/js/core/bootstrap.bundle.min.js"></script>
     {{-- <script src="/assets/js/plugins/bootstrap-autocomplete.min.js"></script> --}}
     <script src="/assets/js/init.js?v=1.0.5"></script>
+    <script type="module">
+        import Autocomplete from "/assets/js/plugins/bootstrap-autocomplete.min.js";
+        const opts = {
+          onSelectItem: console.log,
+        };
 
+        let src = [ ];
+        fetch('/countries').then((response) => response.json())
+      .then((data) =>src = data).then(re =>{
+        Autocomplete.init("input.autocompletecountries", {
+          items: src,
+          valueField: "label",
+          labelField: "title",
+          highlightTyped: true,
+          onSelectItem: (e)=>{console.log(e)},
+        });}
+      );
+        fetch('/companies').then((response) => response.json())
+      .then((data) =>src = data).then(re =>{
+        Autocomplete.init("input.autocomplete", {
+          items: src,
+          valueField: "label",
+          labelField: "title",
+          highlightTyped: true,
+          onSelectItem: (e)=>{console.log(e)},
+        });}
+      );
+
+
+        const formsubmit = document.getElementById('contact-form')
+        formsubmit?.addEventListener('submit', handleSubmit)
+        async function handleSubmit(e) {
+            let err = 0
+            let span = document.createElement('span');
+            const form = e.target
+            e.preventDefault()
+            if(form.email.value.trim() =='' && form.work_phone.value.trim() =='' && form.personal_phone.value.trim() =='' && form.first_name.value.trim() =='' && form.last_name.value.trim() ==''  ){
+                alert('You can\'t save with all importaant fields empty')
+                return false
+            }
+            form.submitBtn.disabled = true
+            let validationFileds = [form.email, form.work_phone, form.personal_phone]
+            for (const ele  of validationFileds) {
+                const { name, value } = ele
+                if (ele.value.trim() == '' || ele.value.trim() == ele.dataset.default.trim())
+                continue
+                    await  post("/check-duplicate", { name, value } )
+                    .then(json=>{
+
+                        ele.classList.remove('border-danger')
+                        ele?.nextElementSibling?.remove()
+                        if (json?.id) {
+                            ele.classList.add('border-danger')
+                            ele.parentNode.insertBefore(span, ele.nextSibling);
+                            span.innerHTML = `<p class="text-danger text-xs mt-2">Its already exist under ${json?.first_name} ${json?.last_name}, click <a href="/contacts/${json?.id}/edit">here</a> to update it.</a></p>`
+                            err++
+                        }
+                    })
+            }
+            // e.preventDefault()
+            let company = form.company
+            company.classList.remove('border-danger')
+            // company?.nextElementSibling?.remove()
+            if(!src.includes(form.company.value)) {
+                company.classList.add('border-danger')
+                // company.parentNode.insertBefore(span, company.nextSibling)
+                if(!confirm("Campany name not found.\n Do you want add it as a new one")){
+                    form.submitBtn.disabled = false
+                    return false
+                }
+                // span.innerHTML = `<p class="text-danger text-xs mt-2">Campany name not found</p>`
+            }
+            console.log(err)
+            if(err == 0)
+                form.submit();
+            else
+                form.submitBtn.disabled = false
+
+
+        }
+
+      </script>
 
 
 </head>
@@ -79,20 +160,20 @@
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
     </script>
-<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
-<script>
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
 
-    var pusher = new Pusher('e26f3579c24775647413', {
-        cluster: 'mt1'
-    });
+        var pusher = new Pusher('e26f3579c24775647413', {
+            cluster: 'mt1'
+        });
 
-    var channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', function(data) {
-        console.log(data)
-        let doc = new DOMParser().parseFromString(
-            `<div class="toast fade p-2 mt-2 bg-gradient-success hide" role="alert" aria-live="assertive" id="notifyMini"
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            console.log(data)
+            let doc = new DOMParser().parseFromString(
+                `<div class="toast fade p-2 mt-2 bg-gradient-success hide" role="alert" aria-live="assertive" id="notifyMini"
                 aria-atomic="true">
                 <div class="toast-header bg-transparent border-0 d-flex">
                     <i class="${data.message.icon} text-white me-2"></i>
@@ -107,13 +188,13 @@
                 </div>
             </div>`, 'text/html')
 
-        let toastEle = doc.body.querySelector('.toast');
-        console.log(toastEle)
-        document.getElementById('notifyBase').appendChild(toastEle)
-        let toast = new bootstrap.Toast(toastEle)
-        toast.show()
-    });
-</script>
+            let toastEle = doc.body.querySelector('.toast');
+            console.log(toastEle)
+            document.getElementById('notifyBase').appendChild(toastEle)
+            let toast = new bootstrap.Toast(toastEle)
+            toast.show()
+        });
+    </script>
 
 </body>
 

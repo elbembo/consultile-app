@@ -54,6 +54,16 @@ class ContactController extends Controller
         }
         return response()->json($list);
     }
+    public function countries()
+    {
+        # code...
+        $list = [];
+        $countries = Contact::withTrashed()->get()->groupBy('country')->toArray();
+        foreach ($countries as $country => $data) {
+            array_push($list, $country);
+        }
+        return response()->json($list);
+    }
     /**
      * Show the form for creating a new resource.
      *

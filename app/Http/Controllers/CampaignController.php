@@ -172,7 +172,16 @@ class CampaignController extends Controller
                         $contactGroup = ContactGroupe::where('group_name', '=', $campaign->group_name)->pluck('contact_id');
                         $contacts = Contact::whereIn('id', $contactGroup)->where('subscribe', 1)->get();
                     } else {
-                        $contacts = Contact::where('subscribe', 1)->get();
+                        $contacts = Contact::where('email', '!=', '')->where('subscribe', 1);
+                        if (!empty($campaign->target_location))
+                            $contacts = $contacts->where('country', $campaign->target_location);
+                        if (!empty($campaign->target_audience) && $campaign->target_audience != 'All') {
+                            foreach (explode(',', $campaign->target_audience) as $tag) {
+                                $contacts = $contacts->where('tags', 'like',  "%$tag%");
+                            };
+                        }
+                        $contacts = $contacts->get();
+                        // dd($contacts);
                     }
                     foreach ($contacts as $contact) {
                         if (preg_match("/(.+)@(.+)\.(.+)/i", $contact->email)) {

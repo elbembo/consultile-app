@@ -21,7 +21,7 @@
     </style>
     <div>
 
-        <div class="container-fluid py-4 contact-edit">
+        <div class="px-md-4 py-4 px-md-4">
 
             <form action="{{ isset($campaign) ? url('campaigns/' . $campaign->id) : url('campaigns') }}" method="POST"
                 role="form text-left">
@@ -98,8 +98,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email-template"
-                                        class="form-control-label">{{ __('Group name') }}</label>
+                                    <label for="email-template" class="form-control-label">{{ __('Group name') }}</label>
                                     <div class="@error('group.group_name') border border-danger rounded-3 @enderror">
                                         <select class="form-control" name="group_name" id="group_name">
                                             <option value="0">No group ...</option>
@@ -132,34 +131,37 @@
 
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="user.phone" class="form-control-label">{{ __('Target Audience') }}</label>
-                                    <div class="@error('user.phone')border border-danger rounded-3 @enderror">
-                                        <div class="form-control form-control-tags">
-                                            <span>All</span>
-                                            <input class="m-0 p-0 border-0 mx-1" placeholder="Contacts Tags..."
-                                                style="outline: none;" type="text" id="target-audience">
+                                <fieldset class="form-group">
+                                    <legend>Advanced targeting</legend>
+                                    <div class="form-group">
+                                        <label for="target-location"
+                                            class="form-control-label">{{ __('Location') }}</label>
+                                        <div class="@error('user.location') border border-danger rounded-3 @enderror">
+                                            <div class="form-control">
+                                                <input  name="target_location" value="{{ $campaign->target_location ?? ''}}" class="m-0 p-0 border-0 mx-1 autocompletecountries" placeholder="Countries"
+                                                    style="outline: none;" type="text" id="target-location">
+                                            </div>
                                         </div>
-                                        <input type="hidden" name="target_audience" value="All">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="user.phone"
+                                            class="form-control-label">{{ __('Tags') }}</label>
+                                        <div class="@error('user.phone')border border-danger rounded-3 @enderror">
+                                            <div class="form-control form-control-tags">
+                                                <span>All</span>
+                                                <input class="m-0 p-0 border-0 mx-1" placeholder="Contacts Tags..."
+                                                    style="outline: none;" type="text" id="target-audience">
+                                            </div>
+                                            <input type="hidden" name="tags"  value="{{ $campaign->target_audience ?? ''}}" >
 
 
-                                        @error('phone')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="target-location"
-                                        class="form-control-label">{{ __('Target Location') }}</label>
-                                    <div class="@error('user.location') border border-danger rounded-3 @enderror">
-                                        <div class="form-control form-control-tags">
-                                            <span>All</span>
-                                            <input class="m-0 p-0 border-0 mx-1" placeholder="Countries"
-                                                style="outline: none;" type="text" id="target-location">
+                                            @error('phone')
+                                                <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                            @enderror
                                         </div>
-                                        <input type="hidden" name="target_location" value="All">
                                     </div>
-                                </div>
+
+                                </fieldset>
                             </div>
                             <div class="col-sm-6 col-md-4">
                                 <div class="form-group">
@@ -179,7 +181,7 @@
                                     <label for="sender-name" class="form-control-label">{{ __('Sender Name') }}</label>
                                     <div class="@error('email')border border-danger rounded-3 @enderror">
                                         <input class="form-control"
-                                            value="{{ isset($campaign) ? $campaign->sender_name : env('MAIL_FROM_NAME','Consultile Middle East') }}"
+                                            value="{{ isset($campaign) ? $campaign->sender_name : env('MAIL_FROM_NAME', 'Consultile Middle East') }}"
                                             type="text" placeholder="Sender Name" id="sender-name" name="sender_name"
                                             required>
                                         @error('sender_name')
@@ -192,7 +194,7 @@
                                         class="form-control-label">{{ __('Reply to (Email)') }}</label>
                                     <div class="@error('email')border border-danger rounded-3 @enderror">
                                         <input class="form-control"
-                                            value="{{ isset($campaign) ? $campaign->replay_to :   env('MAIL_REPLY_ADDRESS','info@consultile.com')}}"
+                                            value="{{ isset($campaign) ? $campaign->replay_to : env('MAIL_REPLY_ADDRESS', 'info@consultile.com') }}"
                                             type="email" placeholder="Reply to (Email)" id="replay-to"
                                             name="replay_to" required>
                                         @error('sender_name')
@@ -205,7 +207,7 @@
                                         class="form-control-label">{{ __('Reply to (Name)') }}</label>
                                     <div class="@error('email')border border-danger rounded-3 @enderror">
                                         <input class="form-control"
-                                            value="{{ isset($campaign) ? $campaign->replay_to_name : env('MAIL_REPLY_NAME','Consultile Middle East') }}"
+                                            value="{{ isset($campaign) ? $campaign->replay_to_name : env('MAIL_REPLY_NAME', 'Consultile Middle East') }}"
                                             type="text" placeholder="Reply to (Name)" id="replay-to-name"
                                             name="replay_to_name" required>
                                         @error('sender_name')

@@ -1,81 +1,10 @@
 @extends('layouts.user_type.auth')
-<script type="module">
-    import Autocomplete from "/assets/js/plugins/bootstrap-autocomplete.min.js";
-    const opts = {
-      onSelectItem: console.log,
-    };
 
-    let src = [ ];
-    fetch('/companies').then((response) => response.json())
-  .then((data) =>src = data).then(re =>{
-    Autocomplete.init("input.autocomplete", {
-      items: src,
-      valueField: "label",
-      labelField: "title",
-      highlightTyped: true,
-      onSelectItem: (e)=>{console.log(e)},
-    });}
-  );
-
-
-    const formsubmit = document.getElementById('contact-form')
-    formsubmit?.addEventListener('submit', handleSubmit)
-    async function handleSubmit(e) {
-        let err = 0
-        let span = document.createElement('span');
-        const form = e.target
-        e.preventDefault()
-        if(form.email.value.trim() =='' && form.work_phone.value.trim() =='' && form.personal_phone.value.trim() =='' && form.first_name.value.trim() =='' && form.last_name.value.trim() ==''  ){
-            alert('You can\'t save with all importaant fields empty')
-            return false
-        }
-        form.submitBtn.disabled = true
-        let validationFileds = [form.email, form.work_phone, form.personal_phone]
-        for (const ele  of validationFileds) {
-            const { name, value } = ele
-            if (ele.value.trim() == '' || ele.value.trim() == ele.dataset.default.trim())
-            continue
-                await  post("/check-duplicate", { name, value } )
-                .then(json=>{
-
-                    ele.classList.remove('border-danger')
-                    ele?.nextElementSibling?.remove()
-                    if (json?.id) {
-                        ele.classList.add('border-danger')
-                        ele.parentNode.insertBefore(span, ele.nextSibling);
-                        span.innerHTML = `<p class="text-danger text-xs mt-2">Its already exist under ${json?.first_name} ${json?.last_name}, click <a href="/contacts/${json?.id}/edit">here</a> to update it.</a></p>`
-                        err++
-                    }
-                })
-        }
-        // e.preventDefault()
-        let company = form.company
-        company.classList.remove('border-danger')
-        // company?.nextElementSibling?.remove()
-        if(!src.includes(form.company.value)) {
-            company.classList.add('border-danger')
-            // company.parentNode.insertBefore(span, company.nextSibling)
-            if(!confirm("Campany name not found.\n Do you want add it as a new one")){
-                form.submitBtn.disabled = false
-                return false
-            }
-            // span.innerHTML = `<p class="text-danger text-xs mt-2">Campany name not found</p>`
-        }
-        console.log(err)
-        if(err == 0)
-            form.submit();
-        else
-            form.submitBtn.disabled = false
-
-
-    }
-
-  </script>
 @section('content')
 
     <div>
 
-        <div class="container-fluid py-4">
+        <div class="px-md-4 py-4">
             @if (isset($valid))
                 {{-- @dd($valid->messages) --}}
                 <div class="alert alert-danger mx-4" role="alert">
