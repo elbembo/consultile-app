@@ -49,9 +49,11 @@
             background-color: #cbcbcb;
 
         }
-        #mini-gallery img{
+
+        #mini-gallery img {
             cursor: pointer;
         }
+
         .overlay-gallery {
             position: fixed;
             width: 100vw;
@@ -61,7 +63,8 @@
             left: 0;
             z-index: 999;
         }
-        .img-th{
+
+        .img-th {
             min-height: 10rem;
             display: flex;
             align-items: center;
@@ -75,7 +78,7 @@
     <script src="/assets/js/plugins/jquery-3.5.1.min.js"></script>
     <script src="/assets/js/core/bootstrap.bundle.min.js"></script>
     <script src="/assets/js/plugins/summernote-lite.min.js"></script>
-
+    <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
     {{-- <script src="/assets/js/plugins/bootstrap-autocomplete.min.js"></script> --}}
     <script src="/assets/js/init.js?v=1.0.5"></script>
     <script type="module">
@@ -205,6 +208,14 @@
     </script>
     <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
     <script>
+        const beamsClient = new PusherPushNotifications.Client({
+            instanceId: 'c2ba298f-0a48-471b-9560-6f37abcfb28e',
+        });
+
+        beamsClient.start()
+            .then(() => beamsClient.addDeviceInterest('hello'))
+            .then(() => console.log('Successfully registered and subscribed!'))
+            .catch(console.error);
         // Enable pusher logging - don't include this in production
         Pusher.logToConsole = true;
 
@@ -213,8 +224,12 @@
         });
 
         var channel = pusher.subscribe('my-channel');
-        channel.bind('my-event', function(data) {
+        channel.bind('access-request', function(data) {
             console.log(data)
+        })
+
+
+        channel.bind('my-event', function(data) {
             let doc = new DOMParser().parseFromString(
                 `<div class="toast fade p-2 mt-2 bg-gradient-success hide" role="alert" aria-live="assertive" id="notifyMini"
                 aria-atomic="true">
@@ -232,7 +247,6 @@
             </div>`, 'text/html')
 
             let toastEle = doc.body.querySelector('.toast');
-            console.log(toastEle)
             document.getElementById('notifyBase').appendChild(toastEle)
             let toast = new bootstrap.Toast(toastEle)
             toast.show()

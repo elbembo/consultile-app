@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\AccessRequestEvent;
 use App\Events\CampaignComplete;
 use App\Events\NotificationEvent;
 use App\Http\Controllers\ChangePasswordController;
@@ -118,6 +119,17 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
     Route::get('companies', [ContactController::class, 'companies']);
     Route::get('countries', [ContactController::class, 'countries']);
     Route::post('targeting', [CampaignController::class, 'targeting']);
+    Route::post('requestAccess',function(Request $request){
+        $data = [
+            "requestAccess",
+            'event'=>$request->event,
+            'to'=> $request->to,
+            'askl'=> $request->ask,
+            'contactId' => $request->contactId,
+            'answer'=>''
+        ];
+        event(new AccessRequestEvent($data));
+    });
 });
 Route::get('test2', function () {
 
@@ -126,7 +138,15 @@ Route::get('test2', function () {
 });
 
 Route::get('/clear-cache', function() {
-    event(new NotificationEvent("ddddddddddddddddddddddddddddddddddd"));
+    $data = [
+        "requestAccess",
+        'event'=>'$request->event',
+        'to'=> '$request->to',
+        'askl'=> '$request->ask',
+        'contactId' => '$request->contactId',
+        'answer'=>''
+    ];
+    event(new AccessRequestEvent($data));
     $data[] = Artisan::call('cache:clear');
     $data[] = Artisan::call('route:clear');
     $data[] = Artisan::call('view:clear');
