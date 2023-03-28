@@ -230,6 +230,7 @@
 
 
         channel.bind('my-event', function(data) {
+            console.log(data)
             let doc = new DOMParser().parseFromString(
                 `<div class="toast fade p-2 mt-2 bg-gradient-success hide" role="alert" aria-live="assertive" id="notifyMini"
                 aria-atomic="true">

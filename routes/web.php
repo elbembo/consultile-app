@@ -146,7 +146,7 @@ Route::get('/clear-cache', function() {
         'contactId' => '$request->contactId',
         'answer'=>''
     ];
-    event(new AccessRequestEvent($data));
+    event(new AccessRequestEvent(...$data));
     $data[] = Artisan::call('cache:clear');
     $data[] = Artisan::call('route:clear');
     $data[] = Artisan::call('view:clear');
