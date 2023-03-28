@@ -10,7 +10,7 @@
                             <h6 class="mb-0">Contact Information</h6>
                         </div>
                         <div class="col-md-4 text-end">
-                            <a href="javascript:;" class="mx-3">
+                            <a href="javascript:;" data-event="requestPermission" data-to="admin" data-ask="dataAccess" data-id="{{$contact->id}}"" onclick="requestAccess(this)" class="mx-3">
                                 <i class="fas fa-eye text-secondary text-sm" data-bs-toggle="tooltip"
                                     data-bs-placement="top" title="View secrt data" aria-hidden="true"
                                     aria-label="Edit Profile"></i>
@@ -180,3 +180,14 @@
         </div>
     </div>
 @endsection
+@pushOnce('scripts')
+<script>
+function requestAccess(ele){
+    const {event,ask,id,to} = ele.dataset
+    post('/requestPermission',{event,ask,id,to}).then(res=>{
+        console.log(res)
+    })
+
+};
+</script>
+@endpushOnce

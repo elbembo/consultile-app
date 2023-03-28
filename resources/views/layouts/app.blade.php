@@ -253,7 +253,7 @@
             toast.show()
         });
     </script>
-
+    @stack('scripts')
 </body>
 
 </html>

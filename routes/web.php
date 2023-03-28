@@ -119,15 +119,19 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
     Route::get('companies', [ContactController::class, 'companies']);
     Route::get('countries', [ContactController::class, 'countries']);
     Route::post('targeting', [CampaignController::class, 'targeting']);
-    Route::post('requestAccess',function(Request $request){
+    Route::post('requestPermission',function(Request $request){
         $data = [
             'event'=>$request->event,
             'to'=> $request->to,
-            'askl'=> $request->ask,
-            'contactId' => $request->contactId,
+            'ask'=> $request->ask,
+            'id' => $request->id,
             'answer'=>''
         ];
-        event(new AccessRequestEvent($data));
+        if(event(new AccessRequestEvent($data))){
+            return response()->json(true);
+        };
+        return response()->json(false);
+
     });
 });
 Route::get('test2', function () {
@@ -141,8 +145,8 @@ Route::get('/clear-cache', function() {
     $data = [
         'event'=>'$request->event',
         'to'=> '$request->to',
-        'askl'=> '$request->ask',
-        'contactId' => '$request->contactId',
+        'ask'=> '$request->ask',
+        'id' => '$request->contactId',
         'answer'=>''
     ];
     event(new AccessRequestEvent($data));
