@@ -127,7 +127,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
             'id' => $request->id,
             'answer'=>''
         ];
-        if(event(new AccessRequestEvent($data))){
+        if(new AccessRequestEvent($data)){
             return response()->json(true);
         };
         return response()->json(false);
