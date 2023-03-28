@@ -196,7 +196,7 @@
     <script src="/assets/js/main.js?v=1.0.6"></script>
 
     @stack('rtl')
-    @stack('dashboard')
+    {{-- @stack('dashboard') --}}
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
         if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -226,6 +226,14 @@
         var channel = pusher.subscribe('my-channel');
         channel.bind('access-request', function(data) {
             console.log(data)
+            if (data.message?.ask != '') {
+                let modalElement = document.getElementById('responePermissionModal')
+                let myModal = new bootstrap.Modal(modalElement)
+            }
+            if(data.message?.ask == '') {
+                console.log('respon')
+            }
+
         })
 
 
