@@ -44,8 +44,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::domain('subscribe.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
-    Route::get('/', [SubscribeHomeController::class,'home']);
-    Route::post('/', [SubscribeHomeController::class,'store']);
+    Route::get('/', [SubscribeHomeController::class, 'home']);
+    Route::post('/', [SubscribeHomeController::class, 'store']);
 });
 Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
     Route::group(['middleware' => ['auth', 'permission']], function () {
@@ -68,7 +68,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
         Route::resource('campaigns', CampaignController::class);
         Route::delete('campaigns/{campaign}/attachments', [CampaignController::class, 'removeAttachment'])->name('campaigns.removeAttachment');
 
-        Route::get('subscribes/export', [SubscribeHomeController::class,'export']);
+        Route::get('subscribes/export', [SubscribeHomeController::class, 'export']);
         Route::resource('subscribes', SubscribeHomeController::class);
 
         Route::resource('users', UserController::class);
@@ -86,11 +86,11 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
         Route::post('/contacts/search', [ContactController::class, 'search'])->name('contacts.search');
         Route::post('/notifications/{id}/read', [UserController::class, 'read'])->name('notifications.read');
         Route::get('/notifications', [UserController::class, 'notifications'])->name('notifications.index');
-        Route::post('upload',[EmailTemplateController::class,'fileUpload'])->name('Upload Files');
+        Route::post('upload', [EmailTemplateController::class, 'fileUpload'])->name('Upload Files');
 
-        Route::post('companies',[ContactController::class,'companies'])->name('Companies List');
+        Route::post('companies', [ContactController::class, 'companies'])->name('Companies List');
     });
-    Route::get('/gallery',[GalleryController::class,'index'])->name('gallery');
+    Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
     // Route::get('/test',  function () {
     //     return view('test');
     // })->name('test');
@@ -119,19 +119,17 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
     Route::get('companies', [ContactController::class, 'companies']);
     Route::get('countries', [ContactController::class, 'countries']);
     Route::post('targeting', [CampaignController::class, 'targeting']);
-    Route::post('requestPermission',function(Request $request){
+    Route::post('requestPermission', function (Request $request) {
         $data = [
-            'event'=>$request->event,
-            'to'=> $request->to,
-            'ask'=> $request->ask,
+            'event' => $request->event,
+            'to' => $request->to,
+            'ask' => $request->ask,
             'id' => $request->id,
-            'answer'=>''
+            'answer' => ''
         ];
-        if(new AccessRequestEvent($data)){
-            return response()->json(true);
-        };
-        return response()->json(false);
 
+        event(new AccessRequestEvent($data));
+        return response()->json(true);
     });
 });
 Route::get('test2', function () {
@@ -140,14 +138,14 @@ Route::get('test2', function () {
     return 'notification sent';
 });
 
-Route::get('/clear-cache', function() {
+Route::get('/clear-cache', function () {
 
     $data = [
-        'event'=>'$request->event',
-        'to'=> '$request->to',
-        'ask'=> '$request->ask',
+        'event' => '$request->event',
+        'to' => '$request->to',
+        'ask' => '$request->ask',
         'id' => '$request->contactId',
-        'answer'=>''
+        'answer' => ''
     ];
     event(new AccessRequestEvent($data));
     $data[] = Artisan::call('cache:clear');
