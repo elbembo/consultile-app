@@ -126,6 +126,7 @@ Route::get('test2', function () {
 });
 
 Route::get('/clear-cache', function() {
+    event(new NotificationEvent("ddddddddddddddddddddddddddddddddddd"));
     $data[] = Artisan::call('cache:clear');
     $data[] = Artisan::call('route:clear');
     $data[] = Artisan::call('view:clear');

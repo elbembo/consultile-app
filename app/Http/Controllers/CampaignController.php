@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NotificationEvent;
 use App\Helpers\Helper;
 use App\Models\Campaign;
 use App\Mail\SendCampaignEmails;
@@ -321,6 +322,7 @@ class CampaignController extends Controller
             if ($campaign->status == 'completed') {
                 $users = User::all();
                 Notification::send($users, new CampaignComplete($campaign));
+                event(new NotificationEvent($campaign));
             }
         }
     }
@@ -333,11 +335,12 @@ class CampaignController extends Controller
                 $qeue = EmailQeue::where('priority', '>', 0)->first();
                 if (!empty($qeue)) {
                     $contact = DB::table('contacts')->where('id', $qeue->contact_id)->first();
+
                     if ($contact) {
                         $campaign = Campaign::find($qeue->capmaign_id);
                     }
                     if ($campaign) {
-                        $mailTemp = DB::table('email_templates')->where('id', $campaign->template_id)->first();
+                        $mailTemp = EmailTemplate::where('id', $campaign->template_id)->first();
                     }
                     if ($mailTemp) {
                         $emailto = trim(trim($contact->email, "‎"));

@@ -11,6 +11,7 @@ use App\Models\EmailQeue;
 use App\Models\EmailTraker;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Mockery\Expectation;
 
@@ -37,6 +38,7 @@ class SendEmail extends Command
      */
     public function handle()
     {
+        Log::info('ssssssssss');
 
         CampaignController::send();
 

@@ -179,37 +179,7 @@ function sidenavTypeOnResize() {
 
 
 (function () {
-    function notifyMini(titel, msg, type) {
-        let doc = new DOMParser().parseFromString(
-            `<div class="toast fade p-2 mt-2 bg-gradient-${type} hide" role="alert" aria-live="assertive" id="notifyMini"
-                aria-atomic="true">
-                <div class="toast-header bg-transparent border-0 d-flex">
-                    <i class="ni ni-bell-55 text-white me-2"></i>
-                    <span class="me-auto text-white font-weight-bold toast-title">${titel} </span>
-                    <small class="text-white"></small>
-                    <i class="fas fa-times text-md text-white ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"
-                        aria-hidden="true"></i>
-                </div>
-                <hr class="horizontal light m-0">
-                <div class="toast-body text-white d-flex">
-                ${msg}
-                </div>
-            </div>`, 'text/html')
 
-        let toastEle = doc.body.querySelector('.toast');
-        console.log(toastEle)
-        document.getElementById('notifyBase').appendChild(toastEle)
-        let toast = new bootstrap.Toast(toastEle)
-        toast.show()
-        //     var toastElList = [].slice.call(document.querySelectorAll(`.toast`))
-        //     var toastList = toastElList.map(function(toastEl) {
-        //         // toastEl.querySelector('.toast-title').innerHTML = titel
-        //         // toastEl.querySelector('.toast-body').innerHTML = msg
-        //     // Creates an array of toasts (it only initializes them)
-        //       return new bootstrap.Toast(toastEl) // No need for options; use the default options
-        //     });
-        //    toastList.forEach(toast => toast.show()); // This show them
-    }
 
     document.querySelectorAll('.moment').forEach((ele) => {
         ele.textContent = moment.unix(ele.textContent).fromNow()

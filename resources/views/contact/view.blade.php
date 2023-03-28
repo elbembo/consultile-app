@@ -10,6 +10,11 @@
                             <h6 class="mb-0">Contact Information</h6>
                         </div>
                         <div class="col-md-4 text-end">
+                            <a href="javascript:;" class="mx-3">
+                                <i class="fas fa-eye text-secondary text-sm" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" title="View secrt data" aria-hidden="true"
+                                    aria-label="Edit Profile"></i>
+                            </a>
                             <a href="{{ url('contacts/' . $contact->id . '/edit') }}">
                                 <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip"
                                     data-bs-placement="top" title="" aria-hidden="true"
