@@ -9,16 +9,24 @@
             $col4 = [];
             $i = 0;
             while ($i < count($images)) {
-                $col1[] = $images[$i];
+                if (isset($images[$i])) {
+                    $col1[] = $images[$i];
+                }
                 $i++;
                 if (isset($images[$i])) {
-                    $col2[] = $images[$i];
-                    $i++;
-                    $col3[] = $images[$i];
-                    $i++;
-                    $col4[] = $images[$i];
-                    $i++;
+                    if (isset($images[$i])) {
+                        $col2[] = $images[$i];
+                    }
                 }
+                $i++;
+                if (isset($images[$i])) {
+                    $col3[] = $images[$i];
+                }
+                $i++;
+                if (isset($images[$i])) {
+                    $col4[] = $images[$i];
+                }
+                $i++;
             }
         @endphp
         <div class="col-md-3  mb-4 mb-lg-0">
