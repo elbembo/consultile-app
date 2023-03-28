@@ -121,7 +121,6 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
     Route::post('targeting', [CampaignController::class, 'targeting']);
     Route::post('requestAccess',function(Request $request){
         $data = [
-            "requestAccess",
             'event'=>$request->event,
             'to'=> $request->to,
             'askl'=> $request->ask,
@@ -140,14 +139,13 @@ Route::get('test2', function () {
 Route::get('/clear-cache', function() {
 
     $data = [
-        "requestAccess",
         'event'=>'$request->event',
         'to'=> '$request->to',
         'askl'=> '$request->ask',
         'contactId' => '$request->contactId',
         'answer'=>''
     ];
-    event(new AccessRequestEvent(['event'=>$data]));
+    event(new AccessRequestEvent($data));
     $data[] = Artisan::call('cache:clear');
     $data[] = Artisan::call('route:clear');
     $data[] = Artisan::call('view:clear');
