@@ -15,6 +15,7 @@ async function post(url = "", data = {}, method = "POST", output = 'json') {
         referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
         body: JSON.stringify(data), // body data type must match "Content-Type" header
     });
+    response.status !=  200 && window.location.replace("/login");
     return (output == 'json') ? response.json() : response.text(); // parses JSON response into native JavaScript objects
 }
 function check(url = "", data = {}, method = "POST", output = 'json') {
@@ -91,7 +92,7 @@ $s.prototype.submitJson = function (action) {
     return this;
 }
 const checkThisBitch = async (e) => {
-    result = 
+    result =
     ele = e?.target ? e?.target : e
 
     if (ele.value.trim() == '' || ele.value.trim() == ele.dataset.default.trim())

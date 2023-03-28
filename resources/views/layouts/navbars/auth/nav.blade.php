@@ -52,7 +52,7 @@
 
                     <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4"
                         aria-labelledby="dropdownMenuButton">
-                        @if (count(auth()->user()->unreadNotifications) > 0)
+                        @if (auth()->user() && count(auth()->user()->unreadNotifications) > 0)
                             @foreach (auth()->user()->unreadNotifications as $notifications)
                                 <li class="mb-2 notifications" data-id="{{ $notifications->id }}">
                                     <button data-id="{{ $notifications->id }}" class="btn btn-link close-noti p-1">
