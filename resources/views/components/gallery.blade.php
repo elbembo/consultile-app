@@ -29,28 +29,36 @@
                 $i++;
             }
         @endphp
-        <div class="col-md-3  mb-4 mb-lg-0">
+        <div class="col-md-3  mb-4 mb-lg-0 d-flex flex-column-reverse justify-content-end">
             @foreach ($col1 as $image)
+            <div class="img-th">
                 <img src="{{ '/uploads/campaigns/' . basename($image) }}"
-                    class="w-100 shadow-1-strong rounded mb-4 img-gallery" alt="Boat on Calm Water" />
+                    class="w-100 shadow-1-strong rounded mb-0 img-gallery" alt="Boat on Calm Water" />
+                </div>
             @endforeach
         </div>
-        <div class="col-md-3  mb-4 mb-lg-0">
+        <div class="col-md-3  mb-4 mb-lg-0 d-flex flex-column-reverse justify-content-end">
             @foreach ($col2 as $image)
+            <div class="img-th">
                 <img src="{{ '/uploads/campaigns/' . basename($image) }}"
-                    class="w-100 shadow-1-strong rounded mb-4 img-gallery" alt="Boat on Calm Water" />
+                    class="w-100 shadow-1-strong rounded mb-0 img-gallery" alt="Boat on Calm Water" />
+            </div>
             @endforeach
         </div>
-        <div class="col-md-3  mb-4 mb-lg-0">
+        <div class="col-md-3  mb-4 mb-lg-0 d-flex flex-column-reverse justify-content-end">
             @foreach ($col3 as $image)
+            <div class="img-th">
                 <img src="{{ '/uploads/campaigns/' . basename($image) }}"
-                    class="w-100 shadow-1-strong rounded mb-4 img-gallery" alt="Boat on Calm Water" />
+                    class="w-100 shadow-1-strong rounded mb-0 img-gallery" alt="Boat on Calm Water" />
+            </div>
             @endforeach
         </div>
-        <div class="col-md-3  mb-4 mb-lg-0">
+        <div class="col-md-3  mb-4 mb-lg-0 d-flex flex-column-reverse justify-content-end">
             @foreach ($col4 as $image)
+            <div class="img-th">
                 <img src="{{ '/uploads/campaigns/' . basename($image) }}"
-                    class="w-100 shadow-1-strong rounded mb-4 img-gallery" alt="Boat on Calm Water" />
+                    class="w-100 shadow-1-strong rounded mb-0 img-gallery" alt="Boat on Calm Water" />
+            </div>
             @endforeach
         </div>
     </div>

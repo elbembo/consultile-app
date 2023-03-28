@@ -61,7 +61,16 @@
             left: 0;
             z-index: 999;
         }
-
+        .img-th{
+            min-height: 19.5rem;
+            display: flex;
+            align-items: center;
+            /* padding: 0.5rem; */
+            margin-bottom: 0.5rem;
+            background-color: #c1c1c1;
+            border-radius: 0.8rem;
+            overflow: hidden;
+        }
     </style>
     <script src="/assets/js/plugins/jquery-3.5.1.min.js"></script>
     <script src="/assets/js/core/bootstrap.bundle.min.js"></script>
