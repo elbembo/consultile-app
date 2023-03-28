@@ -38,7 +38,6 @@ class SendEmail extends Command
      */
     public function handle()
     {
-        Log::info('ssssssssss');
 
         CampaignController::send();
 
