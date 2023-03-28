@@ -199,7 +199,7 @@
 @endsection
 @pushOnce('scripts')
 <script>
-    var myModal = new bootstrap.Modal(document.getElementById('myModal'))
+    var myModal = new bootstrap.Modal(document.getElementById('requestPermissionModal'))
 function requestAccess(ele){
     const {event,ask,id,to} = ele.dataset
     post('/requestPermission',{event,ask,id,to}).then(res=>{
