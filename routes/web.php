@@ -138,14 +138,16 @@ Route::get('test2', function () {
 });
 
 Route::get('/clear-cache', function() {
-    $data = new stdClass();
-    $data->event='eventrequestevent';
-    $data->to='torequestevent';
-    $data->ask='askrequestevent';
-    $data->contactId='contactrequestevent';
-    $data->answer='answer';
 
-    event(new AccessRequestEvent($data));
+    $data = [
+        "requestAccess",
+        'event'=>'$request->event',
+        'to'=> '$request->to',
+        'askl'=> '$request->ask',
+        'contactId' => '$request->contactId',
+        'answer'=>''
+    ];
+    event(new AccessRequestEvent(['event'=>$data]));
     $data[] = Artisan::call('cache:clear');
     $data[] = Artisan::call('route:clear');
     $data[] = Artisan::call('view:clear');
