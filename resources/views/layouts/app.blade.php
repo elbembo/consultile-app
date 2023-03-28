@@ -226,9 +226,10 @@
         var channel = pusher.subscribe('my-channel');
         channel.bind('access-request', function(data) {
             console.log(data)
-            if (data.message?.ask != '') {
+            if (data.message?.ask == 'dataAccess') {
                 let modalElement = document.getElementById('responePermissionModal')
                 let myModal = new bootstrap.Modal(modalElement)
+                myModal.show()
             }
             if(data.message?.ask == '') {
                 console.log('respon')
