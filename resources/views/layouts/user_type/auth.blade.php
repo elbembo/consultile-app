@@ -63,7 +63,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="responPermissionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="responePermissionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="m-md-3 modal-body p-md-4 text-center">
