@@ -77,8 +77,8 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
 
 
         Route::get('server/error', function(){
-            return view('server.log');
-        })->name('settings.error');
+            return view('errors.log');
+        })->name('server.log');
         Route::resource('settings/trash', Trash::class);
         Route::resource('settings/roles', RolesController::class);
         Route::resource('settings/permissions', PermissionsController::class);
