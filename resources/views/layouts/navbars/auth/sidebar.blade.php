@@ -142,7 +142,7 @@
                         </div>
                         <span class="nav-link-text ms-1">Settings</span>
                     </a>
-                    <div class="collapse   {{ str_contains(url()->current(), 'settings') ? 'show' : '' }}"
+                    <div class="collapse   {{ str_contains(url()->current(), 'settings') || str_contains(url()->current(), 'server') ? 'show' : '' }}"
                         id="applicationsExamples">
                         <ul class="nav ms-4 ps-3">
                             <li class="nav-item ">
