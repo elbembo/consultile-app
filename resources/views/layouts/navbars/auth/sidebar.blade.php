@@ -170,7 +170,7 @@
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link " href="{{ url('settings/error') }}">
+                                <a class="nav-link " href="{{ url('server/error') }}">
                                     <span class="sidenav-mini-icon"> E </span>
                                     <span class="sidenav-normal"> Error log </span>
                                 </a>

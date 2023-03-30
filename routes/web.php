@@ -76,9 +76,9 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
         Route::resource('editor', SummernoteController::class);
 
 
-        Route::get('settings/error', function(){
+        Route::get('server/error', function(){
             return view('server.log');
-        })->name('settings.log');
+        })->name('settings.error');
         Route::resource('settings/trash', Trash::class);
         Route::resource('settings/roles', RolesController::class);
         Route::resource('settings/permissions', PermissionsController::class);
