@@ -74,6 +74,22 @@
             border-radius: 0.8rem;
             overflow: hidden;
         }
+
+        .log-err {
+            background-color: #191b24;
+            color: #b0b4c7;
+            padding: 12px 5px;
+            border-bottom: 1px solid #3d4150;
+        }
+
+        .log-err hr {
+            margin: 14px 0;
+        }
+
+        .navbar-vertical.navbar-expand-xs .navbar-collapse {
+
+            height: auto;
+        }
     </style>
     <script src="/assets/js/plugins/jquery-3.5.1.min.js"></script>
     <script src="/assets/js/core/bootstrap.bundle.min.js"></script>
@@ -231,7 +247,7 @@
                 let myModal = new bootstrap.Modal(modalElement)
                 myModal.show()
             }
-            if(data.message?.ask == '') {
+            if (data.message?.ask == '') {
                 console.log('respon')
             }
 

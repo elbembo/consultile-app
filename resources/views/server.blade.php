@@ -12,7 +12,6 @@
     </div>
     <div class="row">
         <div class="card">
-            <div class="card-body p-3">
 
                 @if (!empty($envs))
                     <form action="" method="post">
