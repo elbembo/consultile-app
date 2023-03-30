@@ -139,7 +139,7 @@
                         ['style'],
                         ['undo', ['undo', 'redo']],
                         ['style', ['bold', 'italic', 'underline', ]],
-                        ['font', ['strikethrough', 'fontname', 'fontsize', 'color']],
+                        ['font', ['strikethrough', 'fontname', 'fontsize', 'color','height']],
                         ['table'],
                         ['para', ['ul', 'ol', 'paragraph']],
                         ['picture', ['picture', 'gallery', 'link', 'codeview']],

@@ -371,6 +371,7 @@ class CampaignController extends Controller
                         // if (Mail::to($contact->email, 'Test Email Isaa')->send(new SendCampaignEmails($mailData)));
                     }
                 }
+                sleep(1);
             }
         }
     }
