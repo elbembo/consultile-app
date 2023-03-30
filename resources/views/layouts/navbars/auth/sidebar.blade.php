@@ -114,7 +114,7 @@
             @role('admin')
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#applicationsExamples"
-                        class="nav-link  {{ str_contains(url()->current(), 'settings') ? 'active' : '' }}"
+                        class="nav-link  {{ str_contains(url()->current(), 'settings')  || str_contains(url()->current(), 'server') ? 'active' : '' }}"
                         aria-controls="applicationsExamples" role="button" aria-expanded="false">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
