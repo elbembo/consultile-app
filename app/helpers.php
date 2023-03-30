@@ -47,51 +47,36 @@ if (!function_exists('priority')) {
 if (!function_exists('secret')) {
     function secret($secret)
     {
-        if(Auth::user()->hasAnyPermission(['secret.contacts'])){
+        if (Auth::user()->hasAnyPermission(['secret.contacts'])) {
             return $secret;
-        }else{
-            if(preg_match('/\b[\w\.-]+@[\w\.-]+\.\w{2,6}\b/',$secret)){
+        } else {
+            if (preg_match('/\b[\w\.-]+@[\w\.-]+\.\w{2,6}\b/', $secret)) {
                 return preg_replace('/(.).(?=..*@)/', '*', trim($secret));
-            }else{
+            } else {
                 return preg_replace('/(?<=...).(?=.*...)/', '*', $secret);
             }
         }
-
     }
 }
-if (!function_exists('updateDotEnv')) {
-    function updateDotEnv($key, $newValue, $delim = '')
+if (!function_exists('setEnv')) {
+    function setEnv($key, $value)
     {
+        file_put_contents(app()->environmentFilePath(), str_replace(
+            $key . '=' . env($key),
+            $key . '=' . $value,
+            file_get_contents(app()->environmentFilePath())
+        ));
 
-        $path = base_path('.env');
-        // get old value from current env
-        $oldValue = env($key);
-
-        // was there any change?
-        if ($oldValue === $newValue) {
-            return;
-        }
-
-        // rewrite file content with changed data
-        if (file_exists($path)) {
-            // replace current value with new value
-            file_put_contents(
-                $path,
-                str_replace(
-                    $key . '=' . $delim . $oldValue . $delim,
-                    $key . '=' . $delim . $newValue . $delim,
-                    file_get_contents($path)
-                )
-            );
-        }
     }
 }
-if (!function_exists('ranlor')){
-    function random_color_part() {
-        return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+if (!function_exists('ranlor')) {
+    function random_color_part()
+    {
+        return str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT);
     }
 
-    function ranlor() {
-        return '#'.random_color_part() . random_color_part() . random_color_part();
+    function ranlor()
+    {
+        return '#' . random_color_part() . random_color_part() . random_color_part();
     }
 }

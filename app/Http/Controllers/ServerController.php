@@ -29,8 +29,44 @@ class ServerController extends Controller
                 $value = trim($value);
                 $envs[$name] = $value;
             }
+        }
+        return view('server', compact('envs'));
+    }
+    public function store(Request $request)
+    {
+        # code...
+        if (!empty($request->env)) {
+            if ($request->env == "local") {
+                // setEnv('APP_ENV','local');
+                // setEnv('APP_DEBUG',"true");
+                file_put_contents(app()->environmentFilePath(), str_replace(
+                    'APP_ENV' . '=' . 'production',
+                    'APP_ENV' . '=' . 'local' ,
+                    file_get_contents(app()->environmentFilePath())
+                ));
+                file_put_contents(app()->environmentFilePath(), str_replace(
+                    'APP_DEBUG' . '=' . 'false',
+                    'APP_DEBUG' . '=' . 'true' ,
+                    file_get_contents(app()->environmentFilePath())
+                ));
+                return response()->json(['state' => true, 'msg' => 'local']);
+            }
+            if ($request->env == "production") {
+                // setEnv('APP_ENV','production');
+                // setEnv('APP_DEBUG',"false");
+                file_put_contents(app()->environmentFilePath(), str_replace(
+                    'APP_ENV' . '=' . 'local',
+                    'APP_ENV' . '=' . 'production' ,
+                    file_get_contents(app()->environmentFilePath())
+                ));
+                file_put_contents(app()->environmentFilePath(), str_replace(
+                    'APP_DEBUG' . '=' . 'true',
+                    'APP_DEBUG' . '=' . 'false' ,
+                    file_get_contents(app()->environmentFilePath())
+                ));
+                return response()->json(['state' => true, 'msg' => 'production']);
+            }
 
         }
-        return view('server',compact('envs'));
     }
 }
