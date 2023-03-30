@@ -51,6 +51,75 @@
                 </a>
             </li>
             <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Company</h6>
+            </li>
+            <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#subscribe"
+                    class="nav-link  {{ str_contains(url()->current(), 'projects') ? 'active' : '' }}"
+                    aria-controls="subscribe" role="button" aria-expanded="false">
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
+                        <i class="fas fa-lg fa-suitcase top-0 text-center  {{ str_contains(url()->current(), 'projects') ? 'text-white' : 'text-dark' }}"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Projects</span>
+                </a>
+                <div class="collapse   {{ str_contains(url()->current(), 'subscribes') ? 'show' : '' }}"
+                    id="subscribe">
+                    <ul class="nav ms-4 ps-3">
+                        <li class="nav-item ">
+                            <a class="nav-link " href="{{ url('#') }}">
+                                <span class="sidenav-mini-icon"> O </span>
+                                <span class="sidenav-normal"> Overview </span>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link " href="{{ url('#') }}">
+                                <span class="sidenav-mini-icon"> O </span>
+                                <span class="sidenav-normal"> Opportunity </span>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link " href="{{ url('#') }}">
+                                <span class="sidenav-mini-icon"> P </span>
+                                <span class="sidenav-normal">Projects list </span>
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#feedback"
+                    class="nav-link  {{ str_contains(url()->current(), 'financial') ? 'active' : '' }}"
+                    aria-controls="subscribe" role="button" aria-expanded="false">
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
+                        <i style="font-size: 1rem;" class="fa fa-lg fa-dollar top-0 text-center text-dark " aria-hidden="true"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Financial</span>
+                </a>
+                <div class="collapse   {{ str_contains(url()->current(), 'financial') ? 'show' : '' }}"
+                    id="feedback">
+                    <ul class="nav ms-4 ps-3">
+                        <li class="nav-item ">
+                            <a class="nav-link " href="{{ url('#') }}">
+                                <span class="sidenav-mini-icon"> R </span>
+                                <span class="sidenav-normal"> Revenues </span>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link " href="{{ url('#') }}">
+                                <span class="sidenav-mini-icon"> E </span>
+                                <span class="sidenav-normal"> Expenses </span>
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Forms</h6>
             </li>
             <li class="nav-item">
