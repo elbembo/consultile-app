@@ -8406,7 +8406,7 @@
                                                 </div>
                                                 <label>Last Name</label>
                                                 <div class="mb-3">
-                                                    <input name="first_name" type="text" class="form-control"
+                                                    <input name="last_name" type="text" class="form-control"
                                                         placeholder="Last Name" aria-label="Name">
                                                 </div>
                                                 <label>Email</label>
@@ -8431,7 +8431,7 @@
                                                 </div>
                                                 <label>Country</label>
                                                 <div class="mb-3">
-                                                    <input name="job_title" type="text" class="form-control"
+                                                    <input name="country" type="text" class="form-control"
                                                         placeholder="Country" aria-label="Country">
                                                 </div>
                                                 {{-- <div class="form-check form-check-info text-left">

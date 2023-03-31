@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class HomeController extends Controller
@@ -25,6 +26,10 @@ class HomeController extends Controller
     }
     public function store (Request $request)
     {
+        // $validator = Validator::make($request->all(), [
+        //     'email' => 'required|exists:contacts',
+        // ]);
+
         $list_id = env('MAILCHIMP_LIST_ID');
         $mailchimp = new \MailchimpMarketing\ApiClient();
         $mailchimp->setConfig([
