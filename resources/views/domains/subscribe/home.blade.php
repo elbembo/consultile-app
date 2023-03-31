@@ -8364,7 +8364,7 @@
             <section>
                 <div class="page-header min-vh-100">
                     <div class="container">
-                        <div class="row">
+                        <div class="row justify-content-center">
                             @if ($errors->any())
                                 <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
                                     <div class="card">
@@ -8453,7 +8453,7 @@
                                     </div>
                                 </div>
                             @endif
-                            <div
+                            {{-- <div
                                 class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
                                 <div
                                     class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
@@ -8466,7 +8466,7 @@
                                     <p class="text-white">Just as it takes a company to sustain a product, it takes a
                                         community to sustain a protocol.</p>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
