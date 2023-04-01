@@ -17,7 +17,7 @@
 
                                 <form class=" d-flex" action="{{ url('/subscribes/exportSMS') }}" method="POST">
                                     @csrf
-                                        <input class="form-control" type="date" name="created_at">
+                                        <input class="form-control" type="date" name="created_at" required>
                                         <button type="submit"
                                             class="btn bg-gray-50 btn-sm m-1">{{ __('Export_SMS') }}</button>
                                 </form>

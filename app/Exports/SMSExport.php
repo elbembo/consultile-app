@@ -27,6 +27,6 @@ class SMSExport implements FromQuery
 
 // // }
 //         dump($fromgroup);
-        return Contact::whereNotIn('id',$fromgroup)->whereDate('created_at',">=", $this->day);
+        return Contact::whereNotIn('id',$fromgroup)->whereDate('created_at',">=", $this->day)->get('title','first_name','work_phone','personal_phone');
     }
 }
