@@ -33,9 +33,9 @@
 
 
                 <td class="text-center">
-                    <a href="javascript:;" data-bs-toggle="modal"
+                    <a href="#" data-bs-toggle="modal"
                     data-bs-target="#addnote{{ $contact->id }}" class="mx-2"
-                    data-bs-toggle="tooltip" title="Add note">
+                    data-bs-toggle="modal" title="Add note">
                     <i class="fas fa-sticky-note {{count($contact->notes) > 0 ? 'text-warning' : 'text-secondary'}}"></i>
                 </a>
                 <!-- Modal -->
