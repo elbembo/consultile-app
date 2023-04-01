@@ -54,17 +54,17 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Company</h6>
             </li>
             <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#subscribe"
+                <a data-bs-toggle="collapse" href="#projects"
                     class="nav-link  {{ str_contains(url()->current(), 'projects') ? 'active' : '' }}"
-                    aria-controls="subscribe" role="button" aria-expanded="false">
+                    aria-controls="projects" role="button" aria-expanded="false">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
                         <i class="fas fa-lg fa-suitcase top-0 text-center  {{ str_contains(url()->current(), 'projects') ? 'text-white' : 'text-dark' }}"></i>
                     </div>
                     <span class="nav-link-text ms-1">Projects</span>
                 </a>
-                <div class="collapse   {{ str_contains(url()->current(), 'subscribes') ? 'show' : '' }}"
-                    id="subscribe">
+                <div class="collapse   {{ str_contains(url()->current(), 'projects') ? 'show' : '' }}"
+                    id="projects">
                     <ul class="nav ms-4 ps-3">
                         <li class="nav-item ">
                             <a class="nav-link " href="{{ url('#') }}">
@@ -90,7 +90,7 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#feedback"
+                <a data-bs-toggle="collapse" href="#financial"
                     class="nav-link  {{ str_contains(url()->current(), 'financial') ? 'active' : '' }}"
                     aria-controls="subscribe" role="button" aria-expanded="false">
                     <div
@@ -100,7 +100,7 @@
                     <span class="nav-link-text ms-1">Financial</span>
                 </a>
                 <div class="collapse   {{ str_contains(url()->current(), 'financial') ? 'show' : '' }}"
-                    id="feedback">
+                    id="financial">
                     <ul class="nav ms-4 ps-3">
                         <li class="nav-item ">
                             <a class="nav-link " href="{{ url('#') }}">

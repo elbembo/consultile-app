@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Domains\Subscribe;
 
+use App\Exports\SMSExport;
 use App\Exports\SubscriberExport;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
@@ -74,5 +75,13 @@ class HomeController extends Controller
     {
         # code...
         return Excel::download(new SubscriberExport, 'All_subscriber.consultile.com.xlsx');
+    }
+    public function exportSMS(Request $request)
+    {
+        # code...
+        $request->validate([
+            'created_at' => 'nullable|date',
+        ]);
+        return Excel::download(new SMSExport($request->created_at), 'sms_'.date('Y-m-d',now()->timestamp).'.xlsx');
     }
 }

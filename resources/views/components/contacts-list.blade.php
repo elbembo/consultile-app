@@ -36,7 +36,7 @@
                     <a href="javascript:;" data-bs-toggle="modal"
                     data-bs-target="#addnote{{ $contact->id }}" class="mx-2"
                     data-bs-toggle="tooltip" title="Add note">
-                    <i class="fas fa-sticky-note text-secondary"></i>
+                    <i class="fas fa-sticky-note {{count($contact->notes) > 0 ? 'text-warning' : 'text-secondary'}}"></i>
                 </a>
                 <!-- Modal -->
                 <div class="modal fade" id="addnote{{ $contact->id }}" tabindex="-1"

@@ -15,6 +15,12 @@
                             </div>
                             <div class="d-flex flex-row justify-content-end">
 
+                                <form class=" d-flex" action="{{ url('/subscribes/exportSMS') }}" method="POST">
+                                    @csrf
+                                        <input class="form-control" type="date" name="created_at">
+                                        <button type="submit"
+                                            class="btn bg-gray-50 btn-sm m-1">{{ __('Export_SMS') }}</button>
+                                </form>
                                 <a href="{{ url('subscribes/export') }}"
                                     class="btn bg-gray-50 btn-sm m-1">{{ __('Export') }}</a>
 
@@ -114,7 +120,8 @@
                                                     <a href="javascript:;" data-bs-toggle="modal"
                                                         data-bs-target="#snote{{ $contact->id }}" class="mx-2"
                                                         data-bs-toggle="tooltip" title="Add note">
-                                                        <i class="fas fa-sticky-note text-secondary"></i>
+                                                        <i
+                                                            class="fas fa-sticky-note  {{ count($contact->notes) > 0 ? 'text-warning' : 'text-secondary' }}"></i>
                                                     </a>
                                                     <!-- Modal -->
                                                     <div class="modal fade" id="snote{{ $contact->id }}" tabindex="-1"
@@ -128,7 +135,8 @@
                                                                     <button type="button" class="btn-close"
                                                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
-                                                                <form action="/contacts/{{ $contact->id }}/note" method="post">
+                                                                <form action="/contacts/{{ $contact->id }}/note"
+                                                                    method="post">
                                                                     @csrf
                                                                     <div class="modal-body">
 
