@@ -18,7 +18,7 @@
                                 @csrf
                                     <input class="form-control" type="date" name="created_at" required>
                                     <button type="submit"
-                                        class="btn bg-gray-50 btn-sm m-1">{{ __('Export_SMS') }}</button>
+                                        class="btn bg-gray-50 btn-sm m-1">{{ __('Export_Numbers') }}</button>
                             </form>
                             <a href="{{url('contacts/export')}}" class="btn bg-gray-50 btn-sm m-1">{{ __('Export') }}</a>
                             <a href="{{url('contacts/import')}}" class="btn bg-gray-50 btn-sm m-1">{{ __('Import') }}</a>
