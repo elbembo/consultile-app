@@ -2,6 +2,12 @@
 
 @section('content')
     <div class="container-fluid py-4">
+        @if (session('status'))
+            <div class="alert alert-success">
+                <span class="text-white">
+                <strong>{{ session('status') }}</strong></span>
+            </div>
+        @endif
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -13,8 +19,7 @@
                             </div>
                             <div class="ms-auto my-auto mt-lg-0 mt-4">
                                 <div class="ms-auto my-auto">
-                                    <a href="/users/create"
-                                        class="btn bg-gradient-primary btn-sm mb-0">+&nbsp; New User</a>
+                                    <a href="/users/create" class="btn bg-gradient-primary btn-sm mb-0">+&nbsp; New User</a>
                                 </div>
                             </div>
                         </div>
@@ -56,10 +61,10 @@
                                         <tbody>
                                             @foreach ($users as $user)
                                                 <tr>
-                                                    <td class="text-sm">{{$user->id}}</td>
+                                                    <td class="text-sm">{{ $user->id }}</td>
                                                     <td class="text-sm">
                                                         <span class="my-2 text-xs avatar avatar-xxl overflow-hidden me-2">
-                                                            <img src="/uploads/users/profile/{{$user->emp->image ?? 'default-'.($user->emp->gender ?? '').'.jpg'}}"
+                                                            <img src="/uploads/users/profile/{{ $user->emp->image ?? 'default-' . ($user->emp->gender ?? '') . '.jpg' }}"
                                                                 alt="picture">
                                                         </span>
                                                     </td>
@@ -70,7 +75,9 @@
                                                             <span class="badge bg-primary">{{ $role->name }}</span>
                                                         @endforeach
                                                     </td>
-                                                    <td class="text-sm"><span class="momentDate">{{ $user->emp->hiring_date ?? '' }}</span></td>
+                                                    <td class="text-sm"><span
+                                                            class="momentDate">{{ $user->emp->hiring_date ?? '' }}</span>
+                                                    </td>
                                                     <td class="text-sm">
                                                         <a href="{{ url('users/' . $user->id . '/edit') }}" class="mx-3"
                                                             data-bs-toggle="tooltip" data-bs-original-title="Edit user">
@@ -106,4 +113,3 @@
 
     </div>
 @endsection
-
