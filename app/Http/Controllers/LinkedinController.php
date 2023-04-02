@@ -27,22 +27,31 @@ class LinkedinController extends Controller
             if ($linkedinUser) {
 
                 // Auth::login($linkedinUser);
-                Auth::attempt(['email' => $linkedinUser->email, 'password' => '$2y$10$TJ5n9mCTwLRE19NjXKQXnOnRJ2hFkGjcqSwVgBraIR5Hd.AoO/Xti']);
-                return redirect('/dashboard');
+                if (Auth::attempt(['email' => $linkedinUser->email, 'password' => '$2y$10$TJ5n9mCTwLRE19NjXKQXnOnRJ2hFkGjcqSwVgBraIR5Hd.AoO/Xti'])) {
+                    session()->regenerate();
+                    return redirect('campaigns')->with(['success' => 'You are logged in.']);
+                } else {
+
+                    return back()->withErrors(['email' => 'Email or password invalid.']);
+                }
             } else {
                 $user = User::create([
                     'name' => $user->name,
                     'email' => $user->email,
                     'oauth_id' => $user->id,
                     'oauth_type' => 'linkedin',
-                    'password' => Hash::make('$2y$10$.3GDAcYMSyLV1xEN.hMhTO6geRyborCFadCH.n13IQkXFu92f8QDy')
+                    'password' => Hash::make('Hav$!)345k&@97!')
                 ]);
                 // $userid = $user->id;
                 // $user->emp->create(['user_id' => $userid, 'image' => $user->getAvatar()]);
 
-                Auth::attempt(['email' => $user->email, 'password' => '$2y$10$TJ5n9mCTwLRE19NjXKQXnOnRJ2hFkGjcqSwVgBraIR5Hd.AoO/Xti']);
+                if (Auth::attempt(['email' => $user->email, 'password' => '$2y$10$TJ5n9mCTwLRE19NjXKQXnOnRJ2hFkGjcqSwVgBraIR5Hd.AoO/Xti'])) {
+                    session()->regenerate();
+                    return redirect('campaigns')->with(['success' => 'You are logged in.']);
+                } else {
 
-                return redirect('/dashboard');
+                    return back()->withErrors(['email' => 'Email or password invalid.']);
+                }
             }
         } catch (Exception $e) {
             dd($e->getMessage());
