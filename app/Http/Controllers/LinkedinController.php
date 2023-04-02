@@ -25,13 +25,19 @@ class LinkedinController extends Controller
             $linkedinUser = User::where('oauth_id', $user->id)->first();
 
             if ($linkedinUser) {
-
+                request()->merge([
+                    'email' => $linkedinUser->email,
+                    'password' => Hash::make($linkedinUser->password)
+                ]);
+                $attributes = request()->validate([
+                    'email' => 'required|email',
+                    'password' => 'required'
+                ]);
                 // Auth::login($linkedinUser);
-                if (Auth::attempt(['email' => $linkedinUser->email, 'password' =>  $linkedinUser->password])) {
+                if (Auth::attempt($attributes)) {
                     session()->regenerate();
                     return redirect('campaigns')->with(['success' => 'You are logged in.']);
                 } else {
-
                     return back()->withErrors(['email' => 'Email or password invalid.']);
                 }
             } else {
@@ -42,10 +48,18 @@ class LinkedinController extends Controller
                     'oauth_type' => 'linkedin',
                     'password' => Hash::make('Hav$!)345k&@97!')
                 ]);
+                request()->merge([
+                    'email' => $user->email,
+                    'password' => $user->password
+                ]);
+                $attributes = request()->validate([
+                    'email' => 'required|email',
+                    'password' => 'required'
+                ]);
                 // $userid = $user->id;
                 // $user->emp->create(['user_id' => $userid, 'image' => $user->getAvatar()]);
 
-                if (Auth::attempt(['email' => $user->email, 'password' => $user->password])) {
+                if (Auth::attempt($attributes)) {
                     session()->regenerate();
                     return redirect('campaigns')->with(['success' => 'You are logged in.']);
                 } else {
