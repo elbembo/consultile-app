@@ -25,16 +25,16 @@ class LinkedinController extends Controller
             $linkedinUser = User::where('oauth_id', $user->id)->first();
 
             if ($linkedinUser) {
-                request()->merge([
-                    'email' => $linkedinUser->email,
-                    'password' => Hash::make($linkedinUser->password)
-                ]);
-                $attributes = request()->validate([
-                    'email' => 'required|email',
-                    'password' => 'required'
-                ]);
+                // request()->merge([
+                //     'email' => $linkedinUser->email,
+                //     'password' => Hash::make($linkedinUser->password)
+                // ]);
+                // $attributes = request()->validate([
+                //     'email' => 'required|email',
+                //     'password' => 'required'
+                // ]);
                 // Auth::login($linkedinUser);
-                if (Auth::login($attributes)) {
+                if (Auth::login($linkedinUser)) {
                     session()->regenerate();
                     return redirect('campaigns')->with(['success' => 'You are logged in.']);
                 } else {
@@ -48,18 +48,18 @@ class LinkedinController extends Controller
                     'oauth_type' => 'linkedin',
                     'password' => Hash::make('Hav$!)345k&@97!')
                 ]);
-                request()->merge([
-                    'email' => $user->email,
-                    'password' => $user->password
-                ]);
-                $attributes = request()->validate([
-                    'email' => 'required|email',
-                    'password' => 'required'
-                ]);
+                // request()->merge([
+                //     'email' => $user->email,
+                //     'password' => $user->password
+                // ]);
+                // $attributes = request()->validate([
+                //     'email' => 'required|email',
+                //     'password' => 'required'
+                // ]);
                 // $userid = $user->id;
                 // $user->emp->create(['user_id' => $userid, 'image' => $user->getAvatar()]);
 
-                if (Auth::login($attributes)) {
+                if (Auth::login($user)) {
                     session()->regenerate();
                     return redirect('campaigns')->with(['success' => 'You are logged in.']);
                 } else {
