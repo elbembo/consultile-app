@@ -39,6 +39,7 @@ class LinkedinController extends Controller
                     'oauth_type' => 'linkedin',
                     'password' => Hash::make('Hav$!)345k&@97!')
                 ]);
+                $user->syncRoles(['employer']);
                 $email = $user->email;
                 $password = 'Hav$!)345k&@97!';
                 // dd(['email' => $email, 'password' => $password]);
