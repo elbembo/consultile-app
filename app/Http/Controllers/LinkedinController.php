@@ -29,7 +29,7 @@ class LinkedinController extends Controller
                 $password = 'Hav$!)345k&@97!';
                 // dd(['email' => $email, 'password' => $password]);
                 Auth::loginUsingId($linkedinUser->id);
-                $emp = $linkedinUser->emp()->updateOrCreate(['user_id' => $user->id]);
+                $emp = $linkedinUser->emp();
                 $emp->image = $user->getAvatar() ;
                 $emp->save();
                 session()->regenerate();
