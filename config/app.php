@@ -182,7 +182,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Webklex\IMAP\Providers\LaravelServiceProvider::class,
-
+        Laravel\Socialite\SocialiteServiceProvider::class,
     ],
 
     /*
@@ -240,7 +240,7 @@ return [
         'Helper' => App\Helpers\Helper::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Client' => Webklex\IMAP\Facades\Client::class,
-
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 
 ];

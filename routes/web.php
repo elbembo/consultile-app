@@ -16,6 +16,7 @@ use App\Http\Controllers\Domains\Subscribe\HomeController as SubscribeHomeContro
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\EmailTrakerController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\LinkedinController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\ServerController;
@@ -96,6 +97,8 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
         Route::post('companies', [ContactController::class, 'companies'])->name('Companies List');
     });
     Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
+    Route::get('auth/linkedin', [LinkedinController::class, 'linkedinRedirect']);
+    Route::get('auth/linkedin/callback', [LinkedinController::class, 'linkedinCallback']);
     // Route::get('/test',  function () {
     //     return view('test');
     // })->name('test');
