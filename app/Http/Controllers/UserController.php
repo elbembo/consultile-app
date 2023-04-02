@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Spatie\Permission\Models\Role;
 
@@ -18,14 +19,13 @@ class UserController extends Controller
     }
     public function create()
     {
-        return view('users.create');
+        return view('users.create',['roles' => Role::latest()->get()]);
     }
     public function notifications()
     {
         # code...
-        $notifications = auth()->user()->notifications ;
-        return view('notifications',compact('notifications'));
-
+        $notifications = auth()->user()->notifications;
+        return view('notifications', compact('notifications'));
     }
     public function read($id)
     {
@@ -37,15 +37,18 @@ class UserController extends Controller
         }
         return response()->json(false);
     }
-    public function store(User $user, StoreUserRequest $request)
+    public function store(User $user, Request $request)
     {
         //For demo purposes only. When creating user or inviting a user
         // you should create a generated random password and email it to the user
-        $user->create(array_merge($request->validated(), [
-            'password' => 'test'
+        $new = $user->create(array_merge($request->all(), [
+            'password' => Hash::make($request->password)
         ]));
+        $new->syncRoles($request->get('role'));
+        $user_id = $new->id;
+        $emp = $new->emp()->create(['title' =>  $request->title,'sallery' =>  $request->sallery]);
 
-        return redirect('/')
+        return redirect('/users')
             ->withSuccess(__('User created successfully.'));
     }
     public function show(User $user)
@@ -59,14 +62,28 @@ class UserController extends Controller
         return view('users.create', [
             'user' => $user,
             'userRole' => $user->roles->pluck('name')->toArray(),
-            'roles' => Role::latest()->get()
+            'roles' => Role::latest()->get(),
+            'emp' => $user->emp
         ]);
     }
-    public function update(User $user, UpdateUserRequest $request)
+    public function update(User $user, Request $request)
     {
-        $user->update($request->validated());
+        $input = $request->except(['_token', '_method']);
+        if ($request->password == '')
+            $request->request->remove('password');
+        else
+            $request->merge([
+                'password' => Hash::make($request->password)
+            ]);
+        $user->update($request->all());
 
         $user->syncRoles($request->get('role'));
+        $emp = $user->emp()->updateOrCreate(['user_id' => $user->id]);
+        $emp->title =  $request->title;
+        $emp->sallery =  $request->sallery;
+        $emp->gender =  $request->gender;
+        $emp->hiring_date =  $request->hiring_date;
+        $emp->save();
 
         return redirect('/users')
             ->withSuccess(__('User updated successfully.'));

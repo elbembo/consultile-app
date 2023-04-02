@@ -96,6 +96,7 @@
     <script src="/assets/js/plugins/summernote-lite.min.js"></script>
     <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
     {{-- <script src="/assets/js/plugins/bootstrap-autocomplete.min.js"></script> --}}
+
     <script src="/assets/js/init.js?v=1.0.5"></script>
     <script type="module">
         import Autocomplete from "/assets/js/plugins/bootstrap-autocomplete.min.js";
@@ -209,6 +210,7 @@
     {{-- <script src="/assets/js/core.min.js?v=1.0.4"></script> --}}
     <script src="/assets/js/plugins/summernote-lite.min.js"></script>
     <script src="/assets/js/plugins/moment.min.js"></script>
+
     <script src="/assets/js/main.js?v=1.0.6"></script>
 
     @stack('rtl')

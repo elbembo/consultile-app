@@ -348,9 +348,9 @@
                                 </form>
                             </div>
                             <div class="col-md-4">
-                                <form
+                                <form class="form-confirm"
                                     action="{{ isset($campaign) ? url('campaigns/' . $campaign->id) : url('campaigns') }}"
-                                    method="post">
+                                    method="post" data-confirmMsg="">
                                     <fieldset class="form-group">
                                         <legend>Take Action</legend>
                                         @csrf
@@ -366,17 +366,17 @@
                                         <input type="hidden" name="action" value="update_status">
                                         @if ($campaign->status == 'draft')
                                             <input type="hidden" name="status" value="processing">
-                                            <button class="btn bg-gradient-success text-lg mt-2" type="submit"><i
+                                            <button name="submitBTN"  class="btn bg-gradient-success text-lg mt-2" type="submit" value="Do you want to run this campaign?"><i
                                                     class="fa fa-play me-sm-1" aria-hidden="true"></i>Run
                                                 campaign</button>
                                         @elseif($campaign->status == 'processing')
                                             <input type="hidden" name="status" value="canceled">
-                                            <button class="btn bg-gradient-danger text-lg mt-2" type="submit"><i
+                                            <button name="submitBTN"  class="btn bg-gradient-danger text-lg mt-2" type="submit" value="Do you want to stop this campaign?"><i
                                                     class="fa fa-stop me-sm-1" aria-hidden="true"></i>Stop
                                                 campaign</button>
                                         @elseif($campaign->status == 'completed')
                                             <input type="hidden" name="status" value="replicate">
-                                            <button class="btn bg-gradient-info text-lg mt-2" type="submit"><i
+                                            <button name="submitBTN" class="btn bg-gradient-info text-lg mt-2" type="submit" value="Do you want to replicate this campaign?"><i
                                                     class="fa fa-repeat me-sm-1" aria-hidden="true"></i>Replicate</button>
                                         @endif
                                     </fieldset>

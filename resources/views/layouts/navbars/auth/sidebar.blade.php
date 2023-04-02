@@ -59,12 +59,12 @@
                     aria-controls="projects" role="button" aria-expanded="false">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
-                        <i class="fas fa-lg fa-suitcase top-0 text-center  {{ str_contains(url()->current(), 'projects') ? 'text-white' : 'text-dark' }}"></i>
+                        <i
+                            class="fas fa-lg fa-suitcase top-0 text-center  {{ str_contains(url()->current(), 'projects') ? 'text-white' : 'text-dark' }}"></i>
                     </div>
                     <span class="nav-link-text ms-1">Projects</span>
                 </a>
-                <div class="collapse   {{ str_contains(url()->current(), 'projects') ? 'show' : '' }}"
-                    id="projects">
+                <div class="collapse   {{ str_contains(url()->current(), 'projects') ? 'show' : '' }}" id="projects">
                     <ul class="nav ms-4 ps-3">
                         <li class="nav-item ">
                             <a class="nav-link " href="{{ url('#') }}">
@@ -95,12 +95,12 @@
                     aria-controls="subscribe" role="button" aria-expanded="false">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
-                        <i style="font-size: 1rem;" class="fa fa-lg fa-dollar top-0 text-center text-dark " aria-hidden="true"></i>
+                        <i style="font-size: 1rem;" class="fa fa-lg fa-dollar top-0 text-center text-dark "
+                            aria-hidden="true"></i>
                     </div>
                     <span class="nav-link-text ms-1">Financial</span>
                 </a>
-                <div class="collapse   {{ str_contains(url()->current(), 'financial') ? 'show' : '' }}"
-                    id="financial">
+                <div class="collapse   {{ str_contains(url()->current(), 'financial') ? 'show' : '' }}" id="financial">
                     <ul class="nav ms-4 ps-3">
                         <li class="nav-item ">
                             <a class="nav-link " href="{{ url('#') }}">
@@ -128,7 +128,8 @@
                     aria-controls="subscribe" role="button" aria-expanded="false">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
-                        <i class="fas  fa-lg fa-pen-alt top-0 text-center  {{ str_contains(url()->current(), 'subscribes') ? 'text-white' : 'text-dark' }}"></i>
+                        <i
+                            class="fas  fa-lg fa-pen-alt top-0 text-center  {{ str_contains(url()->current(), 'subscribes') ? 'text-white' : 'text-dark' }}"></i>
                     </div>
                     <span class="nav-link-text ms-1">Subscribe App</span>
                 </a>
@@ -152,7 +153,8 @@
                     aria-controls="subscribe" role="button" aria-expanded="false">
                     <div
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
-                        <i style="font-size: 1rem;" class="fas fa-lg fa-comment-dots top-0 text-center text-dark " aria-hidden="true"></i>
+                        <i style="font-size: 1rem;" class="fas fa-lg fa-comment-dots top-0 text-center text-dark "
+                            aria-hidden="true"></i>
                     </div>
                     <span class="nav-link-text ms-1">Feedback App</span>
                 </a>
@@ -182,8 +184,28 @@
 
             @role('admin')
                 <li class="nav-item">
+                    <a href="/users" class="nav-link  {{ str_contains(url()->current(), 'users') ? 'active' : '' }}">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48" viewBox="0 0 48 48">
+                                <title>profile</title>
+                                <g class="nc-icon-wrapper">
+                                    <path class="color-background"
+                                        d="M43.25,37.8,30,32V22H18V32l-.125.062L4.754,37.8A4.985,4.985,0,0,0,2,42.009V45a1,1,0,0,0,1,1H45a1,1,0,0,0,1-1V42.009A4.979,4.979,0,0,0,43.25,37.8Z"
+                                         fill-rule="evenodd" />
+                                    <path class="color-background"
+                                        d="M24,28A11.013,11.013,0,0,1,13,17V13a11,11,0,0,1,22,0v4A11.013,11.013,0,0,1,24,28Z"
+                                         />
+                                </g>
+                            </svg>
+                        </div>
+                        <span class="nav-link-text ms-1">Users</span>
+                    </a>
+
+                </li>
+                <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#applicationsExamples"
-                        class="nav-link  {{ str_contains(url()->current(), 'settings')  || str_contains(url()->current(), 'server') ? 'active' : '' }}"
+                        class="nav-link  {{ str_contains(url()->current(), 'settings') || str_contains(url()->current(), 'server') ? 'active' : '' }}"
                         aria-controls="applicationsExamples" role="button" aria-expanded="false">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
@@ -191,7 +213,8 @@
                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <title>settings</title>
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <g transform="translate(-2020.000000, -442.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                                    <g transform="translate(-2020.000000, -442.000000)" fill="#FFFFFF"
+                                        fill-rule="nonzero">
                                         <g transform="translate(1716.000000, 291.000000)">
                                             <g transform="translate(304.000000, 151.000000)">
                                                 <polygon class="color-background" opacity="0.596981957"
