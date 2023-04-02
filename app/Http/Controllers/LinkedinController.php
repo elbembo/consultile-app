@@ -27,12 +27,9 @@ class LinkedinController extends Controller
             if ($linkedinUser) {
                 $email = $linkedinUser->email;
                 $password = $linkedinUser->password;
-                if (Auth::attempt(['email' => $email, 'password' => $password])) {
-                    session()->regenerate();
-                    return redirect('campaigns')->with(['success' => 'You are logged in.']);
-                } else {
-                    return back()->withErrors(['email' => 'Email or password invalid.']);
-                }
+                Auth::attempt(['email' => $email, 'password' => $password]);
+                session()->regenerate();
+                return redirect('campaigns')->with(['success' => 'You are logged in.']);
             } else {
                 $user = User::create([
                     'name' => $user->name,
@@ -43,13 +40,9 @@ class LinkedinController extends Controller
                 ]);
                 $email = $user->email;
                 $password = $user->password;
-                if (Auth::attempt(['email' => $email, 'password' => $password])) {
-                    session()->regenerate();
-                    return redirect('campaigns')->with(['success' => 'You are logged in.']);
-                } else {
-
-                    return back()->withErrors(['email' => 'Email or password invalid.']);
-                }
+                Auth::attempt(['email' => $email, 'password' => $password]);
+                session()->regenerate();
+                return redirect('campaigns')->with(['success' => 'You are logged in.']);
             }
         } catch (Exception $e) {
             dd($e->getMessage());
