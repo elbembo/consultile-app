@@ -64,7 +64,7 @@
                                                     <td class="text-sm">{{ $user->id }}</td>
                                                     <td class="text-sm">
                                                         <span class="my-2 text-xs avatar avatar-xxl overflow-hidden me-2">
-                                                            <img src="{{ $user->emp->image && !str_contains($user->emp->image,'http://') ? '/uploads/users/profile/default-' . ($user->emp->gender ?? '') . '.jpg' : ($user->emp->image ?? $user->emp->image)  }}"
+                                                            <img src="{{ $user->emp->image && !str_contains($user->emp->image,'http://') ? '/uploads/users/profile/default-' . ($user->emp->gender ?? '') . '.jpg' : $user->emp->image  }}"
                                                                 alt="picture">
                                                         </span>
                                                     </td>
