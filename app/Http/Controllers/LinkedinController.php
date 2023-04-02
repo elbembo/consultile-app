@@ -27,6 +27,7 @@ class LinkedinController extends Controller
             if ($linkedinUser) {
                 $email = $linkedinUser->email;
                 $password = $linkedinUser->password;
+                dd(['email' => $email, 'password' => $password]);
                 Auth::attempt(['email' => $email, 'password' => $password]);
                 session()->regenerate();
                 return redirect('campaigns')->with(['success' => 'You are logged in.']);
@@ -40,6 +41,7 @@ class LinkedinController extends Controller
                 ]);
                 $email = $user->email;
                 $password = $user->password;
+                dd(['email' => $email, 'password' => $password]);
                 Auth::attempt(['email' => $email, 'password' => $password]);
                 session()->regenerate();
                 return redirect('campaigns')->with(['success' => 'You are logged in.']);
