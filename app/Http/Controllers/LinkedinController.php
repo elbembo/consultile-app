@@ -36,8 +36,8 @@ class LinkedinController extends Controller
                     'oauth_type' => 'linkedin',
                     'password' => encrypt('admin12345')
                 ]);
-                $userid = $user->id;
-                $user->emp->create(['user_id' => $userid, 'image' => $user->getAvatar()]);
+                // $userid = $user->id;
+                // $user->emp->create(['user_id' => $userid, 'image' => $user->getAvatar()]);
 
                 Auth::login($user);
 
