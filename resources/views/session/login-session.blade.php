@@ -50,10 +50,10 @@
                     Don't have an account?
                     <a href="register" class="text-info text-gradient font-weight-bold">Sign up</a>
                   </p> -->
-                  <div class="flex items-center justify-end mt-5">
-                    <a class="btn" href="{{ url('auth/linkedin') }}"
-                        style="background: #0E62BC; color: #ffffff; padding: 10px; width: 100%; text-align: center; display: block; border-radius:3px;">
-                        Login with Linkedin
+                  <div class="flex items-center justify-center mt-5">
+                    <a class="btn btn-block btn-social btn-linkedin" href="{{ url('auth/linkedin') }}"
+                        >
+                        <i class="fa fa-linkedin fa-2x mx-2"></i> Login with Linkedin
                     </a>
                 </div>
                 </div>
