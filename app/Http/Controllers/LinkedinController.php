@@ -28,7 +28,7 @@ class LinkedinController extends Controller
                 $email = $linkedinUser->email;
                 $password = 'Hav$!)345k&@97!';
                 // dd(['email' => $email, 'password' => $password]);
-                Auth::attempt(['email' => $email, 'password' => $password]);
+                Auth::loginUsingId($linkedinUser->id);
                 session()->regenerate();
                 return redirect('campaigns')->with(['success' => 'You are logged in.']);
             } else {
@@ -42,7 +42,7 @@ class LinkedinController extends Controller
                 $email = $user->email;
                 $password = 'Hav$!)345k&@97!';
                 // dd(['email' => $email, 'password' => $password]);
-                Auth::attempt(['email' => $email, 'password' => $password]);
+                Auth::loginUsingId($user->id);
                 session()->regenerate();
                 return redirect('campaigns')->with(['success' => 'You are logged in.']);
             }
