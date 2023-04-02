@@ -21,7 +21,7 @@
 
                     <div class="row">
                         <div class="col-12 col-lg-8 m-auto">
-                            <form action="{{ !empty($user) ? '/users/'.$user->id : '/users'}}" class="multisteps-form__form mb-8" style="height: 408px;" autocomplete="off" method="POST" >
+                            <form action="{{ !empty($user) ? '/users/'.$user->id : '/users'}}" class="multisteps-form__form mb-8" style="height: 408px;" autocomplete="off" method="POST" enctype="multipart/form-data" >
                                 @csrf
                                 @if(!empty($user))
                                 @method('PUT')

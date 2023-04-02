@@ -58,9 +58,9 @@
                                                 <tr>
                                                     <td class="text-sm">{{$user->id}}</td>
                                                     <td class="text-sm">
-                                                        <span class="my-2 text-xs">
-                                                            <img src="{{$user->emp->image ?? '/uploads/users/profile/default-'.($user->emp->gender ?? '').'.jpg'}}"
-                                                                alt="picture" class="avatar avatar-xxl me-2">
+                                                        <span class="my-2 text-xs avatar avatar-xxl overflow-hidden me-2">
+                                                            <img src="/uploads/users/profile/{{$user->emp->image ?? 'default-'.($user->emp->gender ?? '').'.jpg'}}"
+                                                                alt="picture">
                                                         </span>
                                                     </td>
                                                     <td class="text-sm">{{ $user->name }}</td>

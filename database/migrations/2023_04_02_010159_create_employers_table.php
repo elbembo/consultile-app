@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('gender')->nullable();
             $table->date('hiring_date')->nullable();
             $table->double('sallery', 8, 2)->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

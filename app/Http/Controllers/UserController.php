@@ -19,7 +19,7 @@ class UserController extends Controller
     }
     public function create()
     {
-        return view('users.create',['roles' => Role::latest()->get()]);
+        return view('users.create', ['roles' => Role::latest()->get()]);
     }
     public function notifications()
     {
@@ -46,7 +46,7 @@ class UserController extends Controller
         ]));
         $new->syncRoles($request->get('role'));
         $user_id = $new->id;
-        $emp = $new->emp()->create(['title' =>  $request->title,'sallery' =>  $request->sallery]);
+        $emp = $new->emp()->create(['title' =>  $request->title, 'sallery' =>  $request->sallery]);
 
         return redirect('/users')
             ->withSuccess(__('User created successfully.'));
@@ -68,6 +68,11 @@ class UserController extends Controller
     }
     public function update(User $user, Request $request)
     {
+        $request->validate([
+            'email' => 'required|email',
+            'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
         $input = $request->except(['_token', '_method']);
         if ($request->password == '')
             $request->request->remove('password');
@@ -83,6 +88,11 @@ class UserController extends Controller
         $emp->sallery =  $request->sallery;
         $emp->gender =  $request->gender;
         $emp->hiring_date =  $request->hiring_date;
+        if (!empty($request->image)) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('uploads/users/profile'), $imageName);
+            $emp->image =  $imageName ;
+        }
         $emp->save();
 
         return redirect('/users')
