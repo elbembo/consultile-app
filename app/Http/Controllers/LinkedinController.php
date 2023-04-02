@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Exception;
-use Socialite;
+use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 
 class LinkedinController extends Controller
@@ -25,8 +25,8 @@ class LinkedinController extends Controller
 
             if ($linkedinUser) {
 
-                Auth::login($linkedinUser);
-
+                // Auth::login($linkedinUser);
+                Auth::attempt($linkedinUser);
                 return redirect('/dashboard');
             } else {
                 $user = User::create([
@@ -39,7 +39,7 @@ class LinkedinController extends Controller
                 // $userid = $user->id;
                 // $user->emp->create(['user_id' => $userid, 'image' => $user->getAvatar()]);
 
-                Auth::login($user);
+                Auth::attempt($user);
 
                 return redirect('/dashboard');
             }
