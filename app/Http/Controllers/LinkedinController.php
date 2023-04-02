@@ -29,8 +29,8 @@ class LinkedinController extends Controller
                 $password = 'Hav$!)345k&@97!';
                 // dd(['email' => $email, 'password' => $password]);
                 Auth::loginUsingId($linkedinUser->id);
-                $emp = $linkedinUser->emp();
-                $emp->image = $user->getAvatar() ;
+                $emp = $linkedinUser->emp()->updateOrCreate(['image' =>$user->getAvatar()]);
+                $emp->image  = $user->getAvatar() ;
                 $emp->save();
                 session()->regenerate();
                 return redirect('campaigns')->with(['success' => 'You are logged in.']);
