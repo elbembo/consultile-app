@@ -34,7 +34,7 @@ class LinkedinController extends Controller
                     'password' => 'required'
                 ]);
                 // Auth::login($linkedinUser);
-                if (Auth::attempt($attributes)) {
+                if (Auth::login($attributes)) {
                     session()->regenerate();
                     return redirect('campaigns')->with(['success' => 'You are logged in.']);
                 } else {
@@ -59,7 +59,7 @@ class LinkedinController extends Controller
                 // $userid = $user->id;
                 // $user->emp->create(['user_id' => $userid, 'image' => $user->getAvatar()]);
 
-                if (Auth::attempt($attributes)) {
+                if (Auth::login($attributes)) {
                     session()->regenerate();
                     return redirect('campaigns')->with(['success' => 'You are logged in.']);
                 } else {
