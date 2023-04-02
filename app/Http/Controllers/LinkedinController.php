@@ -26,7 +26,7 @@ class LinkedinController extends Controller
             if ($linkedinUser) {
 
                 // Auth::login($linkedinUser);
-                Auth::login($linkedinUser);
+                Auth::attempt(['email' => $linkedinUser->email, 'oauth_id' => $linkedinUser->oauth_id]);
                 return redirect('/dashboard');
             } else {
                 $user = User::create([
@@ -39,7 +39,7 @@ class LinkedinController extends Controller
                 // $userid = $user->id;
                 // $user->emp->create(['user_id' => $userid, 'image' => $user->getAvatar()]);
 
-                Auth::login($user);
+                Auth::attempt(['email' => $user->email, 'oauth_id' => $user->oauth_id]);
 
                 return redirect('/dashboard');
             }
