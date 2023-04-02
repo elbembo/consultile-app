@@ -2,7 +2,7 @@
   <footer class="footer py-5">
     <div class="container">
       <div class="row">
-      <div class="col-lg-8 mb-4 mx-auto text-center">
+      {{-- <div class="col-lg-8 mb-4 mx-auto text-center">
           <a href="#" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
               Company
           </a>
@@ -21,7 +21,7 @@
           <a href="#" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
               Pricing
           </a>
-      </div>
+      </div> --}}
          {{-- @if (!auth()->user() || \Request::is('static-sign-up'))
           <div class="col-lg-8 mx-auto text-center mb-4 mt-2">
               <a href="https://dribbble.com/creativetim" target="_blank" class="text-secondary me-xl-4 me-4">
