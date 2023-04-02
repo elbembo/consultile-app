@@ -79,6 +79,14 @@
                                                             class="momentDate">{{ $user->emp->hiring_date ?? '' }}</span>
                                                     </td>
                                                     <td class="text-sm">
+                                                        @if($user->approved == 0)
+                                                        {!! Form::open(['method' => 'PUT', 'route' => ['users.update', $user->id], 'style' => 'display:inline']) !!}
+                                                        <input type="hidden" name="approved" value="1">
+                                                        <button type="submit" class="btn btn-slack">
+                                                            Approve
+                                                        </button>
+                                                        {!! Form::close() !!}
+                                                        @endif
                                                         <a href="{{ url('users/' . $user->id . '/edit') }}" class="mx-3"
                                                             data-bs-toggle="tooltip" data-bs-original-title="Edit user">
                                                             <i class="fas fa-user-edit text-secondary"

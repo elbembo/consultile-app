@@ -68,6 +68,10 @@ class UserController extends Controller
     }
     public function update(User $user, Request $request)
     {
+        if($request->approved){
+            $user->update($request->all());
+            return back();
+        }
         $request->validate([
             'email' => 'required|email',
             'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',

@@ -26,7 +26,9 @@ class User extends Authenticatable
         'location',
         'about_me',
         'oauth_id',
-        'oauth_type'
+        'oauth_type',
+        'approved',
+        'suspend'
     ];
 
     /**

@@ -49,7 +49,7 @@ Route::domain('subscribe.' . env('APP_DOMAIN', 'consultile.com'))->group(functio
     Route::post('/', [SubscribeHomeController::class, 'store']);
 });
 Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
-    Route::group(['middleware' => ['auth', 'permission']], function () {
+    Route::group(['middleware' => ['auth', 'permission','approved']], function () {
         Route::get('/', [HomeController::class, 'home'])->name('home');
         Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
@@ -96,6 +96,8 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
 
         Route::post('companies', [ContactController::class, 'companies'])->name('Companies List');
     });
+    Route::get('/approval', [SessionsController::class, 'approval'])->name('approval');
+    Route::get('/suspend', [SessionsController::class, 'suspend'])->name('suspend');
     Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
     Route::get('auth/linkedin', [LinkedinController::class, 'linkedinRedirect']);
     Route::get('auth/linkedin/callback', [LinkedinController::class, 'linkedinCallback']);
@@ -140,11 +142,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
         return response()->json(true);
     });
 });
-Route::get('test2', function () {
 
-    event(new NotificationEvent('dddddddddddd'));
-    return 'notification sent';
-});
 
 Route::get('/clear-cache', function () {
 

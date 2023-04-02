@@ -15,7 +15,15 @@ class SessionsController extends Controller
 
         return view('session.login-session');
     }
-
+    public function approval()
+    {
+        return view('session.approval');
+    }
+    public function suspend()
+    {
+        # code...
+        return view('session.suspend');
+    }
     public function store()
     {
         $attributes = request()->validate([
