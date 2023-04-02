@@ -25,10 +25,10 @@ class LinkedinController extends Controller
             $linkedinUser = User::where('oauth_id', $user->id)->first();
 
             if ($linkedinUser) {
-                $email = $linkedinUser->email;
-                $password = 'Hav$!)345k&@97!';
+                // $email = $linkedinUser->email;
+                // $password = 'Hav$!)345k&@97!';
                 // dd(['email' => $email, 'password' => $password]);
-                Auth::attempt(['email' => $email, 'password' => $password]);
+                Auth::login($linkedinUser);
                 session()->regenerate();
                 return redirect('campaigns')->with(['success' => 'You are logged in.']);
             } else {
@@ -39,10 +39,12 @@ class LinkedinController extends Controller
                     'oauth_type' => 'linkedin',
                     'password' => Hash::make('Hav$!)345k&@97!')
                 ]);
-                $email = $user->email;
-                $password = 'Hav$!)345k&@97!';
+                $user->syncRoles(['employer']);
+                // $email = $user->email;
+                // $password = 'Hav$!)345k&@97!';
+
                 // dd(['email' => $email, 'password' => $password]);
-                Auth::attempt(['email' => $email, 'password' => $password]);
+                Auth::login($user);
                 session()->regenerate();
                 return redirect('campaigns')->with(['success' => 'You are logged in.']);
             }
