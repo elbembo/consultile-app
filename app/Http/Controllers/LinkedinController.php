@@ -19,7 +19,7 @@ class LinkedinController extends Controller
     {
         try {
 
-            $socialUser = Socialite::driver('linkedin')->user();
+            $user = Socialite::driver('linkedin')->user();
 
             $linkedinUser = User::where('oauth_id', $user->id)->first();
 
@@ -30,9 +30,9 @@ class LinkedinController extends Controller
                 return redirect('/dashboard');
             } else {
                 $user = User::create([
-                    'name' => $socialUser->name,
-                    'email' => $socialUser->email,
-                    'oauth_id' => $socialUser->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'oauth_id' => $user->id,
                     'oauth_type' => 'linkedin',
                     'password' => encrypt('admin12345')
                 ]);
