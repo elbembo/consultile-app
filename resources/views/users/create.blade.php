@@ -64,7 +64,7 @@
                                                 <label>Role</label>
                                                 <select class="multisteps-form__input form-control"  name="role"   >
                                                     @foreach($roles as $role)
-                                                    <option value="{{ $role->name }}" {{ isset($userRole)  && $userRole[0] == $role->name  ? 'selected' : ''}}>{{ $role->name }}</option>
+                                                    <option value="{{ $role->name }}" {{ isset($userRole[0])  && $userRole[0] == $role->name  ? 'selected' : ''}}>{{ $role->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
