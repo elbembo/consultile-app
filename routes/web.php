@@ -84,8 +84,8 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
 
         Route::name('settings.')->prefix('settings')->group(function () {
             Route::resource('trash', Trash::class);
-            // Route::resource('roles', RolesController::class);
-            // Route::resource('permissions', PermissionsController::class);
+            Route::resource('roles', RolesController::class);
+            Route::resource('permissions', PermissionsController::class);
             Route::resource('drop-list', DropListController::class);
             Route::get('server/error', function () {
                 return view('errors.log');
@@ -93,8 +93,8 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
             Route::resource('server', ServerController::class);
 
         });
-Route::resource('settings/roles', RolesController::class);
-            Route::resource('settings/permissions', PermissionsController::class);
+        Route::resource('roles', RolesController::class);
+        Route::resource('permissions', PermissionsController::class);
 
         // Ajax
         Route::post('/email-validation-dns', [ContactController::class, 'emailValidation'])->name('email.validation.dns');
