@@ -47,6 +47,8 @@ use Illuminate\Support\Facades\Route;
 Route::domain('subscribe.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
     Route::get('/', [SubscribeHomeController::class, 'home']);
     Route::post('/', [SubscribeHomeController::class, 'store']);
+    Route::get('unsubscribe', [ContactController::class, 'unsubscribe']);
+    Route::post('unsubscribe', [ContactController::class, 'unsubscribe']);
 });
 Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
     Route::group(['middleware' => ['auth', 'permission','approved']], function () {

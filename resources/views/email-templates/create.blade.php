@@ -166,7 +166,7 @@
             $('.unsubscribe-btn').on('click', (e) => {
                 $("#summernote").summernote('createLink', {
                     text: "Unsubscribe",
-                    url: 'https://app.consultile.com/unsubscribe/?t=@{{ Traker }}',
+                    url: 'https://subscribe.consultile.com/unsubscribe/?t=@{{ Traker }}',
                     isNewWindow: true
                 })
 
