@@ -13,7 +13,7 @@
             @endphp
 
             @foreach ($logCollection as $log)
-                {!! str_contains($log['content'], 'local.ERROR') ?  $log['content'] . '<hr>' : '' !!}
+                {!! str_contains($log['content'], '.ERROR') ?  $log['content'] . '<hr>' : '' !!}
             @endforeach
     </div>
 @endsection
