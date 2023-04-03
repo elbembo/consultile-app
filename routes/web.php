@@ -93,8 +93,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
             Route::resource('server', ServerController::class);
 
         });
-        Route::resource('roles', RolesController::class);
-        Route::resource('permissions', PermissionsController::class);
+
 
         // Ajax
         Route::post('/email-validation-dns', [ContactController::class, 'emailValidation'])->name('email.validation.dns');
