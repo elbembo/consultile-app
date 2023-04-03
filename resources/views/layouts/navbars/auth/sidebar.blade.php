@@ -244,6 +244,12 @@
                                 </a>
                             </li>
                             <li class="nav-item ">
+                                <a class="nav-link " href="{{ url('settings/drop-list') }}">
+                                    <span class="sidenav-mini-icon"> D </span>
+                                    <span class="sidenav-normal"> Drop List </span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
                                 <a class="nav-link " href="{{ url('settings/permissions') }}">
                                     <span class="sidenav-mini-icon"> P </span>
                                     <span class="sidenav-normal"> Permissions </span>
@@ -256,13 +262,13 @@
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link " href="{{ url('server') }}">
+                                <a class="nav-link " href="{{ url('settings/server') }}">
                                     <span class="sidenav-mini-icon"> S </span>
                                     <span class="sidenav-normal"> Server </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link " href="{{ url('server/error') }}">
+                                <a class="nav-link " href="{{ url('settings/server/error') }}">
                                     <span class="sidenav-mini-icon"> E </span>
                                     <span class="sidenav-normal"> Error log </span>
                                 </a>

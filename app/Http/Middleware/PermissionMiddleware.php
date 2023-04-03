@@ -4,7 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 class PermissionMiddleware
 {
@@ -17,6 +18,16 @@ class PermissionMiddleware
      */
     public function handle(Request $request, Closure $next, $permission = null, $guard = null)
     {
+        if (!auth()->user()->approved == 1) {
+            Session::flush();
+            Auth::logout();
+            return redirect()->route('approval');
+        }
+        if (auth()->user()->suspend == 1) {
+            Session::flush();
+            Auth::logout();
+            return redirect()->route('suspend');
+        }
         $authGuard = app('auth')->guard($guard);
 
         if ($authGuard->guest()) {

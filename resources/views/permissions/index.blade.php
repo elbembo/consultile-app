@@ -8,7 +8,7 @@
         <h2>Permissions</h2>
         <div class="lead">
             Manage your permissions here.
-            <a href="{{ route('permissions.create') }}" class="btn btn-primary btn-sm float-right">Add permissions</a>
+            <a href="{{ route('settings.permissions.create') }}" class="btn btn-primary btn-sm float-right">Add permissions</a>
         </div>
 
         <div class="mt-2">
@@ -28,9 +28,9 @@
                     <tr>
                         <td>{{ $permission->name }}</td>
                         <td>{{ $permission->guard_name }}</td>
-                        <td><a href="{{ route('permissions.edit', $permission->id) }}" class="btn btn-info btn-sm">Edit</a></td>
+                        <td><a href="{{ route('settings.permissions.edit', $permission->id) }}" class="btn btn-info btn-sm">Edit</a></td>
                         <td>
-                            {!! Form::open(['method' => 'DELETE','route' => ['permissions.destroy', $permission->id],'style'=>'display:inline']) !!}
+                            {!! Form::open(['method' => 'DELETE','route' => ['settings.permissions.destroy', $permission->id],'style'=>'display:inline']) !!}
                             {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
                             {!! Form::close() !!}
                         </td>

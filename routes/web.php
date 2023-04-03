@@ -13,6 +13,7 @@ use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\CampaignReportController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Domains\Subscribe\HomeController as SubscribeHomeController;
+use App\Http\Controllers\DropListController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\EmailTrakerController;
 use App\Http\Controllers\GalleryController;
@@ -51,7 +52,7 @@ Route::domain('subscribe.' . env('APP_DOMAIN', 'consultile.com'))->group(functio
     Route::post('unsubscribe', [ContactController::class, 'unsubscribe']);
 });
 Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
-    Route::group(['middleware' => ['auth', 'permission','approved']], function () {
+    Route::group(['middleware' => ['auth', 'permission']], function () {
         Route::get('/', [HomeController::class, 'home'])->name('home');
         Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
@@ -80,14 +81,20 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
         Route::resource('editor', SummernoteController::class);
 
 
-        Route::get('server/error', function(){
-            return view('errors.log');
 
-        })->name('server.log');
-        Route::resource('settings/trash', Trash::class);
-        Route::resource('settings/roles', RolesController::class);
-        Route::resource('settings/permissions', PermissionsController::class);
-        Route::resource('/server', ServerController::class);
+        Route::name('settings.')->prefix('settings')->group(function () {
+            Route::resource('trash', Trash::class);
+            Route::resource('roles', RolesController::class);
+            Route::resource('permissions', PermissionsController::class);
+            Route::resource('drop-list', DropListController::class);
+            Route::get('server/error', function () {
+                return view('errors.log');
+            })->name('server.log');
+            Route::resource('server', ServerController::class);
+
+        });
+
+
         // Ajax
         Route::post('/email-validation-dns', [ContactController::class, 'emailValidation'])->name('email.validation.dns');
         Route::post('/check-duplicate', [ContactController::class, 'isDuplicate'])->name('check.duplicate');

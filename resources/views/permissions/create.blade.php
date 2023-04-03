@@ -9,7 +9,7 @@
 
         <div class="container mt-4">
 
-            <form method="POST" action="{{ route('permissions.store') }}">
+            <form method="POST" action="{{ route('settings.permissions.store') }}">
                 @csrf
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
@@ -25,7 +25,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Save permission</button>
-                <a href="{{ route('permissions.index') }}" class="btn btn-default">Back</a>
+                <a href="{{ route('settings.permissions.index') }}" class="btn btn-default">Back</a>
             </form>
         </div>
 

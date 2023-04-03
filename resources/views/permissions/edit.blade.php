@@ -8,7 +8,7 @@
 
         <div class="container mt-4">
 
-            <form method="POST" action="{{ route('permissions.update', $permission->id) }}">
+            <form method="POST" action="{{ route('settings.permissions.update', $permission->id) }}">
                 @method('patch')
                 @csrf
                 <div class="mb-3">
@@ -25,7 +25,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Save permission</button>
-                <a href="{{ route('permissions.index') }}" class="btn btn-default">Back</a>
+                <a href="{{ route('settings.permissions.index') }}" class="btn btn-default">Back</a>
             </form>
         </div>
 
