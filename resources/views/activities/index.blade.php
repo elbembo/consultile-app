@@ -24,25 +24,25 @@
     </div>
     <div class="row">
         @if (!empty($counts))
-        @php
-            function action_icon($var)
-            {
-                switch ($var) {
-                    case 'new-messages':
-                        return 'fa-envelope';
-                        break;
+            @php
+                function action_icon($var)
+                {
+                    switch ($var) {
+                        case 'new-messages':
+                            return 'fa-envelope';
+                            break;
 
-                    case 'groups-messages':
-                        return 'fa-users';
-                        break;
+                        case 'groups-messages':
+                            return 'fa-users';
+                            break;
 
-                    case 'new-invitations':
-                        return 'fa-user-plus';
-                        break;
+                        case 'new-invitations':
+                            return 'fa-user-plus';
+                            break;
+                    }
+                    # code...
                 }
-                # code...
-            }
-        @endphp
+            @endphp
             @foreach ($counts as $item)
                 <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
                     <div class="card">
@@ -60,7 +60,8 @@
                                 </div>
                                 <div class="col-4 text-end">
                                     <div class="icon icon-shape bg-gradient-dark shadow text-center border-radius-md">
-                                        <i class="fa {{action_icon($item->action)}} text-lg opacity-10" aria-hidden="true"></i>
+                                        <i class="fa {{ action_icon($item->action) }} text-lg opacity-10"
+                                            aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </div>
@@ -139,58 +140,26 @@
                 </div>
                 <div class="card-body p-3">
                     <ul class="list-group">
-                        <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                            <div class="w-100">
-                                <div class="d-flex align-items-center mb-2">
-                                    <a class="btn btn-facebook btn-simple mb-0 p-0" href="javascript:;">
-                                        <i class="fa fa-envelope fa-lg" aria-hidden="true"></i>
-                                    </a>
-                                    <span class="me-2 text-sm font-weight-bold text-capitalize ms-2">New Messages</span>
-                                    <span class="ms-auto text-sm font-weight-bold">80%</span>
-                                </div>
-                                <div>
-                                    <div class="progress progress-md">
-                                        <div class="progress-bar bg-gradient-dark w-80" role="progressbar"
-                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                        @foreach ($counts as $item)
+                            <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+                                <div class="w-100">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <a class="btn btn-facebook btn-simple mb-0 p-0" href="javascript:;">
+                                            <i class="fa  {{ action_icon($item->action) }}  fa-lg" aria-hidden="true"></i>
+                                        </a>
+                                        <span
+                                            class="me-2 text-sm font-weight-bold text-capitalize ms-2">{{ str_replace('-', ' ', $item->action) }}</span>
+                                        <span class="ms-auto text-sm font-weight-bold">{{ floor($item->total/count($activities)*100) }}%</span>
+                                    </div>
+                                    <div>
+                                        <div class="progress progress-md">
+                                            <div class="progress-bar bg-gradient-dark " style="width: {{ floor($item->total/count($activities)*100) }}%" role="progressbar"
+                                                aria-valuenow="{{ floor($item->total/count($activities)*100) }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                            <div class="w-100">
-                                <div class="d-flex align-items-center mb-2">
-                                    <a class="btn btn-twitter btn-simple mb-0 p-0" href="javascript:;">
-                                        <i class="fa fa-lg fa-users" aria-hidden="true"></i>
-                                    </a>
-                                    <span class="me-2 text-sm font-weight-bold text-capitalize ms-2">Groups’
-                                        Messages</span>
-                                    <span class="ms-auto text-sm font-weight-bold">40%</span>
-                                </div>
-                                <div>
-                                    <div class="progress progress-md">
-                                        <div class="progress-bar bg-gradient-dark w-40" role="progressbar"
-                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                            <div class="w-100">
-                                <div class="d-flex align-items-center mb-2">
-                                    <a class="btn  btn-simple mb-0 p-0" href="javascript:;">
-                                        <i class="fa fa-lg fa-user-plus " aria-hidden="true"></i>
-                                    </a>
-                                    <span class="me-2 text-sm font-weight-bold text-capitalize ms-2">New Invitations</span>
-                                    <span class="ms-auto text-sm font-weight-bold">30%</span>
-                                </div>
-                                <div>
-                                    <div class="progress progress-md">
-                                        <div class="progress-bar bg-gradient-dark w-30" role="progressbar"
-                                            aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+                            </li>
+                        @endforeach
 
                     </ul>
                 </div>

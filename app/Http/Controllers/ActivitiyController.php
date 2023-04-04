@@ -18,14 +18,13 @@ class ActivitiyController extends Controller
     public function index()
     {
         $today =   Carbon::now();
-        if (Auth()->user()->hasRole(['admin'])|| Auth()->user()->hasDirectPermission('show all activities')) {
+        if (Auth()->user()->can('show all activities')) {
             $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereDay('created_at', $today)->where('type', 1)->groupBy('action')->get();
             $activities = Activitiy::whereDay('created_at', $today)->where('type', 1)->get();
         } else {
-            $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereDay('created_at', $today)->where('type', 1)->where('user_id',auth()->id())->groupBy('action')->get();
-            $activities = Activitiy::whereDay('created_at', $today)->where('type', 1)->where('user_id',auth()->id())->get();
+            $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereDay('created_at', $today)->where('type', 1)->where('user_id', auth()->id())->groupBy('action')->get();
+            $activities = Activitiy::whereDay('created_at', $today)->where('type', 1)->where('user_id', auth()->id())->get();
         }
-
         return view('activities.index', compact('activities', 'counts'));
     }
 
