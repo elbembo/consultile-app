@@ -11,15 +11,10 @@
                 <div class="card-header pb-0">
                     <div class="d-md-flex flex-md-row justify-content-between">
                         <div>
-                            <h5 class="mb-0">All Contacts - {{ $count ?? ''}} - {{ $countWithEmail ?? '0' }} has email </h5>
+                            <h5 class="mb-0">All Contacts </h5>
                         </div>
                         <div class="d-md-flex flex-md-row justify-content-end">
-                            <form class=" d-flex" action="{{ url('/subscribes/exportSMS') }}" method="POST">
-                                @csrf
-                                    <input class="form-control" type="date" name="created_at" required>
-                                    <button type="submit"
-                                        class="btn bg-gray-50 btn-sm m-1">{{ __('Export_Numbers') }}</button>
-                            </form>
+
                             <a href="{{url('contacts/export')}}" class="btn bg-gray-50 btn-sm m-1">{{ __('Export') }}</a>
                             <a href="{{url('contacts/import')}}" class="btn bg-gray-50 btn-sm m-1">{{ __('Import') }}</a>
 
@@ -27,6 +22,15 @@
 
                         </div>
                     </div>
+                    <div class="d-md-flex flex-md-row justify-content-between mt-2">
+                        <p>{{ $count ?? ''}} - {{ $countWithEmail ?? '0' }} has email </p><form class=" d-flex" action="{{ url('/subscribes/exportSMS') }}" method="POST">
+                                @csrf
+                                    <input class="form-control" type="date" name="created_at" required>
+                                    <button type="submit"
+                                        class="btn bg-gray-50 btn-sm m-1">{{ __('Export_Numbers') }}</button>
+                            </form>
+                    </div>
+
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">

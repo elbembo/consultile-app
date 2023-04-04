@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class DropList extends Model
 {
     use HasFactory;
+    protected $fillable = [
+
+        'section',
+        'name',
+        'value',
+        'show',
+    ];
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DropList;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Str;
 class DropListController extends Controller
 {
     /**
@@ -15,7 +15,9 @@ class DropListController extends Controller
     public function index()
     {
         //
-        return view('settings.drop-list');
+        $dropLists = DropList::all()->groupBy('section');
+        // dd($dropLists);
+        return view('settings.drop-list', compact('dropLists'));
     }
 
     /**
@@ -36,7 +38,9 @@ class DropListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->merge(['value' => Str::slug($request->name, '-')]);
+        DropList::create($request->all());
+        return back();
     }
 
     /**
@@ -71,6 +75,8 @@ class DropListController extends Controller
     public function update(Request $request, DropList $dropList)
     {
         //
+        $dropList->update($request->all());
+        return response()->json(true);
     }
 
     /**
