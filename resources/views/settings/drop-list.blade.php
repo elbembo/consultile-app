@@ -45,7 +45,7 @@
     <div class="row mt-2">
         @if (!empty($dropLists))
             @foreach ($dropLists as $key => $items)
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <div class="card">
 
                         <div class="card-header pb-0">

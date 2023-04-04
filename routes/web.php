@@ -3,6 +3,7 @@
 use App\Events\AccessRequestEvent;
 use App\Events\CampaignComplete;
 use App\Events\NotificationEvent;
+use App\Http\Controllers\ActivitiyController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
@@ -33,6 +34,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Row;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,6 +95,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
             Route::resource('server', ServerController::class);
 
         });
+        Route::resource('activities', ActivitiyController::class);
 
 
         // Ajax

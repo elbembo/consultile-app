@@ -1,0 +1,201 @@
+@extends('layouts.user_type.auth')
+
+@section('content')
+    <div class="row">
+        <div class="col-lg-6 col-12 d-flex ms-auto">
+            <a href="/activities/create" class="btn btn-icon bg-gradient-primary">
+                <span class="btn-inner--text">Add Connection</span>
+                <span class="btn-inner--icon ms-2"><i class="fa fa-plus"></i></span>
+            </a>
+        </div>
+        <div class="col-lg-6 col-12 d-flex ms-auto">
+            <div class="dropleft ms-auto">
+                <button class="btn bg-gradient-dark dropdown-toggle" type="button" id="dropdownImport"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Today
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownImport">
+                    <li><a class="dropdown-item" href="javascript:;">Yesterday</a></li>
+                    <li><a class="dropdown-item" href="javascript:;">Last 7 days</a></li>
+                    <li><a class="dropdown-item" href="javascript:;">Last 30 days</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        @if (!empty($counts))
+        @php
+            function action_icon($var)
+            {
+                switch ($var) {
+                    case 'new-messages':
+                        return 'fa-envelope';
+                        break;
+
+                    case 'groups-messages':
+                        return 'fa-users';
+                        break;
+
+                    case 'new-invitations':
+                        return 'fa-user-plus';
+                        break;
+                }
+                # code...
+            }
+        @endphp
+            @foreach ($counts as $item)
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card">
+                        <div class="card-body p-3">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="numbers">
+                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">
+                                            {{ str_replace('-', ' ', $item->action) }}</p>
+                                        <h5 class="font-weight-bolder mb-0">
+                                            {{ $item->total }}
+                                            <span class="text-success text-sm font-weight-bolder"></span>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <div class="icon icon-shape bg-gradient-dark shadow text-center border-radius-md">
+                                        <i class="fa {{action_icon($item->action)}} text-lg opacity-10" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        @endif
+
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-sm-7">
+            <div class="card h-100 mt-4 mt-md-0">
+                <div class="card-header pb-0 p-3">
+                    <div class="d-flex align-items-center">
+                        <h6>Connections</h6>
+                        <button type="button"
+                            class="btn btn-icon-only btn-rounded btn-outline-success mb-0 ms-2 btn-sm d-flex align-items-center justify-content-center ms-auto"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                            data-bs-original-title="Data is based from sessions and is 100% accurate">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body px-3 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center justify-content-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-50">
+                                        Link</th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">
+                                        Account</th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-30">
+                                        Action taken</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($activities as $connection)
+                                    <tr>
+                                        <td>
+                                            <a href="{{ $connection->url }}"
+                                                class="btn-link text-sm font-weight-bold mb-0">../{{ substr($connection->url, strrpos($connection->url, '/') + 1) }}</a>
+                                        </td>
+                                        <td>
+                                            <p class="text-sm font-weight-bold mb-0">{{ $connection->account }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-sm font-weight-bold mb-0">{{ $connection->action }}</p>
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="card h-100">
+                <div class="card-header pb-0 p-3">
+                    <div class="d-flex align-items-center">
+                        <h6 class="mb-0">Action Taken</h6>
+                        <button type="button"
+                            class="btn btn-icon-only btn-rounded btn-outline-secondary mb-0 ms-2 btn-sm d-flex align-items-center justify-content-center ms-auto"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                            data-bs-original-title="See how much traffic do you get from social media">
+                            <i class="fas fa-info" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-3">
+                    <ul class="list-group">
+                        <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+                            <div class="w-100">
+                                <div class="d-flex align-items-center mb-2">
+                                    <a class="btn btn-facebook btn-simple mb-0 p-0" href="javascript:;">
+                                        <i class="fa fa-envelope fa-lg" aria-hidden="true"></i>
+                                    </a>
+                                    <span class="me-2 text-sm font-weight-bold text-capitalize ms-2">New Messages</span>
+                                    <span class="ms-auto text-sm font-weight-bold">80%</span>
+                                </div>
+                                <div>
+                                    <div class="progress progress-md">
+                                        <div class="progress-bar bg-gradient-dark w-80" role="progressbar"
+                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+                            <div class="w-100">
+                                <div class="d-flex align-items-center mb-2">
+                                    <a class="btn btn-twitter btn-simple mb-0 p-0" href="javascript:;">
+                                        <i class="fa fa-lg fa-users" aria-hidden="true"></i>
+                                    </a>
+                                    <span class="me-2 text-sm font-weight-bold text-capitalize ms-2">Groups’
+                                        Messages</span>
+                                    <span class="ms-auto text-sm font-weight-bold">40%</span>
+                                </div>
+                                <div>
+                                    <div class="progress progress-md">
+                                        <div class="progress-bar bg-gradient-dark w-40" role="progressbar"
+                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+                            <div class="w-100">
+                                <div class="d-flex align-items-center mb-2">
+                                    <a class="btn  btn-simple mb-0 p-0" href="javascript:;">
+                                        <i class="fa fa-lg fa-user-plus " aria-hidden="true"></i>
+                                    </a>
+                                    <span class="me-2 text-sm font-weight-bold text-capitalize ms-2">New Invitations</span>
+                                    <span class="ms-auto text-sm font-weight-bold">30%</span>
+                                </div>
+                                <div>
+                                    <div class="progress progress-md">
+                                        <div class="progress-bar bg-gradient-dark w-30" role="progressbar"
+                                            aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+@endsection
