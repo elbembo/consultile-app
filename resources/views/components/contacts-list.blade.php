@@ -30,6 +30,11 @@
                         <p class="text-xs font-weight-bold mb-0">{{ $contact->company }}</p>
                     </a>
                 </td>
+                <td class="text-center">
+                    <a  class="" href="{{ url('contacts/' . $contact->id) }}">
+                        <p class="text-xs font-weight-bold mb-0">{{ $contact->country }}</p>
+                    </a>
+                </td>
 
 
                 <td class="text-center">
