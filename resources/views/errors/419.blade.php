@@ -1,7 +1,7 @@
 @php
     Session::flush();
     Auth::logout();
-    redirect()->route('login');
+    return redirect()->route('login');
 @endphp
 @extends('layouts.user_type.auth')
 
