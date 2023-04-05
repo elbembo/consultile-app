@@ -36,9 +36,10 @@ class ActivitiyController extends Controller
     public function create()
     {
         //
+        $lastes = Activitiy::where('type', 1)->where('user_id', auth()->id())->orderBy('id','desc')->first();
         $accountsList = DropList::where('section', 'linkedin-accounts')->where('show', 1)->get();
         $actionList = DropList::where('section', 'communicate-action')->where('show', 1)->get();
-        return view('activities.create', compact('accountsList', 'actionList'));
+        return view('activities.create', compact('accountsList', 'actionList','lastes'));
     }
 
     /**
