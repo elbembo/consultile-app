@@ -253,7 +253,7 @@ class ContactController extends Controller
             ->orWhere('first_name', 'like', "%$firstName%")
             ->orWhere('last_name', 'like', "%$lastName%")
             ->groupBy('id')
-            ->orderBy('id', 'desc');
+            ->orderBy('id', 'desc')->get();
         $views = [];
         foreach($contacts as $contact){
 
