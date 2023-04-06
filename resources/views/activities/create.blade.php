@@ -17,7 +17,7 @@
                                 <select name="account" id="linkedin-accounts" class="form-control" required>
                                     <option disabled selected value> -- select an option -- </option>
                                     @foreach ($accountsList as $item)
-                                        <option value="{{ $item->value }}" {{ $lastes->account == $item->value ? 'selected' : ''}}>{{ $item->name }}</option>
+                                        <option value="{{ $item->value }}" {{ !empty($lastes->account ) && $lastes->account == $item->value ? 'selected' : ''}}>{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
