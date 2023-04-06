@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Json;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +14,11 @@ class Employer extends Model
         'title',
         'sallery',
         'gender',
-        'hiring_date'
+        'hiring_date',
+        'docs'
 
+    ];
+    protected $casts = [
+        'docs' => Json::class,
     ];
 }

@@ -68,7 +68,30 @@ class UserController extends Controller
     }
     public function update(User $user, Request $request)
     {
-        if($request->approved){
+        if ($request->hasFile('files')) {
+            $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx'];
+            $files = $request->file('files');
+            // dd($files);
+            $docs = [];
+            foreach ($files as $file) {
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension();
+                $check = true; //in_array($extension, $allowedfileExtension);
+                // dd($file)
+                $path = $file->store('public/uploads/users/docs');
+                // dd($path);
+                if ($check) {
+                    $docs[] = [
+                        'path' => $path,
+                        'name' => $filename,
+                        'mime' => 'application/' . $extension,
+
+                    ];
+                }
+            }
+            $request->request->add(['docs' => $docs]);
+        }
+        if ($request->approved) {
             $user->update($request->all());
             return back();
         }
@@ -92,10 +115,12 @@ class UserController extends Controller
         $emp->sallery =  $request->sallery;
         $emp->gender =  $request->gender;
         $emp->hiring_date =  $request->hiring_date;
+        if (!empty($request->docs))
+            $emp->docs =  $request->docs;
         if (!empty($request->image)) {
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('uploads/users/profile'), $imageName);
-            $emp->image =  $imageName ;
+            $emp->image =  $imageName;
         }
         $emp->save();
 
