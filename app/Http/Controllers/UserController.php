@@ -72,7 +72,7 @@ class UserController extends Controller
             $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx'];
             $files = $request->file('files');
             // dd($files);
-            $docs = [];
+            $docs = $user->emp->docs;
             foreach ($files as $file) {
                 $filename = $file->getClientOriginalName();
                 $extension = $file->getClientOriginalExtension();
@@ -119,8 +119,8 @@ class UserController extends Controller
             $emp->docs =  $request->docs;
         if (!empty($request->image)) {
             $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('uploads/users/profile'), $imageName);
-            $emp->image =  $imageName;
+            $path = $request->image->store('public/uploads/users/profile');
+            $emp->image =  $path;
         }
         $emp->save();
 
