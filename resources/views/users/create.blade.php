@@ -155,7 +155,7 @@
                                                 @if (is_array($user->emp->docs))
                                                     @foreach ($user->emp->docs as $key => $attachment)
                                                         <div class="attachment" data-key="{{ $key }}">
-                                                            <a href="/storage/{{ $attachment['path'] ?? ''}}"><span class=" text-truncate">
+                                                            <a href="{{ str_replace('public/','/storage/',$attachment['path']) ?? ''}}"><span class=" text-truncate">
                                                                 <i class="fa fa-file-pdf text-lg mo-sm-1"
                                                                     aria-hidden="true"></i>
                                                                 {{ $attachment['name'] ?? ''}}
