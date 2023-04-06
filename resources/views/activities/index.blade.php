@@ -108,7 +108,7 @@
                                     <tr>
                                         <td>
                                             <a href="{{ $connection->url }}"
-                                                class="btn-link text-sm font-weight-bold mb-0">../{{ substr($connection->url, strrpos($connection->url, '/') + 1) }}</a>
+                                                class="btn-link text-sm font-weight-bold mb-0">{{ str_replace('www.linkedin.com/in/','.../',$connection->url) }}</a>
                                         </td>
                                         <td>
                                             <p class="text-sm font-weight-bold mb-0">{{ $connection->account }}</p>
