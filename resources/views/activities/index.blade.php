@@ -9,7 +9,9 @@
             </a>
         </div>
         <div class="col-lg-6 col-12 d-flex ms-auto">
+            <input type="button" name="daterange" class="bg-gray-900 btn ms-auto text-white">
             <div class="dropleft ms-auto">
+
                 <button class="btn bg-gradient-dark dropdown-toggle" type="button" id="dropdownImport"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     Today
@@ -31,11 +33,11 @@
                         case 'new-messages':
                             return 'fa-envelope';
                             break;
-
+                
                         case 'groups-messages':
                             return 'fa-users';
                             break;
-
+                
                         case 'new-invitations':
                             return 'fa-user-plus';
                             break;
@@ -108,7 +110,7 @@
                                     <tr>
                                         <td>
                                             <a href="{{ $connection->url }}"
-                                                class="btn-link text-sm font-weight-bold mb-0">{{ str_replace('www.linkedin.com/in/','.../',$connection->url) }}</a>
+                                                class="btn-link text-sm font-weight-bold mb-0">{{ str_replace('www.linkedin.com/in/', '.../', $connection->url) }}</a>
                                         </td>
                                         <td>
                                             <p class="text-sm font-weight-bold mb-0">{{ $connection->account }}</p>
@@ -149,12 +151,16 @@
                                         </a>
                                         <span
                                             class="me-2 text-sm font-weight-bold text-capitalize ms-2">{{ str_replace('-', ' ', $item->action) }}</span>
-                                        <span class="ms-auto text-sm font-weight-bold">{{ floor($item->total/count($activities)*100) }}%</span>
+                                        <span
+                                            class="ms-auto text-sm font-weight-bold">{{ floor(($item->total / count($activities)) * 100) }}%</span>
                                     </div>
                                     <div>
                                         <div class="progress progress-md">
-                                            <div class="progress-bar bg-gradient-dark " style="width: {{ floor($item->total/count($activities)*100) }}%" role="progressbar"
-                                                aria-valuenow="{{ floor($item->total/count($activities)*100) }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar bg-gradient-dark "
+                                                style="width: {{ floor(($item->total / count($activities)) * 100) }}%"
+                                                role="progressbar"
+                                                aria-valuenow="{{ floor(($item->total / count($activities)) * 100) }}"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -168,3 +174,22 @@
 
     </div>
 @endsection
+@pushOnce('scripts')
+    <script>
+        $(function() {
+            $('input[name="daterange"]').daterangepicker({
+                opens: 'right'
+            }, function(start, end, label) {
+                var url = new URL(window.location.href);
+                var search_params = url.searchParams;
+                search_params.set('start', start.format('YYYY-MM-DD'));
+                search_params.set('end', end.format('YYYY-MM-DD'));
+                url.search = search_params.toString();
+                var new_url = url.toString();
+                window.open(new_url,'_self')
+                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end
+                    .format('YYYY-MM-DD'));
+            });
+        });
+    </script>
+@endPushOnce

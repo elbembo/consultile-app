@@ -18,12 +18,20 @@ class ActivitiyController extends Controller
     public function index()
     {
         $today =   Carbon::now();
-        if (Auth()->user()->can('show all activities')) {
-            $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereDay('created_at', $today)->where('type', 1)->groupBy('action')->get();
-            $activities = Activitiy::whereDay('created_at', $today)->where('type', 1)->get();
+        if (request()->get('start') && request()->get('end')) {
+            $startDate = Carbon::createFromFormat('Y-m-d', request()->get('start'));
+            $endDate = Carbon::createFromFormat('Y-m-d', request()->get('end'));
         } else {
-            $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereDay('created_at', $today)->where('type', 1)->where('user_id', auth()->id())->groupBy('action')->get();
-            $activities = Activitiy::whereDay('created_at', $today)->where('type', 1)->where('user_id', auth()->id())->get();
+            $startDate = Carbon::now();
+            $endDate = Carbon::now();
+        }
+        // dump(request()->get('start') . ' to ' . request()->get('end'));
+        if (Auth()->user()->can('show all activities')) {
+            $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereBetween('created_at', [$startDate, $endDate])->where('type', 1)->groupBy('action')->get();
+            $activities = Activitiy::whereBetween('created_at', [$startDate, $endDate])->where('type', 1)->get();
+        } else {
+            $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereBetween('created_at',[$startDate, $endDate])->where('type', 1)->where('user_id', auth()->id())->groupBy('action')->get();
+            $activities = Activitiy::whereBetween('created_at', [$startDate, $endDate])->where('type', 1)->where('user_id', auth()->id())->get();
         }
         return view('activities.index', compact('activities', 'counts'));
     }
@@ -36,10 +44,10 @@ class ActivitiyController extends Controller
     public function create()
     {
         //
-        $lastes = Activitiy::where('type', 1)->where('user_id', auth()->id())->orderBy('id','desc')->first();
+        $lastes = Activitiy::where('type', 1)->where('user_id', auth()->id())->orderBy('id', 'desc')->first();
         $accountsList = DropList::where('section', 'linkedin-accounts')->where('show', 1)->get();
         $actionList = DropList::where('section', 'communicate-action')->where('show', 1)->get();
-        return view('activities.create', compact('accountsList', 'actionList','lastes'));
+        return view('activities.create', compact('accountsList', 'actionList', 'lastes'));
     }
 
     /**

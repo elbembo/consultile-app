@@ -30,6 +30,7 @@
     <!-- CSS Files -->
     <link id="appstyle" href="/assets/css/core.css?v=1.0.3" rel="stylesheet" />
     <link id="pagestyle" href="/assets/css/style.css?v=1.0.5" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link href="/assets/css/summernote-lite.min.css" rel="stylesheet">
     <style>
         .note-modal.open {
@@ -210,6 +211,7 @@
     {{-- <script src="/assets/js/core.min.js?v=1.0.4"></script> --}}
     <script src="/assets/js/plugins/summernote-lite.min.js"></script>
     <script src="/assets/js/plugins/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     <script src="/assets/js/main.js?v=1.0.6"></script>
 
