@@ -9,8 +9,8 @@
             </a>
         </div>
         <div class="col-lg-6 col-12 d-flex ms-auto">
-            <input type="button" name="daterange" class="bg-gray-900 btn ms-auto text-white">
-            <div class="dropleft ms-auto">
+            <input type="button" name="daterange" class=" bg-gradient-dark btn ms-auto text-white">
+            <div class="dropleft ms-auto d-none">
 
                 <button class="btn bg-gradient-dark dropdown-toggle" type="button" id="dropdownImport"
                     data-bs-toggle="dropdown" aria-expanded="false">
