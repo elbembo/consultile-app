@@ -26,7 +26,7 @@
                                 <select name="action" id="communicate-action" class="form-control" required>
                                     <option disabled selected value> -- select an option -- </option>
                                     @foreach ($actionList as $item)
-                                        <option value="{{ $item->value }}" {{ $lastes->action == $item->value ? 'selected' : ''}}>{{ $item->name }}</option>
+                                        <option value="{{ $item->value }}" {{  !empty($lastes->action ) && $lastes->action == $item->value ? 'selected' : ''}}>{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
