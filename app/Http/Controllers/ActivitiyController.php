@@ -19,19 +19,32 @@ class ActivitiyController extends Controller
     {
         $today =   Carbon::now();
         if (request()->get('start') && request()->get('end')) {
-            $startDate = Carbon::createFromFormat('Y-m-d', request()->get('start'));
-            $endDate = Carbon::createFromFormat('Y-m-d', request()->get('end'));
+            if (request()->get('start') == request()->get('end')) {
+                $oneDay = Carbon::createFromFormat('Y-m-d', request()->get('start'));
+            } else {
+                $startDate = Carbon::createFromFormat('Y-m-d', request()->get('start'));
+                $endDate = Carbon::createFromFormat('Y-m-d', request()->get('end'));
+            }
         } else {
-            $startDate = Carbon::now();
-            $endDate = Carbon::now();
+            $oneDay = Carbon::now();
         }
         // dump(request()->get('start') . ' to ' . request()->get('end'));
         if (Auth()->user()->can('show all activities')) {
-            $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereBetween('created_at', [$startDate, $endDate])->where('type', 1)->groupBy('action')->get();
-            $activities = Activitiy::whereBetween('created_at', [$startDate, $endDate])->where('type', 1)->get();
+            if (!empty($oneDay)) {
+                $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereDay('created_at', $oneDay)->where('type', 1)->groupBy('action')->get();
+                $activities = Activitiy::whereDay('created_at', $oneDay)->where('type', 1)->get();
+            } elseif (!empty($startDate) && !empty($endDate)) {
+                $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereBetween('created_at', [$startDate, $endDate])->where('type', 1)->groupBy('action')->get();
+                $activities = Activitiy::whereBetween('created_at', [$startDate, $endDate])->where('type', 1)->get();
+            }
         } else {
-            $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereBetween('created_at',[$startDate, $endDate])->where('type', 1)->where('user_id', auth()->id())->groupBy('action')->get();
-            $activities = Activitiy::whereBetween('created_at', [$startDate, $endDate])->where('type', 1)->where('user_id', auth()->id())->get();
+            if (!empty($oneDay)) {
+                $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereDay('created_at', $oneDay)->where('type', 1)->where('user_id', auth()->id())->groupBy('action')->get();
+                $activities = Activitiy::whereDay('created_at', $oneDay)->where('type', 1)->where('user_id', auth()->id())->get();
+            } elseif (!empty($startDate) && !empty($endDate)) {
+                $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereBetween('created_at', [$startDate, $endDate])->where('type', 1)->where('user_id', auth()->id())->groupBy('action')->get();
+                $activities = Activitiy::whereBetween('created_at', [$startDate, $endDate])->where('type', 1)->where('user_id', auth()->id())->get();
+            }
         }
         return view('activities.index', compact('activities', 'counts'));
     }
