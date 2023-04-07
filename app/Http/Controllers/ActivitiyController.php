@@ -39,11 +39,12 @@ class ActivitiyController extends Controller
 
                 $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereDay('created_at', $oneDay)->where('type', 1)->groupBy('action')->get();
 
-                $userCounts = Activitiy::select('activitiys.action', 'activitiys.user_id', DB::raw('count(*) as total'))
+                $userCounts = Activitiy::select('activitiys.action', 'activitiys.user_id', 'users.name', DB::raw('count(*) as total'))
                     ->join('users', 'users.id', 'activitiys.user_id')
                     ->whereDay('activitiys.created_at', $oneDay)
                     ->where('activitiys.type', 1)
                     ->groupBy('activitiys.action', 'activitiys.user_id')->get();
+
 
                 $activities = Activitiy::whereDay('created_at', $oneDay)->where('type', 1)->get();
 
