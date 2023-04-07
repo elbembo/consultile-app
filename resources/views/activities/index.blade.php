@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-lg-6 col-12 d-flex ms-auto">
             <a href="/activities/create" class="btn btn-icon bg-gradient-primary">
-                <span class="btn-inner--text">Add Connection</span>
+                <span class="btn-inner--text">Add Linkedin activity</span>
                 <span class="btn-inner--icon ms-2"><i class="fa fa-plus"></i></span>
             </a>
         </div>
@@ -30,7 +30,7 @@
                 function action_icon($var)
                 {
                     switch ($var) {
-                        case 'new-messages':
+                        case 'direct-message':
                             return 'fa-envelope';
                             break;
                 
@@ -80,17 +80,16 @@
                             <div class="numbers">
                                 <p class="text-sm mb-0 text-capitalize font-weight-bold">
                                     Duplicates
-                                    </p>
+                                </p>
                                 <h5 class="font-weight-bolder mb-0">
-                                    {{$duplicates ?? 0}}
+                                    {{ $duplicates ?? 0 }}
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
                         </div>
                         <div class="col-4 text-end">
                             <div class="icon icon-shape bg-gradient-dark shadow text-center border-radius-md">
-                                <i class="fa  fa-copy text-lg opacity-10"
-                                    aria-hidden="true"></i>
+                                <i class="fa  fa-copy text-lg opacity-10" aria-hidden="true"></i>
                             </div>
                         </div>
                     </div>
@@ -99,7 +98,6 @@
         </div>
 
     </div>
-
     <div class="row mt-4">
         <div class="col-sm-7">
             <div class="card h-100 mt-4 mt-md-0">
@@ -152,8 +150,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-5">
-            <div class="card h-100">
+        <div class="col-sm-5 h-100">
+            <div class="card">
                 <div class="card-header pb-0 p-3">
                     <div class="d-flex align-items-center">
                         <h6 class="mb-0">Action Taken</h6>
@@ -192,9 +190,60 @@
                             </li>
                         @endforeach
 
+
                     </ul>
                 </div>
             </div>
+
+            @if (!empty($usersTarget))
+                @foreach ($usersTarget as $user)
+                    <div class="card mt-3">
+                        <div class="card-header pb-0 p-3">
+                            <div class="d-flex align-items-center">
+                                <h6 class="mb-0">{{$user['name']}}</h6>
+                                <button type="button"
+                                    class="btn btn-icon-only btn-rounded btn-outline-secondary mb-0 ms-2 btn-sm d-flex align-items-center justify-content-center ms-auto"
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                                    data-bs-original-title="See how much traffic do you get from social media">
+                                    <i class="fas fa-info" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body p-3">
+                            <ul class="list-group">
+                                @foreach ($user['actions'] as $key => $item)
+                                    <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+                                        <div class="w-100">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <a class="btn btn-facebook btn-simple mb-0 p-0" href="javascript:;">
+                                                    <i class="fa  {{ action_icon($key) }}  fa-lg"
+                                                        aria-hidden="true"></i>
+                                                </a>
+                                                <span
+                                                    class="me-2 text-sm font-weight-bold text-capitalize ms-2">{{ str_replace('-', ' ', $key) }}</span>
+                                                <span
+                                                    class="ms-auto text-sm font-weight-bold">{{ $item['target_per_days'] > 0 ? floor(($item['total'] / $item['target_per_days'] ) * 100) : 0 }}%</span>
+                                            </div>
+                                            <div>
+                                                {{-- @dump($item['target_per_days']) --}}
+                                                <div class="progress progress-md">
+                                                    <div class="progress-bar bg-gradient-dark "
+                                                        style="width: {{ $item['target_per_days'] > 0 ? floor(($item['total'] / $item['target_per_days'] ) * 100) : 0 }}%"
+                                                        role="progressbar"
+                                                        aria-valuenow="{{ $item['target_per_days'] > 0 ? floor(($item['total'] / $item['target_per_days'] ) * 100) : 0 }}"
+                                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
+
+
+                            </ul>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
         </div>
 
     </div>
@@ -211,7 +260,7 @@
                 search_params.set('end', end.format('YYYY-MM-DD'));
                 url.search = search_params.toString();
                 var new_url = url.toString();
-                window.open(new_url,'_self')
+                window.open(new_url, '_self')
                 console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end
                     .format('YYYY-MM-DD'));
             });

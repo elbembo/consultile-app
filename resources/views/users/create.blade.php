@@ -18,6 +18,9 @@
                                 <button class="multisteps-form__progress-btn " type="button" title="Employer Info">
                                     <span>Employer Documents</span>
                                 </button>
+                                <button class="multisteps-form__progress-btn " type="button" title="Employer Info">
+                                    <span>Target Adjustment</span>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -133,7 +136,7 @@
                                         <div class="button-row d-flex mt-4">
                                             <button class="btn bg-gradient-light mb-0 js-btn-prev" type="button"
                                                 title="Prev">Prev</button>
-                                                <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" type="button"
+                                            <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" type="button"
                                                 title="Next">Next</button>
                                         </div>
                                     </div>
@@ -152,16 +155,16 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                @if (is_array($user->emp->docs))
+                                                @if (!empty($user->emp->docs))
                                                     @foreach ($user->emp->docs as $key => $attachment)
                                                         <div class="attachment" data-key="{{ $key }}">
-                                                            <a href="{{ str_replace('public/','/storage/',$attachment['path']) ?? ''}}" target="_blank"><span class=" text-truncate">
-                                                                <i class="fa fa-file-pdf text-lg mo-sm-1"
-                                                                    aria-hidden="true"></i>
-                                                                {{ $attachment['name'] ?? ''}}
-                                                            </span></a>
-                                                            <span class="docs-del"><i
-                                                                    data-key="{{ $key }}"
+                                                            <a href="{{ str_replace('public/', '/storage/', $attachment['path']) ?? '' }}"
+                                                                target="_blank"><span class=" text-truncate">
+                                                                    <i class="fa fa-file-pdf text-lg mo-sm-1"
+                                                                        aria-hidden="true"></i>
+                                                                    {{ $attachment['name'] ?? '' }}
+                                                                </span></a>
+                                                            <span class="docs-del"><i data-key="{{ $key }}"
                                                                     data-id="{{ $user->emp->id }}"
                                                                     class="cursor-pointer fa fa-times text-secondary text-lg "
                                                                     aria-hidden="true"></i></span>
@@ -175,13 +178,37 @@
                                         <div class="button-row d-flex mt-4">
                                             <button class="btn bg-gradient-light mb-0 js-btn-prev" type="button"
                                                 title="Prev">Prev</button>
+                                            <button class="btn bg-gradient-dark ms-auto mb-0 js-btn-next" type="button"
+                                                title="Next">Next</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card multisteps-form__panel p-3 border-radius-xl bg-white"
+                                    data-animation="FadeIn">
+                                    <h5 class="font-weight-bolder mb-0">Target Adjustment</h5>
+                                    <p class="mb-0 text-sm">upload files and documents of user</p>
+                                    <div class="multisteps-form__content">
+                                        <div class="row mt-3  g-3 ">
+                                            @if (!empty($actionList))
+                                            @foreach ($actionList as $item)
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-text bg-gray-200" >{{ $item->name }}</span>
+                                                    <input type="number" class="form-control" name="target[{{$item->value}}]" required>
+                                                </div>
+                                            </div>    
+                                            @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="button-row d-flex mt-4">
+                                            <button class="btn bg-gradient-light mb-0 js-btn-prev" type="button"
+                                                title="Prev">Prev</button>
                                             <button class="btn bg-gradient-dark ms-auto mb-0" type="submit"
                                                 title="Send">Save</button>
                                         </div>
                                     </div>
                                 </div>
-
-
 
                             </form>
                         </div>

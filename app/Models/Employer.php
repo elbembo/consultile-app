@@ -15,10 +15,12 @@ class Employer extends Model
         'sallery',
         'gender',
         'hiring_date',
-        'docs'
+        'docs',
+        'target'
 
     ];
     protected $casts = [
         'docs' => Json::class,
+        'target' => Json::class,
     ];
 }

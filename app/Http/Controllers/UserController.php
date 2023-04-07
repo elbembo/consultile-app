@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DropList;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -63,7 +64,8 @@ class UserController extends Controller
             'user' => $user,
             'userRole' => $user->roles->pluck('name')->toArray(),
             'roles' => Role::latest()->get(),
-            'emp' => $user->emp
+            'emp' => $user->emp,
+            'actionList' => DropList::where('section', 'communicate-action')->where('show', 1)->get()
         ]);
     }
     public function update(User $user, Request $request)
@@ -115,6 +117,7 @@ class UserController extends Controller
         $emp->sallery =  $request->sallery;
         $emp->gender =  $request->gender;
         $emp->hiring_date =  $request->hiring_date;
+        $emp->target =  $request->target;
         if (!empty($request->docs))
             $emp->docs =  $request->docs;
         if (!empty($request->image)) {

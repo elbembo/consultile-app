@@ -22,7 +22,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="communicate-action">Ccommunicate Action</label>
+                                <label for="communicate-action">Communicate Action</label>
                                 <select name="action" id="communicate-action" class="form-control" required>
                                     <option disabled selected value> -- select an option -- </option>
                                     @foreach ($actionList as $item)
