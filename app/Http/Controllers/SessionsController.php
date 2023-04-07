@@ -11,7 +11,7 @@ class SessionsController extends Controller
     public function create()
     {
         if (Auth::check())
-            return redirect('campaigns');
+            return redirect('activities');
 
         return view('session.login-session');
     }
@@ -34,7 +34,7 @@ class SessionsController extends Controller
 
         if (Auth::attempt($attributes)) {
             session()->regenerate();
-            return redirect('campaigns')->with(['success' => 'You are logged in.']);
+            return redirect('activities')->with(['success' => 'You are logged in.']);
         } else {
 
             return back()->withErrors(['email' => 'Email or password invalid.']);

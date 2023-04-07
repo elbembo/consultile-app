@@ -15,7 +15,7 @@ class HomeController extends Controller
     public function home()
     {
         //
-        return redirect('campaigns');
+        return redirect('activities');
     }
 
     /**
@@ -48,12 +48,12 @@ class HomeController extends Controller
     public function show()
     {
         //
-        return redirect('campaigns');
+        return redirect('activities');
     }
     public function dashboard()
     {
         //
-        return redirect('campaigns');
+        return redirect('activities');
     }
 
     /**

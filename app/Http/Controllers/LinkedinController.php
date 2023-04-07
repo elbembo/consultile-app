@@ -33,7 +33,7 @@ class LinkedinController extends Controller
                 $emp->image  = $user->getAvatar() ;
                 $emp->save();
                 session()->regenerate();
-                return redirect('campaigns')->with(['success' => 'You are logged in.']);
+                return redirect('activities')->with(['success' => 'You are logged in.']);
             } else {
                 $user = User::create([
                     'name' => $user->name,
@@ -48,7 +48,7 @@ class LinkedinController extends Controller
                 // dd(['email' => $email, 'password' => $password]);
                 Auth::loginUsingId($user->id);
                 session()->regenerate();
-                return redirect('campaigns')->with(['success' => 'You are logged in.']);
+                return redirect('activities')->with(['success' => 'You are logged in.']);
             }
         } catch (Exception $e) {
             dd($e->getMessage());
