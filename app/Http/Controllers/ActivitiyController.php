@@ -88,21 +88,23 @@ class ActivitiyController extends Controller
                 $duplicates += ($value - 1);
         }
         $usersTarget = [];
-        foreach ($userCounts as  $value) {
-            $usersTarget[$value->user_id] = [
-                'user_id' => $value->user_id,
-                'name' => $value->name,
-                'days' => $interval,
-            ];
-        }
-        foreach ($userCounts as  $value) {
+        if (!empty($userCounts)) {
+            foreach ($userCounts as  $value) {
+                $usersTarget[$value->user_id] = [
+                    'user_id' => $value->user_id,
+                    'name' => $value->name,
+                    'days' => $interval,
+                ];
+            }
+            foreach ($userCounts as  $value) {
 
-            $user = User::find($value->user_id);
-            $usersTarget[$value->user_id]['actions'][$value->action] = [
-                'total' => $value->total,
-                'target_per_month' => !empty($user->emp->target[$value->action]) ? $user->emp->target[$value->action] : 0,
-                'target_per_days' => !empty($user->emp->target[$value->action]) ? floor($user->emp->target[$value->action] / 30 * $interval) : 0,
-            ];
+                $user = User::find($value->user_id);
+                $usersTarget[$value->user_id]['actions'][$value->action] = [
+                    'total' => $value->total,
+                    'target_per_month' => !empty($user->emp->target[$value->action]) ? $user->emp->target[$value->action] : 0,
+                    'target_per_days' => !empty($user->emp->target[$value->action]) ? floor($user->emp->target[$value->action] / 30 * $interval) : 0,
+                ];
+            }
         }
         // dump($usersTarget);
         return view('activities.index', compact('activities', 'counts', 'duplicates', 'usersTarget'));
