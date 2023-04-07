@@ -103,7 +103,7 @@ class ActivitiyController extends Controller
                 'target_per_days' => !empty($user->emp->target[$value->action]) ? floor($user->emp->target[$value->action] / 30 * $interval) : 0,
             ];
         }
-        // dump($usersTarget);
+        dump($usersTarget);
         return view('activities.index', compact('activities', 'counts', 'duplicates', 'usersTarget'));
     }
 
