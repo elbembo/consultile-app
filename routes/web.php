@@ -165,7 +165,7 @@ Route::get('/clear-cache', function () {
         'id' => '$request->contactId',
         'answer' => ''
     ];
-    event(new AccessRequestEvent($data));
+    // event(new AccessRequestEvent($data));
     $data[] = Artisan::call('cache:clear');
     $data[] = Artisan::call('route:clear');
     $data[] = Artisan::call('view:clear');
@@ -174,4 +174,16 @@ Route::get('/clear-cache', function () {
     $data[] = Artisan::call('optimize:clear');
 
     return response("<h1>All Cache Cleared Successfully</h1>");
+});
+Route::get('/cache', function () {
+
+
+    
+    $data[] = Artisan::call('route:cache');
+    $data[] = Artisan::call('view:cache');
+    $data[] = Artisan::call('config:cache');
+    $data[] = Artisan::call('event:cache');
+    $data[] = Artisan::call('optimize');
+
+    return response("<h1>All is Cached</h1>");
 });
