@@ -224,7 +224,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Managing</h6>
             </li>
 
-            @role('admin')
+            @can('settings.*')
                 <li class="nav-item">
                     <a href="/users" class="nav-link  {{ str_contains(url()->current(), 'users') ? 'active' : '' }}">
                         <div
@@ -319,7 +319,7 @@
                         </ul>
                     </div>
                 </li>
-            @endrole
+            @endcan
         </ul>
     </div>
 
