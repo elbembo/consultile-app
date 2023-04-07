@@ -50,19 +50,16 @@
                     <span class="nav-link-text ms-1">Email Templates</span>
                 </a>
             </li>
-            <li class="nav-item mt-3">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Company</h6>
-            </li>
             <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#activities"
                     class="nav-link  {{ str_contains(url()->current(), 'activities') ? 'active' : '' }}"
                     aria-controls="activities" role="button" aria-expanded="false">
                     <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
+                        class="icon icon-shape icon-sm btn-linkedin shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
                         <i
-                            class="fas fa-lg fa-chart-line  top-0 text-center  {{ str_contains(url()->current(), 'activities') ? 'text-white' : 'text-dark' }}"></i>
+                            class="fab fa-linkedin-in fa-lg  top-0 text-center  {{ str_contains(url()->current(), 'activities') ? 'text-white' : 'text-dark' }}"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Activities</span>
+                    <span class="nav-link-text ms-1">Linkedin marketing</span>
                 </a>
                 <div class="collapse   {{ str_contains(url()->current(), 'activities') ? 'show' : '' }}" id="activities">
                     <ul class="nav ms-4 ps-3">
@@ -89,6 +86,10 @@
                     </ul>
                 </div>
             </li>
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Company</h6>
+            </li>
+            @canany(['projects.index'])
             <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#projects"
                     class="nav-link  {{ str_contains(url()->current(), 'projects') ? 'active' : '' }}"
@@ -125,6 +126,8 @@
                     </ul>
                 </div>
             </li>
+            @endcanany
+            @can('financial.*')
             <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#financial"
                     class="nav-link  {{ str_contains(url()->current(), 'financial') ? 'active' : '' }}"
@@ -155,9 +158,11 @@
                     </ul>
                 </div>
             </li>
+            @endcan
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Forms</h6>
             </li>
+            @can('subscribes.*')
             <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#subscribe"
                     class="nav-link  {{ str_contains(url()->current(), 'subscribes') ? 'active' : '' }}"
@@ -183,6 +188,7 @@
                     </ul>
                 </div>
             </li>
+            @endcan
             <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#feedback"
                     class="nav-link  {{ str_contains(url()->current(), 'feedback') ? 'active' : '' }}"

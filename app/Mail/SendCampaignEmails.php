@@ -50,8 +50,8 @@ class SendCampaignEmails extends Mailable
             messageId: $this->mailData['messageId'] . '@consultile-mea.com',
             text: [
                 'X-SES-CONFIGURATION-SET' => 'consultile_set',
-                'X-Confirm-Reading-To' => '<' . $this->mailData['replyTo']['email'] . '>',
-                'Disposition-Notification-To' => '<' . $this->mailData['replyTo']['email'] . '>',
+                'X-Confirm-Reading-To' => '<' . env('MAIL_RESPONE_ADDRESS', 'consultilemea@gmail.com') . '>',
+                'Disposition-Notification-To' => '<' . env('MAIL_RESPONE_ADDRESS', 'consultilemea@gmail.com') . '>',
                 'List-Unsubscribe' => 'subscribe.' . env('APP_DOMAIN', 'consultile.com') . '/unsubscribe/?t=' . $this->mailData['messageId'] ,
             ],
         );
