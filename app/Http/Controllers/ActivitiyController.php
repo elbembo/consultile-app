@@ -33,20 +33,37 @@ class ActivitiyController extends Controller
             if (!empty($oneDay)) {
                 $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereDay('created_at', $oneDay)->where('type', 1)->groupBy('action')->get();
                 $activities = Activitiy::whereDay('created_at', $oneDay)->where('type', 1)->get();
+                $grouped = $activities->groupBy('url')->map(function ($row) {
+                    return $row->count();
+                });
             } elseif (!empty($startDate) && !empty($endDate)) {
                 $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereBetween('created_at', [$startDate, $endDate])->where('type', 1)->groupBy('action')->get();
                 $activities = Activitiy::whereBetween('created_at', [$startDate, $endDate])->where('type', 1)->get();
+                $grouped = $activities->groupBy('url')->map(function ($row) {
+                    return $row->count();
+                });
             }
         } else {
             if (!empty($oneDay)) {
                 $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereDay('created_at', $oneDay)->where('type', 1)->where('user_id', auth()->id())->groupBy('action')->get();
                 $activities = Activitiy::whereDay('created_at', $oneDay)->where('type', 1)->where('user_id', auth()->id())->get();
+                $grouped = $activities->groupBy('url')->map(function ($row) {
+                    return $row->count();
+                });
             } elseif (!empty($startDate) && !empty($endDate)) {
                 $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereBetween('created_at', [$startDate, $endDate])->where('type', 1)->where('user_id', auth()->id())->groupBy('action')->get();
                 $activities = Activitiy::whereBetween('created_at', [$startDate, $endDate])->where('type', 1)->where('user_id', auth()->id())->get();
+                $grouped = $activities->groupBy('url')->map(function ($row) {
+                    return $row->count();
+                });
             }
         }
-        return view('activities.index', compact('activities', 'counts'));
+        $duplicates=0;
+        foreach ($grouped as $key => $value) {
+            if($value > 1)
+            $duplicates += ($value -1);
+        }
+        return view('activities.index', compact('activities', 'counts','duplicates'));
     }
 
     /**
