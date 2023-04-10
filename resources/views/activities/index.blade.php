@@ -230,7 +230,7 @@
                                                         aria-hidden="true"></i>
                                                 </a>
                                                 <span
-                                                    class="me-2 text-sm font-weight-bold text-capitalize ms-2">{{ str_replace('-', ' ', $key) }}</span>
+                                                    class="me-2 text-sm font-weight-bold text-capitalize ms-2">{{ str_replace('-', ' ', $key) }}</span><span class="text-xs">{{ $item['target_per_month'] ?? ''  }} per month</span>
                                                 <span
                                                     class="ms-auto text-sm font-weight-bold">{{ $item['target_per_days'] > 0 ? floor(($item['total'] / $item['target_per_days'] ) * 100) : 0 }}%</span>
                                             </div>
@@ -243,6 +243,7 @@
                                                         aria-valuenow="{{ $item['target_per_days'] > 0 ? floor(($item['total'] / $item['target_per_days'] ) * 100) : 0 }}"
                                                         aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
+                                                <span class="text-xs">{{ $item['total'] ?? ''  }}/{{ $item['target_per_days'] ?? '' }} for {{ $user['days'] > 1 ? $user['days'].' days' : $user['days'].' day' ?? '' }}</span>
                                             </div>
                                         </div>
                                     </li>
