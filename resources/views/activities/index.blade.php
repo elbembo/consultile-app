@@ -9,19 +9,23 @@
             </a>
         </div>
         <div class="col-lg-6 col-12 d-flex ms-auto">
-            <input type="button" name="daterange" class=" bg-gradient-dark btn ms-auto text-white">
-            <div class="dropleft ms-auto d-none">
+            <div class="dropleft ms-auto">
 
-                <button class="btn bg-gradient-dark dropdown-toggle" type="button" id="dropdownImport"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Today
+                <button class="btn bg-gradient-dark   fixed-plugin-button " type="button">
+                    Fillters
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownImport">
+                {{-- <ul class="dropdown-menu" aria-labelledby="dropdownImport">
                     <li><a class="dropdown-item" href="javascript:;">Yesterday</a></li>
                     <li><a class="dropdown-item" href="javascript:;">Last 7 days</a></li>
-                    <li><a class="dropdown-item" href="javascript:;">Last 30 days</a></li>
-                </ul>
+                    <li><a class="dropdown-item" href="javascript:;">Last 30 days</a><ul class="dropdown-menu" aria-labelledby="dropdownImport">
+                        <li><a class="dropdown-item" href="javascript:;">Yesterday</a></li>
+                        <li><a class="dropdown-item" href="javascript:;">Last 7 days</a></li>
+                        <li><a class="dropdown-item" href="javascript:;">Last 30 days</a></li>
+                    </ul></li>
+                </ul> --}}
             </div>
+            <input type="button" name="daterange" class=" bg-gradient-dark btn ms-auto text-white">
+
         </div>
     </div>
     <div class="row">
@@ -33,11 +37,11 @@
                         case 'direct-message':
                             return 'fa-envelope';
                             break;
-                
+
                         case 'groups-messages':
                             return 'fa-users';
                             break;
-                
+
                         case 'new-invitations':
                             return 'fa-user-plus';
                             break;
@@ -99,7 +103,7 @@
 
     </div>
     <div class="row mt-4">
-        <div class="col-sm-7">
+        <div class="col-md-8">
             <div class="card h-100 mt-4 mt-md-0">
                 <div class="card-header pb-0 p-3">
                     <div class="d-flex align-items-center">
@@ -118,14 +122,17 @@
                             <thead>
                                 <tr>
                                     <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-50">
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-40">
                                         Link</th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">
                                         Account</th>
                                     <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-30">
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">
                                         Action taken</th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">
+                                        Message</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -141,6 +148,9 @@
                                         <td>
                                             <p class="text-sm font-weight-bold mb-0">{{ $connection->action }}</p>
                                         </td>
+                                        <td>
+                                            <p class="text-sm font-weight-bold mb-0">{{ $connection->message }}</p>
+                                        </td>
 
                                     </tr>
                                 @endforeach
@@ -150,7 +160,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-5 h-100">
+        <div class="col-md-4 h-100">
             <div class="card">
                 <div class="card-header pb-0 p-3">
                     <div class="d-flex align-items-center">
@@ -245,7 +255,7 @@
                 @endforeach
             @endif
         </div>
-
+        @include('components.fixed-plugin')
     </div>
 @endsection
 @pushOnce('scripts')

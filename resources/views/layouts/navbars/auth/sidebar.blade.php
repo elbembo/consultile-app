@@ -50,6 +50,7 @@
                     <span class="nav-link-text ms-1">Email Templates</span>
                 </a>
             </li>
+            @can('activities.*')
             <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#activities"
                     class="nav-link  {{ str_contains(url()->current(), 'activities') ? 'active' : '' }}"
@@ -81,14 +82,21 @@
                                 <span class="sidenav-normal">Projects list </span>
                             </a>
                         </li>
-
+                        <li class="nav-item ">
+                            <a class="nav-link " href="{{ url('settings/drop-list') }}">
+                                <span class="sidenav-mini-icon"> D </span>
+                                <span class="sidenav-normal"> Drop List </span>
+                            </a>
+                        </li>
 
                     </ul>
                 </div>
             </li>
+            @endcan
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Company</h6>
             </li>
+
             @canany(['projects.index'])
             <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#projects"

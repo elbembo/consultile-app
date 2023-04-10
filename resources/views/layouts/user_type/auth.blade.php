@@ -49,7 +49,7 @@
             </main>
         @endif
 
-        @include('components.fixed-plugin')
+        
     @endif
 
     <div class="modal fade" id="requestPermissionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -195,9 +195,9 @@
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-text bg-gray-200" >{{ $item->name }}</span>
-                                                    <input type="number" class="form-control" name="target[{{$item->value}}]" required>
+                                                    <input type="number" class="form-control" name="target[{{$item->value}}]" value="{{$emp->target[$item->value] ?? ''}}" >
                                                 </div>
-                                            </div>    
+                                            </div>
                                             @endforeach
                                             @endif
                                         </div>

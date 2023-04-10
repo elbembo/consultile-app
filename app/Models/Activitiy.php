@@ -14,6 +14,7 @@ class Activitiy extends Model
         'user_id',
         'account',
         'action',
+        'message',
         'connections_count',
         'new_opportunities',
         'type'
