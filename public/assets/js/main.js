@@ -232,12 +232,15 @@ function sidenavTypeOnResize() {
                 e.target.classList.add('bg-gradient-faded-warning-vertical')
         });
     })
-    $s('.form-confirm').on('submit',(e) => {
+    $s('.form-confirm').on('submit', (e) => {
         e.preventDefault()
-        if(confirm(e.target.submitBTN.value)){
+        if (confirm(e.target.submitBTN.value)) {
             e.target.submit()
         }
 
+    })
+    $s('.form-safe-submit').on('submit', (e) => {
+        e.target.submitBtn.disabled = true
     })
     $s('#profileSubscribeCheck').click((e) => {
         post("/contacts/" + e.target.dataset.id, { subscribe: e.target.checked == true ? 1 : 0 }, 'PUT');

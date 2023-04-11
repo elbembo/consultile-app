@@ -5,7 +5,7 @@
         <div class=" mb-xl-0 mb-4">
             <div class="card">
                 <div class="card-body p-3">
-                    <form action="/activities" method="post" autocomplete="off">
+                    <form action="/activities" method="post" autocomplete="off" class="form-safe-submit">
                         @csrf
                         <div class="row">
                             <div class="form-group col-md-4">

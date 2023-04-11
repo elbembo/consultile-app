@@ -213,7 +213,7 @@
     <script src="/assets/js/plugins/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
-    <script src="/assets/js/main.js?v=1.0.6"></script>
+    <script src="/assets/js/main.js?v=1.0.7"></script>
 
     @stack('rtl')
     {{-- @stack('dashboard') --}}

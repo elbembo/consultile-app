@@ -163,8 +163,8 @@ class ActivitiyController extends Controller
      */
     public function store(Request $request)
     {
-        Activitiy::create(array_merge($request->all(), ['user_id' => 5]));
-        return back();
+        Activitiy::create(array_merge($request->all(), ['user_id' => auth()->id()]));
+        return redirect('/activities/create');
     }
 
     /**
