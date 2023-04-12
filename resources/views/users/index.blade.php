@@ -5,7 +5,7 @@
         @if (session('status'))
             <div class="alert alert-success">
                 <span class="text-white">
-                <strong>{{ session('status') }}</strong></span>
+                    <strong>{{ session('status') }}</strong></span>
             </div>
         @endif
         <div class="row">
@@ -64,7 +64,7 @@
                                                     <td class="text-sm">{{ $user->id }}</td>
                                                     <td class="text-sm">
                                                         <span class="my-2 text-xs avatar avatar-xxl overflow-hidden me-2">
-                                                            <img src="{{ !empty($user->emp->image) && str_contains($user->emp->image,'http') ?  $user->emp->image  : (!empty($user->emp->image) ? str_replace('public/','/storage/',$user->emp->image) : '/uploads/users/profile/default-' . ($user->emp->gender ?? '') . '.jpg' ) }}"
+                                                            <img src="{{ !empty($user->emp->image) && str_contains($user->emp->image, 'http') ? $user->emp->image : (!empty($user->emp->image) ? str_replace('public/', '/storage/', $user->emp->image) : '/uploads/users/profile/default-' . ($user->emp->gender ?? '') . '.jpg') }}"
                                                                 alt="picture">
                                                         </span>
                                                     </td>
@@ -79,13 +79,13 @@
                                                             class="momentDate">{{ $user->emp->hiring_date ?? '' }}</span>
                                                     </td>
                                                     <td class="text-sm">
-                                                        @if($user->approved == 0)
-                                                        {!! Form::open(['method' => 'PUT', 'route' => ['users.update', $user->id], 'style' => 'display:inline']) !!}
-                                                        <input type="hidden" name="approved" value="1">
-                                                        <button type="submit" class="btn btn-slack">
-                                                            Approve
-                                                        </button>
-                                                        {!! Form::close() !!}
+                                                        @if ($user->approved == 0)
+                                                            {!! Form::open(['method' => 'PUT', 'route' => ['users.update', $user->id], 'style' => 'display:inline']) !!}
+                                                            <input type="hidden" name="approved" value="1">
+                                                            <button type="submit" class="btn btn-slack">
+                                                                Approve
+                                                            </button>
+                                                            {!! Form::close() !!}
                                                         @endif
                                                         <a href="{{ url('users/' . $user->id . '/edit') }}" class="mx-3"
                                                             data-bs-toggle="tooltip" data-bs-original-title="Edit user">

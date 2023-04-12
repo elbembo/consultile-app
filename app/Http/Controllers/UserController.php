@@ -15,12 +15,23 @@ class UserController extends Controller
     public function index()
     {
         $users = User::latest()->paginate(10);
+        if (!auth()->user()->hasAnyRole('admin', 'Super Admin')) {
+
+            $users = $users->reject(function ($user, $key) {
+                return $user->hasAnyRole('admin', 'Super Admin');
+            });
+        }
 
         return view('users.index', compact('users'));
     }
     public function create()
     {
-        return view('users.create', ['roles' => Role::latest()->get()]);
+        $roles = Role::latest()->get();
+        if (!auth()->user()->hasAnyRole('admin', 'Super Admin')) {
+
+            $roles = Role::whereNotIn('name',['admin', 'Super Admin'])->latest()->get();
+        }
+        return view('users.create', ['roles' => $roles]);
     }
     public function notifications()
     {

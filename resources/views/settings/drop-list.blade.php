@@ -45,6 +45,9 @@
     <div class="row mt-2">
         @if (!empty($dropLists))
             @foreach ($dropLists as $key => $items)
+                @php
+                    $items = $items->sortByDesc('created_at');
+                @endphp
                 <div class="col-md-6">
                     <div class="card">
 

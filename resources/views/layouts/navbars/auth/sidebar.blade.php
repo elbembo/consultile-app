@@ -51,151 +51,153 @@
                 </a>
             </li>
             @can('activities.*')
-            <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#activities"
-                    class="nav-link  {{ str_contains(url()->current(), 'activities') ? 'active' : '' }}"
-                    aria-controls="activities" role="button" aria-expanded="false">
-                    <div
-                        class="icon icon-shape icon-sm btn-linkedin shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
-                        <i
-                            class="fab fa-linkedin-in fa-lg  top-0 text-center  {{ str_contains(url()->current(), 'activities') ? 'text-white' : 'text-dark' }}"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Linkedin marketing</span>
-                </a>
-                <div class="collapse   {{ str_contains(url()->current(), 'activities') ? 'show' : '' }}" id="activities">
-                    <ul class="nav ms-4 ps-3">
-                        <li class="nav-item ">
-                            <a class="nav-link " href="{{ route('activities.index') }}">
-                                <span class="sidenav-mini-icon"> O </span>
-                                <span class="sidenav-normal"> Overview </span>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link " href="{{ route('activities.create') }}">
-                                <span class="sidenav-mini-icon"> D </span>
-                                <span class="sidenav-normal"> Daily Activities </span>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link " href="{{ url('#') }}">
-                                <span class="sidenav-mini-icon"> P </span>
-                                <span class="sidenav-normal">Projects list </span>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link " href="{{ url('settings/drop-list') }}">
-                                <span class="sidenav-mini-icon"> D </span>
-                                <span class="sidenav-normal"> Drop List </span>
-                            </a>
-                        </li>
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#activities"
+                        class="nav-link  {{ str_contains(url()->current(), 'activities') ? 'active' : '' }}"
+                        aria-controls="activities" role="button" aria-expanded="false">
+                        <div
+                            class="icon icon-shape icon-sm btn-linkedin shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
+                            <i
+                                class="fab fa-linkedin-in fa-lg  top-0 text-center  {{ str_contains(url()->current(), 'activities') ? 'text-white' : 'text-dark' }}"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Linkedin marketing</span>
+                    </a>
+                    <div class="collapse   {{ str_contains(url()->current(), 'activities') ? 'show' : '' }}"
+                        id="activities">
+                        <ul class="nav ms-4 ps-3">
+                            <li class="nav-item ">
+                                <a class="nav-link " href="{{ route('activities.index') }}">
+                                    <span class="sidenav-mini-icon"> O </span>
+                                    <span class="sidenav-normal"> Overview </span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link " href="{{ route('activities.create') }}">
+                                    <span class="sidenav-mini-icon"> D </span>
+                                    <span class="sidenav-normal"> Daily Activities </span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link " href="{{ url('#') }}">
+                                    <span class="sidenav-mini-icon"> P </span>
+                                    <span class="sidenav-normal">Projects list </span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link " href="{{ url('settings/drop-list') }}">
+                                    <span class="sidenav-mini-icon"> D </span>
+                                    <span class="sidenav-normal"> Drop List </span>
+                                </a>
+                            </li>
 
-                    </ul>
-                </div>
-            </li>
+                        </ul>
+                    </div>
+                </li>
             @endcan
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Company</h6>
             </li>
 
             @canany(['projects.index'])
-            <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#projects"
-                    class="nav-link  {{ str_contains(url()->current(), 'projects') ? 'active' : '' }}"
-                    aria-controls="projects" role="button" aria-expanded="false">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
-                        <i
-                            class="fas fa-lg fa-suitcase top-0 text-center  {{ str_contains(url()->current(), 'projects') ? 'text-white' : 'text-dark' }}"></i>
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#projects"
+                        class="nav-link  {{ str_contains(url()->current(), 'projects') ? 'active' : '' }}"
+                        aria-controls="projects" role="button" aria-expanded="false">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
+                            <i
+                                class="fas fa-lg fa-suitcase top-0 text-center  {{ str_contains(url()->current(), 'projects') ? 'text-white' : 'text-dark' }}"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Projects</span>
+                    </a>
+                    <div class="collapse   {{ str_contains(url()->current(), 'projects') ? 'show' : '' }}" id="projects">
+                        <ul class="nav ms-4 ps-3">
+                            <li class="nav-item ">
+                                <a class="nav-link " href="{{ url('#') }}">
+                                    <span class="sidenav-mini-icon"> O </span>
+                                    <span class="sidenav-normal"> Overview </span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link " href="{{ url('#') }}">
+                                    <span class="sidenav-mini-icon"> O </span>
+                                    <span class="sidenav-normal"> Opportunity </span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link " href="{{ url('#') }}">
+                                    <span class="sidenav-mini-icon"> P </span>
+                                    <span class="sidenav-normal">Projects list </span>
+                                </a>
+                            </li>
+
+
+                        </ul>
                     </div>
-                    <span class="nav-link-text ms-1">Projects</span>
-                </a>
-                <div class="collapse   {{ str_contains(url()->current(), 'projects') ? 'show' : '' }}" id="projects">
-                    <ul class="nav ms-4 ps-3">
-                        <li class="nav-item ">
-                            <a class="nav-link " href="{{ url('#') }}">
-                                <span class="sidenav-mini-icon"> O </span>
-                                <span class="sidenav-normal"> Overview </span>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link " href="{{ url('#') }}">
-                                <span class="sidenav-mini-icon"> O </span>
-                                <span class="sidenav-normal"> Opportunity </span>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link " href="{{ url('#') }}">
-                                <span class="sidenav-mini-icon"> P </span>
-                                <span class="sidenav-normal">Projects list </span>
-                            </a>
-                        </li>
-
-
-                    </ul>
-                </div>
-            </li>
+                </li>
             @endcanany
             @can('financial.*')
-            <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#financial"
-                    class="nav-link  {{ str_contains(url()->current(), 'financial') ? 'active' : '' }}"
-                    aria-controls="subscribe" role="button" aria-expanded="false">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
-                        <i style="font-size: 1rem;" class="fa fa-lg fa-dollar top-0 text-center text-dark "
-                            aria-hidden="true"></i>
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#financial"
+                        class="nav-link  {{ str_contains(url()->current(), 'financial') ? 'active' : '' }}"
+                        aria-controls="subscribe" role="button" aria-expanded="false">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
+                            <i style="font-size: 1rem;" class="fa fa-lg fa-dollar top-0 text-center text-dark "
+                                aria-hidden="true"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Financial</span>
+                    </a>
+                    <div class="collapse   {{ str_contains(url()->current(), 'financial') ? 'show' : '' }}"
+                        id="financial">
+                        <ul class="nav ms-4 ps-3">
+                            <li class="nav-item ">
+                                <a class="nav-link " href="{{ url('#') }}">
+                                    <span class="sidenav-mini-icon"> R </span>
+                                    <span class="sidenav-normal"> Revenues </span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link " href="{{ url('#') }}">
+                                    <span class="sidenav-mini-icon"> E </span>
+                                    <span class="sidenav-normal"> Expenses </span>
+                                </a>
+                            </li>
+
+
+                        </ul>
                     </div>
-                    <span class="nav-link-text ms-1">Financial</span>
-                </a>
-                <div class="collapse   {{ str_contains(url()->current(), 'financial') ? 'show' : '' }}" id="financial">
-                    <ul class="nav ms-4 ps-3">
-                        <li class="nav-item ">
-                            <a class="nav-link " href="{{ url('#') }}">
-                                <span class="sidenav-mini-icon"> R </span>
-                                <span class="sidenav-normal"> Revenues </span>
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link " href="{{ url('#') }}">
-                                <span class="sidenav-mini-icon"> E </span>
-                                <span class="sidenav-normal"> Expenses </span>
-                            </a>
-                        </li>
-
-
-                    </ul>
-                </div>
-            </li>
+                </li>
             @endcan
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Forms</h6>
             </li>
             @can('subscribes.*')
-            <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#subscribe"
-                    class="nav-link  {{ str_contains(url()->current(), 'subscribes') ? 'active' : '' }}"
-                    aria-controls="subscribe" role="button" aria-expanded="false">
-                    <div
-                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
-                        <i
-                            class="fas  fa-lg fa-pen-alt top-0 text-center  {{ str_contains(url()->current(), 'subscribes') ? 'text-white' : 'text-dark' }}"></i>
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#subscribe"
+                        class="nav-link  {{ str_contains(url()->current(), 'subscribes') ? 'active' : '' }}"
+                        aria-controls="subscribe" role="button" aria-expanded="false">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
+                            <i
+                                class="fas  fa-lg fa-pen-alt top-0 text-center  {{ str_contains(url()->current(), 'subscribes') ? 'text-white' : 'text-dark' }}"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Subscribe App</span>
+                    </a>
+                    <div class="collapse   {{ str_contains(url()->current(), 'subscribes') ? 'show' : '' }}"
+                        id="subscribe">
+                        <ul class="nav ms-4 ps-3">
+                            <li class="nav-item ">
+                                <a class="nav-link " href="{{ url('subscribes') }}">
+                                    <span class="sidenav-mini-icon"> S </span>
+                                    <span class="sidenav-normal"> Subscriber List </span>
+                                </a>
+                            </li>
+
+
+                        </ul>
                     </div>
-                    <span class="nav-link-text ms-1">Subscribe App</span>
-                </a>
-                <div class="collapse   {{ str_contains(url()->current(), 'subscribes') ? 'show' : '' }}"
-                    id="subscribe">
-                    <ul class="nav ms-4 ps-3">
-                        <li class="nav-item ">
-                            <a class="nav-link " href="{{ url('subscribes') }}">
-                                <span class="sidenav-mini-icon"> S </span>
-                                <span class="sidenav-normal"> Subscriber List </span>
-                            </a>
-                        </li>
-
-
-                    </ul>
-                </div>
-            </li>
+                </li>
             @endcan
             <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#feedback"
@@ -232,7 +234,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Managing</h6>
             </li>
 
-            @can('settings.*')
+            @can('users.index')
                 <li class="nav-item">
                     <a href="/users" class="nav-link  {{ str_contains(url()->current(), 'users') ? 'active' : '' }}">
                         <div
@@ -242,10 +244,9 @@
                                 <g class="nc-icon-wrapper">
                                     <path class="color-background"
                                         d="M43.25,37.8,30,32V22H18V32l-.125.062L4.754,37.8A4.985,4.985,0,0,0,2,42.009V45a1,1,0,0,0,1,1H45a1,1,0,0,0,1-1V42.009A4.979,4.979,0,0,0,43.25,37.8Z"
-                                         fill-rule="evenodd" />
+                                        fill-rule="evenodd" />
                                     <path class="color-background"
-                                        d="M24,28A11.013,11.013,0,0,1,13,17V13a11,11,0,0,1,22,0v4A11.013,11.013,0,0,1,24,28Z"
-                                         />
+                                        d="M24,28A11.013,11.013,0,0,1,13,17V13a11,11,0,0,1,22,0v4A11.013,11.013,0,0,1,24,28Z" />
                                 </g>
                             </svg>
                         </div>
@@ -253,6 +254,8 @@
                     </a>
 
                 </li>
+            @endcan
+            @can('settings.*')
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#applicationsExamples"
                         class="nav-link  {{ str_contains(url()->current(), 'settings') || str_contains(url()->current(), 'server') ? 'active' : '' }}"
