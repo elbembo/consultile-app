@@ -95,6 +95,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
             Route::resource('server', ServerController::class);
 
         });
+        Route::get('activities/days', [ActivitiyController::class, 'days'])->name('activities.days');
         Route::resource('activities', ActivitiyController::class);
 
 
@@ -178,7 +179,7 @@ Route::get('/clear-cache', function () {
 Route::get('/cache', function () {
 
 
-    
+
     $data[] = Artisan::call('route:cache');
     $data[] = Artisan::call('view:cache');
     $data[] = Artisan::call('config:cache');

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activitiy;
+use App\Models\ActivityDays;
 use App\Models\DropList;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
+use function Ramsey\Uuid\v1;
 
 class ActivitiyController extends Controller
 {
@@ -96,7 +99,6 @@ class ActivitiyController extends Controller
             $grouped = $activities->groupBy('url')->map(function ($row) {
                 return $row->count();
             });
-
         } else {
             if (!empty($oneDay)) {
                 $counts = Activitiy::select('action', DB::raw('count(*) as total'))->whereDay('created_at', $oneDay)->where('type', 1)->where('user_id', auth()->id())->groupBy('action')->get();
@@ -139,6 +141,17 @@ class ActivitiyController extends Controller
         // dump($usersTarget);
         return view('activities.index', compact('activities', 'counts', 'duplicates', 'usersTarget', 'accountsList', 'actionList', 'messageList', 'empList'));
     }
+    function days()
+    {
+        $workDays = Activitiy::pluck('created_at')->groupBy(function ($date) {
+            return Carbon::parse($date)->format('Y-m-d');
+        });
+        foreach ($workDays as $key => $value) {
+            $days[] = $key;
+        }
+        // dd($days);
+        return view('activities.days');
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -149,6 +162,8 @@ class ActivitiyController extends Controller
     {
         //
         $lastes = Activitiy::where('type', 1)->where('user_id', auth()->id())->orderBy('id', 'desc')->first();
+        $lastesDays = ActivityDays::where('user_id', auth()->id())->orderBy('id', 'desc')->first();
+// if()
         $accountsList = DropList::where('section', 'linkedin-accounts')->where('show', 1)->get();
         $actionList = DropList::where('section', 'communicate-action')->where('show', 1)->get();
         $messageList = DropList::where('section', 'message-subject')->where('show', 1)->latest()->get();

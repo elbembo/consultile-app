@@ -41,7 +41,7 @@
                                     <div class="multisteps-form__content">
                                         <div class="row mt-3">
                                             <div class="col-12 col-sm-6">
-                                                <label>First Name</label>
+                                                <label>Name</label>
                                                 <input class="multisteps-form__input form-control" name="name"
                                                     type="text" value="{{ $user->name ?? '' }}"
                                                     placeholder="eg. Michael">
