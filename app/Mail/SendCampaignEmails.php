@@ -52,7 +52,7 @@ class SendCampaignEmails extends Mailable
                 'X-SES-CONFIGURATION-SET' => 'consultile_set',
                 'X-Confirm-Reading-To' => '<' . env('MAIL_RESPONE_ADDRESS', 'consultilemea@gmail.com') . '>',
                 'Disposition-Notification-To' => '<' . env('MAIL_RESPONE_ADDRESS', 'consultilemea@gmail.com') . '>',
-                'List-Unsubscribe' => '<mailto:'. env('MAIL_RESPONE_ADDRESS', 'consultilemea@gmail.com') . '?subject=unsubscribe>, <https://subscribe.' . env('APP_DOMAIN', 'consultile.com') . '/public/unsubscribe/?t=' . $this->mailData['messageId'].'&source=header>' ,
+                'List-Unsubscribe' => '<mailto:'. env('MAIL_RESPONE_ADDRESS', 'consultilemea@gmail.com') . '?subject=unsubscribe>, <https://subscribe.' . env('APP_DOMAIN', 'consultile.com') . '/public/unsubscribe?t=' . $this->mailData['messageId'].'&source=header>' ,
             ],
         );
     }
