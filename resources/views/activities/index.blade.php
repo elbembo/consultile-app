@@ -23,7 +23,7 @@
                         <li><a class="dropdown-item" href="javascript:;">Last 30 days</a></li>
                     </ul></li>
                 </ul> --}}
-                <span>{{ $today || "" }}</span>
+                <span>{{ $today }}</span>
             </div>
             <input type="button" name="daterange" class=" bg-gradient-dark btn ms-auto text-white">
 
@@ -134,6 +134,9 @@
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">
                                         Message</th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">
+                                        Time</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -151,6 +154,9 @@
                                         </td>
                                         <td>
                                             <p class="text-sm font-weight-bold mb-0">{{ $connection->message }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-sm font-weight-bold mb-0">{{ $connection->created_at }}</p>
                                         </td>
 
                                     </tr>
