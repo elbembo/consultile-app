@@ -139,7 +139,7 @@ class ActivitiyController extends Controller
             }
         }
         // dump($usersTarget);
-        return view('activities.index', compact('activities', 'counts', 'duplicates', 'usersTarget', 'accountsList', 'actionList', 'messageList', 'empList'));
+        return view('activities.index', compact('activities', 'counts', 'duplicates', 'usersTarget', 'accountsList', 'actionList', 'messageList', 'empList','today'));
     }
     function days()
     {

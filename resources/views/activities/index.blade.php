@@ -23,6 +23,7 @@
                         <li><a class="dropdown-item" href="javascript:;">Last 30 days</a></li>
                     </ul></li>
                 </ul> --}}
+                <span>{{ $today || "" }}</span>
             </div>
             <input type="button" name="daterange" class=" bg-gradient-dark btn ms-auto text-white">
 
