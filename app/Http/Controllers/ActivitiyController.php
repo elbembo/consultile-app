@@ -25,6 +25,8 @@ class ActivitiyController extends Controller
         $today =   Carbon::now();
         if (request()->get('start') && request()->get('end')) {
             if (request()->get('start') == request()->get('end')) {
+                $startDate = Carbon::now()->format('Y-m-d 00:00:00', request()->get('start'));
+                $endDate = Carbon::now()->format('Y-m-d 23:59:59', request()->get('start'));
                 $oneDay = Carbon::createFromFormat('Y-m-d', request()->get('start'));
                 $interval = 1;
             } else {
@@ -59,7 +61,7 @@ class ActivitiyController extends Controller
             if (!empty(request()->messages))
                 $counts = $counts->whereIn('message', request()->messages);
             if (!empty($oneDay))
-                $counts = $counts->whereBetween('created_at',[$startDate, $endDate])->where('type', 1)->groupBy('action')->get();
+                $counts = $counts->whereBetween('created_at', [$startDate, $endDate])->where('type', 1)->groupBy('action')->get();
             else if (!empty($startDate) && !empty($endDate))
                 $counts = $counts->whereBetween('created_at', [$startDate, $endDate])->where('type', 1)->groupBy('action')->get();
 
@@ -141,7 +143,7 @@ class ActivitiyController extends Controller
             }
         }
         // dump($usersTarget);
-        return view('activities.index', compact('activities', 'counts', 'duplicates', 'usersTarget', 'accountsList', 'actionList', 'messageList', 'empList','today'));
+        return view('activities.index', compact('activities', 'counts', 'duplicates', 'usersTarget', 'accountsList', 'actionList', 'messageList', 'empList', 'today'));
     }
     function days()
     {
@@ -165,7 +167,7 @@ class ActivitiyController extends Controller
         //
         $lastes = Activitiy::where('type', 1)->where('user_id', auth()->id())->orderBy('id', 'desc')->first();
         $lastesDays = ActivityDays::where('user_id', auth()->id())->orderBy('id', 'desc')->first();
-// if()
+        // if()
         $accountsList = DropList::where('section', 'linkedin-accounts')->where('show', 1)->get();
         $actionList = DropList::where('section', 'communicate-action')->where('show', 1)->get();
         $messageList = DropList::where('section', 'message-subject')->where('show', 1)->latest()->get();
