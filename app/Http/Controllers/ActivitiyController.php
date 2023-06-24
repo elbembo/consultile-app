@@ -30,8 +30,8 @@ class ActivitiyController extends Controller
                 $oneDay = Carbon::createFromFormat('Y-m-d', request()->get('start'));
                 $interval = 1;
             } else {
-                $startDate = Carbon::createFromFormat('Y-m-d', request()->get('start'));
-                $endDate = Carbon::createFromFormat('Y-m-d', request()->get('end'));
+                $startDate = Carbon::createFromFormat('Y-m-d 00:00:00', request()->get('start'));
+                $endDate = Carbon::createFromFormat('Y-m-d 23:59:59', request()->get('end'));
                 $interval = $startDate->diff($endDate)->format('%a');
             }
         } else {
