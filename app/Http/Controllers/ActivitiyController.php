@@ -24,18 +24,20 @@ class ActivitiyController extends Controller
         $users = [];
         $today =   Carbon::now();
         if (request()->get('start') && request()->get('end')) {
+            $start = request()->get('start')."  00:00:00";
+            $ensd = request()->get('end')." 23:59:59";
             if (request()->get('start') == request()->get('end')) {
-                $startDate = Carbon::now()->format('Y-m-d 00:00:00', request()->get('start'));
-                $endDate = Carbon::now()->format('Y-m-d 23:59:59', request()->get('start'));
-                $oneDay = Carbon::createFromFormat('Y-m-d', request()->get('start'));
+                $startDate = Carbon::now()->format('Y-m-d  H:i:s', $start);
+                $endDate = Carbon::now()->format('Y-m-d 23:59:59', $start);
+                $oneDay = Carbon::createFromFormat('Y-m-d  H:i:s', $start);
                 $interval = 1;
             } else {
-                $startDate = Carbon::createFromFormat('Y-m-d 00:00:00', request()->get('start'));
-                $endDate = Carbon::createFromFormat('Y-m-d 23:59:59', request()->get('end'));
+                $startDate = Carbon::createFromFormat('Y-m-d  H:i:s', $start);
+                $endDate = Carbon::createFromFormat('Y-m-d  H:i:s', $start);
                 $interval = $startDate->diff($endDate)->format('%a');
             }
         } else {
-            $startDate = Carbon::now()->format('Y-m-d 00:00:00');
+            $startDate = Carbon::now()->format('Y-m-d  H:i:s');
             $endDate = Carbon::now()->format('Y-m-d 23:59:59');
             $oneDay = Carbon::now();
             $interval = 1;
@@ -44,7 +46,7 @@ class ActivitiyController extends Controller
         $actionList = [];
         $messageList = [];
         $empList = [];
-        // dump(request()->get('start') . ' to ' . request()->get('end'));
+        // dump($start . ' to ' . $start);
         if (Auth()->user()->can('show all activities')) {
             $empList = User::role(['employer', 'supervisor'])->get();
             $accountsList = DropList::where('section', 'linkedin-accounts')->where('show', 1)->get();
