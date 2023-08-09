@@ -45,7 +45,7 @@
                 env = "production"
             else
                 env = "local"
-            post('/server', {
+            post('/settings/server', {
                 env
             }).then(res => {
                 if (res.state == true) {
