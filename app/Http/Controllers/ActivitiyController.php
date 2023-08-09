@@ -25,7 +25,7 @@ class ActivitiyController extends Controller
         $today =   Carbon::now();
         if (request()->get('start') && request()->get('end')) {
             $start = request()->get('start')."  00:00:00";
-            $ensd = request()->get('end')." 23:59:59";
+            $end = request()->get('end')." 23:59:59";
             if (request()->get('start') == request()->get('end')) {
                 $startDate = Carbon::now()->format('Y-m-d  H:i:s', $start);
                 $endDate = Carbon::now()->format('Y-m-d 23:59:59', $start);
@@ -33,7 +33,7 @@ class ActivitiyController extends Controller
                 $interval = 1;
             } else {
                 $startDate = Carbon::createFromFormat('Y-m-d  H:i:s', $start);
-                $endDate = Carbon::createFromFormat('Y-m-d  H:i:s', $start);
+                $endDate = Carbon::createFromFormat('Y-m-d  H:i:s', $end);
                 $interval = $startDate->diff($endDate)->format('%a');
             }
         } else {
@@ -46,7 +46,7 @@ class ActivitiyController extends Controller
         $actionList = [];
         $messageList = [];
         $empList = [];
-        // dump($start . ' to ' . $start);
+        // dump($start . ' to ' . $end);
         if (Auth()->user()->can('show all activities')) {
             $empList = User::role(['employer', 'supervisor'])->get();
             $accountsList = DropList::where('section', 'linkedin-accounts')->where('show', 1)->get();
