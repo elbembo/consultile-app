@@ -24,11 +24,11 @@ class ActivitiyController extends Controller
         $users = [];
         $today =   Carbon::now();
         if (request()->get('start') && request()->get('end')) {
-            $start = request()->get('start')."  00:00:00";
+            $start = request()->get('start')." 00:00:00";
             $end = request()->get('end')." 23:59:59";
             if (request()->get('start') == request()->get('end')) {
-                $startDate = Carbon::now()->format('Y-m-d 00:00:00', $start);
-                $endDate = Carbon::now()->format('Y-m-d 23:59:59', $start);
+                $startDate =  $start;
+                $endDate = $end;
                 $oneDay = Carbon::createFromFormat('Y-m-d  H:i:s', $start);
                 $interval = 1;
             } else {
@@ -48,7 +48,7 @@ class ActivitiyController extends Controller
         $actionList = [];
         $messageList = [];
         $empList = [];
-        // dump($start . ' to ' . $end);
+
         if (Auth()->user()->can('show all activities')) {
             $empList = User::role(['employer', 'supervisor'])->get();
             $accountsList = DropList::where('section', 'linkedin-accounts')->where('show', 1)->get();
@@ -146,8 +146,9 @@ class ActivitiyController extends Controller
                 ];
             }
         }
+        // dump($startDate." to ".$endDate);
         // dump($usersTarget);
-        return view('activities.index', compact('activities', 'counts', 'duplicates', 'usersTarget', 'accountsList', 'actionList', 'messageList', 'empList', 'today'));
+        return view('activities.index', compact('activities', 'counts', 'duplicates', 'usersTarget', 'accountsList', 'actionList', 'messageList', 'empList', 'today','startDate','endDate'));
     }
     function days()
     {

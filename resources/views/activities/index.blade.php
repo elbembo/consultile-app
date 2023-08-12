@@ -30,6 +30,7 @@
         </div>
     </div>
     <div class="row">
+        <div class="row">{{ $startDate ?? ""}} to {{ $endDate ?? ""}}</div>
         @if (!empty($counts))
             @php
                 function action_icon($var)
