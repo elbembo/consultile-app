@@ -37,8 +37,8 @@ class ActivitiyController extends Controller
                 $interval = $startDate->diff($endDate)->format('%a');
             }
         } else {
-            $startDate = Carbon::now()->format('Y-m-d  H:i:s');
-            $endDate = Carbon::now()->format('Y-m-d 23:59:59');
+            $startDate = Carbon::now()->format('Y-m-d');
+            $endDate = Carbon::now()->format('Y-m-d');
             $oneDay = Carbon::now();
             $interval = 1;
         }
