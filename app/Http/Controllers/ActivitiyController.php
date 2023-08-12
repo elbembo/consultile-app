@@ -27,7 +27,7 @@ class ActivitiyController extends Controller
             $start = request()->get('start')."  00:00:00";
             $end = request()->get('end')." 23:59:59";
             if (request()->get('start') == request()->get('end')) {
-                $startDate = Carbon::now()->format('Y-m-d  H:i:s', $start);
+                $startDate = Carbon::now()->format('Y-m-d 00:00:00', $start);
                 $endDate = Carbon::now()->format('Y-m-d 23:59:59', $start);
                 $oneDay = Carbon::createFromFormat('Y-m-d  H:i:s', $start);
                 $interval = 1;
@@ -39,10 +39,11 @@ class ActivitiyController extends Controller
         } else {
             $startDate = Carbon::now()->format('Y-m-d  00:00:00');
             $endDate = Carbon::now()->format('Y-m-d 23:59:59');
-            //dd($startDate." ; ".$endDate);
+
             $oneDay = Carbon::now();
             $interval = 1;
         }
+
         $accountsList = [];
         $actionList = [];
         $messageList = [];
