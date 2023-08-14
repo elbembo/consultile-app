@@ -111,7 +111,6 @@
                                                 @endforeach
                                             @endif
                                         </select>
-
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -133,27 +132,31 @@
                                 </div>
                                 <fieldset class="form-group">
                                     <legend>Advanced targeting</legend>
-                                    <button type="button" class="btn btn-link p-1" id='targeting'>Check audience<i class="fa fa-user ms-2" aria-hidden="true"></i><span class="ms-2" id="target-count"></span></button>
+                                    <button type="button" class="btn btn-link p-1" id='targeting'>Check audience<i
+                                            class="fa fa-user ms-2" aria-hidden="true"></i><span class="ms-2"
+                                            id="target-count"></span></button>
 
                                     <div class="form-group">
                                         <label for="target-location"
                                             class="form-control-label">{{ __('Location') }}</label>
                                         <div class="@error('user.location') border border-danger rounded-3 @enderror">
                                             <div class="form-control">
-                                                <input  name="target_location" value="{{ $campaign->target_location ?? ''}}" class="m-0 p-0 border-0 mx-1 autocompletecountries" placeholder="Countries"
-                                                    style="outline: none;" type="text" id="target-location">
+                                                <input name="target_location"
+                                                    value="{{ $campaign->target_location ?? '' }}"
+                                                    class="m-0 p-0 border-0 mx-1 autocompletecountries"
+                                                    placeholder="Countries" style="outline: none;" type="text"
+                                                    id="target-location">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="user.phone"
-                                            class="form-control-label">{{ __('Tags') }}</label>
+                                        <label for="user.phone" class="form-control-label">{{ __('Tags') }}</label>
                                         <div class="@error('user.phone')border border-danger rounded-3 @enderror">
                                             <div class="form-control form-control-tags">
                                                 <input class="m-0 p-0 border-0 mx-1" placeholder="Contacts Tags..."
-                                                    style="outline: none;" type="text" id="target-audience">
+                                                    style="outline: none;" type="text" id="target-audience"
+                                                    data-role="contacttags" name="target_audience" value="{{ $campaign->target_audience ?? '' }}">
                                             </div>
-                                            <input type="hidden" name="target_audience" id="target-audience"  value="{{ $campaign->target_audience ?? ''}}" >
 
 
                                             @error('phone')
@@ -164,15 +167,17 @@
 
                                 </fieldset>
                                 <script>
-                                    $s('#targeting').click((e)=>{
+                                    $s('#targeting').click((e) => {
                                         const target_location = document.getElementById('target-location').value
                                         const target_audience = document.getElementById('target-audience').value
-                                        post("/targeting", { target_location,target_audience }).then(res=>{
+                                        post("/targeting", {
+                                            target_location,
+                                            target_audience
+                                        }).then(res => {
                                             document.getElementById('target-count').innerHTML = res.count
                                         })
 
                                     })
-
                                 </script>
                             </div>
                             <div class="col-sm-6 col-md-4">
@@ -366,17 +371,20 @@
                                         <input type="hidden" name="action" value="update_status">
                                         @if ($campaign->status == 'draft')
                                             <input type="hidden" name="status" value="processing">
-                                            <button name="submitBTN"  class="btn bg-gradient-success text-lg mt-2" type="submit" value="Do you want to run this campaign?"><i
+                                            <button name="submitBTN" class="btn bg-gradient-success text-lg mt-2"
+                                                type="submit" value="Do you want to run this campaign?"><i
                                                     class="fa fa-play me-sm-1" aria-hidden="true"></i>Run
                                                 campaign</button>
                                         @elseif($campaign->status == 'processing')
                                             <input type="hidden" name="status" value="canceled">
-                                            <button name="submitBTN"  class="btn bg-gradient-danger text-lg mt-2" type="submit" value="Do you want to stop this campaign?"><i
+                                            <button name="submitBTN" class="btn bg-gradient-danger text-lg mt-2"
+                                                type="submit" value="Do you want to stop this campaign?"><i
                                                     class="fa fa-stop me-sm-1" aria-hidden="true"></i>Stop
                                                 campaign</button>
                                         @elseif($campaign->status == 'completed')
                                             <input type="hidden" name="status" value="replicate">
-                                            <button name="submitBTN" class="btn bg-gradient-info text-lg mt-2" type="submit" value="Do you want to replicate this campaign?"><i
+                                            <button name="submitBTN" class="btn bg-gradient-info text-lg mt-2"
+                                                type="submit" value="Do you want to replicate this campaign?"><i
                                                     class="fa fa-repeat me-sm-1" aria-hidden="true"></i>Replicate</button>
                                         @endif
                                     </fieldset>
@@ -407,3 +415,11 @@
                 }
             </script>
         @endsection
+        @push('scripts')
+            <script type="text/javascript">
+                $(document).ready(function() {
+
+                    $("input[data-role=contacttags]").tagsinput();
+                });
+            </script>
+        @endpush

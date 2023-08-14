@@ -28,9 +28,11 @@
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
     <!-- CSS Files -->
+    <link href="/assets/css/bootstrap-tagsinput.css" rel="stylesheet">
     <link id="appstyle" href="/assets/css/core.css?v=1.0.3" rel="stylesheet" />
     <link id="pagestyle" href="/assets/css/style.css?v=1.0.5" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="/assets/css/daterangepicker.css" />
+
     <link href="/assets/css/summernote-lite.min.css" rel="stylesheet">
     <style>
         .note-modal.open {
@@ -94,6 +96,8 @@
     </style>
     <script src="/assets/js/plugins/jquery-3.5.1.min.js"></script>
     <script src="/assets/js/core/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/plugins/bootstrap-tagsinput.min.js"></script>
+    <script src="/assets/js/plugins/typeahead.bundle.js"></script>
     <script src="/assets/js/plugins/summernote-lite.min.js"></script>
     <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
     {{-- <script src="/assets/js/plugins/bootstrap-autocomplete.min.js"></script> --}}

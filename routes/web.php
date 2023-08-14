@@ -13,6 +13,7 @@ use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\CampaignReportController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ContactTagsController;
 use App\Http\Controllers\Domains\Subscribe\HomeController as SubscribeHomeController;
 use App\Http\Controllers\DropListController;
 use App\Http\Controllers\EmailTemplateController;
@@ -63,7 +64,10 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
         Route::get('contacts/import', [ContactController::class, 'import'])->name('contacts.import');
         Route::post('contacts/import', [ContactController::class, 'import'])->name('contacts.import.upload');
 
-        Route::resource('contacts/{contact}/note', StickyNoteController::class);
+        Route::name('note.')->prefix('contacts/{contact}/')->group(function () {
+            Route::resource('note', StickyNoteController::class);
+            Route::resource('tag', ContactTagsController::class);
+        });
         Route::resource('contacts', ContactController::class);
 
         Route::get('email/template/preview/{id}', [EmailTemplateController::class, 'preview'])->name('mail-preview');
@@ -93,7 +97,6 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
                 return view('errors.log');
             })->name('server.log');
             Route::resource('server', ServerController::class);
-
         });
         Route::get('activities/days', [ActivitiyController::class, 'days'])->name('activities.days');
         Route::resource('activities', ActivitiyController::class);

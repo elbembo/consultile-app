@@ -176,10 +176,13 @@ class CampaignController extends Controller
                         $contacts = Contact::where('email', '!=', '')->where('subscribe', 1);
                         if (!empty($campaign->target_location))
                             $contacts = $contacts->where('country', $campaign->target_location);
-                        if (!empty($campaign->target_audience) && $campaign->target_audience != 'All') {
-                            foreach (explode(',', $campaign->target_audience) as $tag) {
-                                $contacts = $contacts->where('tags', 'like',  "%$tag%");
-                            };
+                        if (!empty($campaign->target_audience)) {
+                            foreach (explode(',', $campaign->target_audience) as  $key => $tag) {
+                                if ($key == 0)
+                                    $contacts->where('tags', 'like',  "%$tag%");
+                                else
+                                    $contacts->orWhere('tags', 'like',  "%$tag%")->where('email', '!=', '')->where('subscribe', 1);
+                            }
                         }
                         $contacts = $contacts->get();
                         // dd($contacts);
@@ -280,13 +283,16 @@ class CampaignController extends Controller
         $contacts = Contact::where('email', '!=', '')->where('subscribe', 1);
         if (!empty($request->target_location))
             $contacts = $contacts->where('country', $request->target_location);
-        if (!empty($request->target_audience) && $request->target_audience != 'All') {
-            foreach (explode(',', $request->target_audience) as $tag) {
-                $contacts = $contacts->where('tags', 'like',  "%$tag%");
-            };
+        if (!empty($request->target_audience)) {
+            foreach (explode(',', $request->target_audience) as  $key => $tag) {
+                if ($key == 0)
+                    $contacts->where('tags', 'like',  "%$tag%");
+                else
+                    $contacts->orWhere('tags', 'like',  "%$tag%")->where('email', '!=', '')->where('subscribe', 1);
+            }
         }
-        $contacts = $contacts->count();
-        return response()->json(['count' => $contacts]);
+        $count = $contacts->count();
+        return response()->json(['count' => $count]);
     }
     public function removeAttachment(Request $request)
     {

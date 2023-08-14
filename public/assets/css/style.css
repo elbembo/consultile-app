@@ -5,14 +5,14 @@
     padding-left: 0.5rem;
 }
 .form-control.form-control-tags span {
-    background-color: #97989f;
+    /* background-color: #97989f;
     color: #f7f7f7;
     border-radius: 5px;
     padding: 0.25rem;
     padding-left: 0.4rem;
     padding-right: 0.4rem;
     margin: 0 0.1rem;
-    cursor: pointer;
+    cursor: pointer; */
 }
 .form-control.form-control-tags input:-moz-placeholder {
     color: #adb5bd;
@@ -188,4 +188,45 @@ iframe {
 .avatar img {
     top: 0;
     position: absolute;
+}
+.bootstrap-tagsinput {
+    padding: 6px 4px;
+    line-height: 27px;
+}
+
+.bootstrap-tagsinput .tag {
+    background-color: #c523a0;
+    padding: 3px 10px;
+    border-radius: 8px;
+    margin-bottom: 2px;
+}
+.tt-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 14px;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip: padding-box;
+    cursor: pointer;
+}
+.tt-suggestion {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.428571429;
+    color: #333333;
+    white-space: nowrap;
 }
