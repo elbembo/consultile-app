@@ -263,7 +263,31 @@ function sidenavTypeOnResize() {
                 post(`/${first}/search`, { trim: e.target.value }, 'POST', 'html')
                     .then(res => {
                         document.querySelector('#result').innerHTML = res
-                        console.log(res)
+                        $('.ajaxForm').on('submit', function(event) {
+
+                            event.preventDefault();
+
+                            var url = $(this).attr('data-action');
+                            console.log(url)
+                            $.ajax({
+                                url: url,
+                                method: 'POST',
+                                data: new FormData(this),
+                                dataType: 'JSON',
+                                contentType: false,
+                                cache: false,
+                                processData: false,
+                                success: function(response) {
+                                    $('.ajaxForm').trigger("reset");
+                                    console.log(response)
+                                    $('.modal').modal('hide')
+                                },
+                                error: function(response) {}
+                            });
+
+                        });
+
+                        $("input[data-role=tagsinput], select[multiple][data-role=tagsinput]").tagsinput();
                     });
             }
         }
