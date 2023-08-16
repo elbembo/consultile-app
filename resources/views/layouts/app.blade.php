@@ -102,7 +102,7 @@
     <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
     {{-- <script src="/assets/js/plugins/bootstrap-autocomplete.min.js"></script> --}}
 
-    <script src="/assets/js/init.js?v=1.0.5"></script>
+    <script src="/assets/js/init.js?v=1.1"></script>
     <script type="module">
         import Autocomplete from "/assets/js/plugins/bootstrap-autocomplete.min.js";
         const opts = {
@@ -217,7 +217,7 @@
     <script src="/assets/js/plugins/moment.min.js"></script>
     <script type="text/javascript" src="/assets/js/plugins/daterangepicker.js"></script>
 
-    <script src="/assets/js/main.js?v=1.0.7"></script>
+    <script src="/assets/js/main.js?v=1.1"></script>
 
     @stack('rtl')
     {{-- @stack('dashboard') --}}
