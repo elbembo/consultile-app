@@ -3,6 +3,7 @@ namespace App\Handler;
 
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Spatie\WebhookClient\WebhookConfig;
 use Spatie\WebhookClient\SignatureValidator\SignatureValidator;
 
@@ -26,7 +27,7 @@ class WebHookSignerHandlerForZohoForms implements SignatureValidator
         }
 
         $signingSecret = $config->signingSecret;
-
+        logger($signingSecret);
         if (empty($signingSecret)) {
             throw new Exception("No secret key");
         }

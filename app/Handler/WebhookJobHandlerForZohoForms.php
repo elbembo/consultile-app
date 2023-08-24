@@ -7,11 +7,12 @@ use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
 
 class WebhookJobHandlerForZohoForms extends ProcessWebhookJob
 {
+
     public function handle()
     {
         //I have access to $this->webhookCall provided in ProcessWebhookJob class
-        logger($this->webhookCall);
-        sleep(50);
+        // logger($this->webhookCall);
+        sleep(3);
         logger("I am done");
     }
 }
