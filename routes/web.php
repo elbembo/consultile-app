@@ -27,6 +27,7 @@ use App\Http\Controllers\StickyNoteController;
 use App\Http\Controllers\SummernoteController;
 use App\Http\Controllers\Trash;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WebHookHandler;
 use App\Models\Contact;
 use App\Models\EmailTraker;
 use App\Models\StickyNote;
@@ -191,3 +192,5 @@ Route::get('/cache', function () {
 
     return response("<h1>All is Cached</h1>");
 });
+// Route::post('webhook', [WebHookController::class, 'webhookHandler']);
+Route::webhooks('zoho-webhook','zoho-forms');
