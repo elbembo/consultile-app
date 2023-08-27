@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ClientsRequest;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use Spatie\WebhookClient\Models\WebhookCall;
 
@@ -39,6 +40,15 @@ class ClientsRequestController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'first_name' => 'required',
+            'email' => 'required',
+        ]);
+        if(Contact::create($request->all())):;
+            WebhookCall::find($request->call_id)->update(array('approved' => "1"));
+
+        endif;
+        return redirect()->back()->with('success', 'Request Sent Successfully');
     }
 
     /**

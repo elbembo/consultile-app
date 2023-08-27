@@ -25,6 +25,7 @@
                                     @foreach ($requests as $request)
                                         @php
                                             $payload = $request->payload;
+                                            $approved = $request->approved == 0 ? false : true;
                                         @endphp
                                         <tr>
                                             <td>
@@ -56,21 +57,22 @@
                                                             <div class="row">
                                                                 <div class="col-6 d-flex flex-column">
                                                                     {!! Form::label('fname' . $request->id, 'First Name', []) !!}
-                                                                    {!! Form::text('first_name', $payload['client_fname'], ['required','class'=>'form-control', 'id' => 'fname' . $request->id]) !!}
+                                                                    {!! Form::text('first_name', $payload['client_fname'], ['required','readonly'=>$approved,'class'=>'form-control', 'id' => 'fname' . $request->id]) !!}
                                                                     {!! Form::label('lname' . $request->id, 'First Name', []) !!}
-                                                                    {!! Form::text('last_name', $payload['client_lname'], ['required','class'=>'form-control', 'id' => 'lname' . $request->id]) !!}
+                                                                    {!! Form::text('last_name', $payload['client_lname'], ['required','readonly'=>$approved,'class'=>'form-control', 'id' => 'lname' . $request->id]) !!}
                                                                     {!! Form::label('email' . $request->id, 'Email', []) !!}
-                                                                    {!! Form::text('email', $payload['client_email'], ['required','class'=>'form-control', 'id' => 'email' . $request->id]) !!}
+                                                                    {!! Form::text('email', $payload['client_email'], ['required','readonly'=>$approved,'class'=>'form-control', 'id' => 'email' . $request->id]) !!}
                                                                     {!! Form::label('phone' . $request->id, 'Phone', []) !!}
-                                                                    {!! Form::text('work_phone', $payload['client_phone'], ['required','class'=>'form-control', 'id' => 'phone' . $request->id]) !!}
+                                                                    {!! Form::text('personal_phone', $payload['client_phone'], ['required','readonly'=>$approved,'class'=>'form-control', 'id' => 'phone' . $request->id]) !!}
                                                                     {!! Form::label('company' . $request->id, 'Company', []) !!}
-                                                                    {!! Form::text('company', $payload['client_company'], ['required','class'=>'form-control', 'id' => 'company' . $request->id]) !!}
+                                                                    {!! Form::text('company', $payload['client_company'], ['required','readonly'=>$approved,'class'=>'form-control', 'id' => 'company' . $request->id]) !!}
                                                                     {!! Form::label('job' . $request->id, 'Job', []) !!}
-                                                                    {!! Form::text('job_title', $payload['client_job_title'], ['required','class'=>'form-control', 'id' => 'job' . $request->id]) !!}
+                                                                    {!! Form::text('job_title', $payload['client_job_title'], ['required','readonly'=>$approved,'class'=>'form-control', 'id' => 'job' . $request->id]) !!}
                                                                     {!! Form::label('country' . $request->id, 'Country', []) !!}
-                                                                    {!! Form::text('country', $payload['country'], ['required','class'=>'form-control', 'id' => 'country' . $request->id]) !!}
+                                                                    {!! Form::text('country', $payload['country'], ['required','readonly'=>$approved,'class'=>'form-control', 'id' => 'country' . $request->id]) !!}
                                                                     {!! Form::hidden('source', $payload['source']) !!}
-                                                                    {!! Form::submit('Approve', ["class"=>"btn bg-gradient-dark btn-sm float-end mt-6 mb-0"]) !!}
+                                                                    {!! Form::hidden('call_id', $request->id) !!}
+                                                                    {{ $approved == 0 ? Form::submit('Approve', ["class"=>"btn bg-gradient-dark btn-sm float-end mt-6 mb-0"]) : "" }}
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div><strong>Account:
@@ -92,7 +94,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            {!! Form::close() !!}
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </td>
