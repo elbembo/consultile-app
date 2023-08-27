@@ -46,7 +46,6 @@ class ClientsRequestController extends Controller
         ]);
         if(Contact::create($request->all())):;
             WebhookCall::find($request->call_id)->update(array('approved' => "1"));
-
         endif;
         return redirect()->back()->with('success', 'Request Sent Successfully');
     }
