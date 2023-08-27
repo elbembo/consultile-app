@@ -116,15 +116,10 @@
                         <li class="nav-item ">
                             <a class="nav-link " href="{{ url('/projects/clients-request') }}">
                                 <span class="sidenav-mini-icon"> R </span>
-                                <span class="sidenav-normal"> Revenues </span>
+                                <span class="sidenav-normal"> Clients request </span>
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link " href="{{ url('#') }}">
-                                <span class="sidenav-mini-icon"> E </span>
-                                <span class="sidenav-normal"> Expenses </span>
-                            </a>
-                        </li>
+
 
 
                     </ul>
