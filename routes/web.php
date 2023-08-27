@@ -12,6 +12,7 @@ use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\CampaignReportController;
+use App\Http\Controllers\ClientsRequestController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContactTagsController;
 use App\Http\Controllers\Domains\Subscribe\HomeController as SubscribeHomeController;
@@ -28,6 +29,7 @@ use App\Http\Controllers\SummernoteController;
 use App\Http\Controllers\Trash;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebHookHandler;
+use App\Models\ClientsRequest;
 use App\Models\Contact;
 use App\Models\EmailTraker;
 use App\Models\StickyNote;
@@ -157,6 +159,9 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
 
         event(new AccessRequestEvent($data));
         return response()->json(true);
+    });
+    Route::prefix('projects')->group(function () {
+        Route::get('clients-request', [ClientsRequestController::class, 'index']);
     });
 });
 

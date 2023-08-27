@@ -95,6 +95,7 @@
         }
     </style>
     <script src="/assets/js/plugins/jquery-3.5.1.min.js"></script>
+    {{-- <script src="/assets/js/core/bootstrap.min.js"></script> --}}
     <script src="/assets/js/core/bootstrap.bundle.min.js"></script>
     <script src="/assets/js/plugins/bootstrap-tagsinput.min.js"></script>
     <script src="/assets/js/plugins/typeahead.bundle.js"></script>

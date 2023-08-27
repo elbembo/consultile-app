@@ -27,7 +27,6 @@ class WebHookSignerHandlerForZohoForms implements SignatureValidator
         }
 
         $signingSecret = $config->signingSecret;
-        logger($signingSecret);
         if (empty($signingSecret)) {
             throw new Exception("No secret key");
         }
