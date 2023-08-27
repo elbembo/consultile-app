@@ -25,7 +25,6 @@
                                     @foreach ($requests as $request)
                                         @php
                                             $payload = $request->payload;
-                                            dump($payload);
                                         @endphp
                                         <tr>
                                             <td>
