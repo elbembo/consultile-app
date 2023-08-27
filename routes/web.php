@@ -161,7 +161,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
         return response()->json(true);
     });
     Route::prefix('projects')->group(function () {
-        Route::get('clients-request', [ClientsRequestController::class, 'index']);
+        Route::resource('clients-request', ClientsRequestController::class);
     });
 });
 
