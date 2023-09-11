@@ -71,10 +71,15 @@ class UserController extends Controller
     }
     public function edit(User $user)
     {
+        $roles = Role::latest()->get();
+        if (!auth()->user()->hasAnyRole('admin', 'Super Admin')) {
+
+            $roles = Role::whereNotIn('name',['admin', 'Super Admin'])->latest()->get();
+        }
         return view('users.create', [
             'user' => $user,
             'userRole' => $user->roles->pluck('name')->toArray(),
-            'roles' => Role::latest()->get(),
+            'roles' => $roles,
             'emp' => $user->emp,
             'actionList' => DropList::where('section', 'communicate-action')->where('show', 1)->get()
         ]);
