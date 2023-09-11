@@ -31,6 +31,6 @@ class SendEmailJob implements ShouldQueue
     public function handle()
     {
         sleep(3);
-        logger("I am done");
+        logger("I am done SendEmailJob");
     }
 }
