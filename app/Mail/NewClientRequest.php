@@ -18,9 +18,10 @@ class NewClientRequest extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(private $mailData)
     {
         //
+        $this->mailData = $mailData;
     }
 
     /**
@@ -43,7 +44,9 @@ class NewClientRequest extends Mailable
     public function content()
     {
         return new Content(
-            view: 'view.name',
+            text: 'mail.client_request_text',
+            html: 'mail.client_request_html',
+            with: ['data' => $this->mailData, 'url' => url('/')],
         );
     }
 
