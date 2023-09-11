@@ -14,6 +14,6 @@ class WebhookJobHandlerForZohoForms extends ProcessWebhookJob
         // logger($this->webhookCall);
         // sleep(15);
         logger("I am done");
-        // logger($this->webhookCall->payload);
+        logger($this->webhookCall->payload);
     }
 }
