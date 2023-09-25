@@ -17,7 +17,7 @@ class ClientsRequestController extends Controller
     public function index()
     {
         //
-        $requests = WebhookCall::where('id', '>', '0')->orderBy('id', 'desc')->paginate(30);
+        $requests = WebhookCall::where('approved', '<', '3')->orderBy('id', 'desc')->paginate(30);
         // dd($requests->links());
         return view('projects.client-request.index', compact('requests'));
     }
@@ -90,8 +90,11 @@ class ClientsRequestController extends Controller
      * @param  \App\Models\ClientsRequest  $clientsRequest
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ClientsRequest $clientsRequest)
+    public function destroy(WebhookCall $clientsRequest)
     {
         //
+        $clientsRequest->approved = "3";
+        $clientsRequest->save();
+        return redirect()->back();
     }
 }

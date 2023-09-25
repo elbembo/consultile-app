@@ -5,19 +5,19 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6>Top Selling Products</h6>
+                    <h6>Clients Request</h6>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Request
                                     </th>
 
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Refunds</th>
+                                        Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -52,27 +52,56 @@
                                                 <div class="collapse " id="request{{ $request->id }}">
                                                     <div class="card card-body text-wrap">
 
-                                                        <form method="POST" >
+                                                        <form method="POST">
                                                             @csrf
                                                             <div class="row">
                                                                 <div class="col-6 d-flex flex-column">
                                                                     {!! Form::label('fname' . $request->id, 'First Name', []) !!}
-                                                                    {!! Form::text('first_name', $payload['client_fname'], ['required','readonly'=>$approved,'class'=>'form-control', 'id' => 'fname' . $request->id]) !!}
+                                                                    {!! Form::text('first_name', $payload['client_fname'], [
+                                                                        'required',
+                                                                        'readonly' => $approved,
+                                                                        'class' => 'form-control',
+                                                                        'id' => 'fname' . $request->id,
+                                                                    ]) !!}
                                                                     {!! Form::label('lname' . $request->id, 'First Name', []) !!}
-                                                                    {!! Form::text('last_name', $payload['client_lname'], ['required','readonly'=>$approved,'class'=>'form-control', 'id' => 'lname' . $request->id]) !!}
+                                                                    {!! Form::text('last_name', $payload['client_lname'], [
+                                                                        'readonly' => $approved,
+                                                                        'class' => 'form-control',
+                                                                        'id' => 'lname' . $request->id,
+                                                                    ]) !!}
                                                                     {!! Form::label('email' . $request->id, 'Email', []) !!}
-                                                                    {!! Form::text('email', $payload['client_email'], ['required','readonly'=>$approved,'class'=>'form-control', 'id' => 'email' . $request->id]) !!}
+                                                                    {!! Form::text('email', $payload['client_email'], [
+                                                                        'readonly' => $approved,
+                                                                        'class' => 'form-control',
+                                                                        'id' => 'email' . $request->id,
+                                                                    ]) !!}
                                                                     {!! Form::label('phone' . $request->id, 'Phone', []) !!}
-                                                                    {!! Form::text('personal_phone', $payload['client_phone'], ['required','readonly'=>$approved,'class'=>'form-control', 'id' => 'phone' . $request->id]) !!}
+                                                                    {!! Form::text('personal_phone', $payload['client_phone'], [
+                                                                        'readonly' => $approved,
+                                                                        'class' => 'form-control',
+                                                                        'id' => 'phone' . $request->id,
+                                                                    ]) !!}
                                                                     {!! Form::label('company' . $request->id, 'Company', []) !!}
-                                                                    {!! Form::text('company', $payload['client_company'], ['required','readonly'=>$approved,'class'=>'form-control', 'id' => 'company' . $request->id]) !!}
+                                                                    {!! Form::text('company', $payload['client_company'], [
+                                                                        'readonly' => $approved,
+                                                                        'class' => 'form-control',
+                                                                        'id' => 'company' . $request->id,
+                                                                    ]) !!}
                                                                     {!! Form::label('job' . $request->id, 'Job', []) !!}
-                                                                    {!! Form::text('job_title', $payload['client_job_title'], ['required','readonly'=>$approved,'class'=>'form-control', 'id' => 'job' . $request->id]) !!}
+                                                                    {!! Form::text('job_title', $payload['client_job_title'], [
+                                                                        'readonly' => $approved,
+                                                                        'class' => 'form-control',
+                                                                        'id' => 'job' . $request->id,
+                                                                    ]) !!}
                                                                     {!! Form::label('country' . $request->id, 'Country', []) !!}
-                                                                    {!! Form::text('country', $payload['country'], ['required','readonly'=>$approved,'class'=>'form-control', 'id' => 'country' . $request->id]) !!}
+                                                                    {!! Form::text('country', $payload['country'], [
+                                                                        'readonly' => $approved,
+                                                                        'class' => 'form-control',
+                                                                        'id' => 'country' . $request->id,
+                                                                    ]) !!}
                                                                     {!! Form::hidden('source', $payload['source']) !!}
                                                                     {!! Form::hidden('call_id', $request->id) !!}
-                                                                    {{ $approved == 0 ? Form::submit('Approve', ["class"=>"btn bg-gradient-dark btn-sm float-end mt-6 mb-0"]) : "" }}
+                                                                    {{ $approved == 0 ? Form::submit('Approve', ['class' => 'btn bg-gradient-dark btn-sm float-end mt-6 mb-0']) : '' }}
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div><strong>Account:
@@ -87,7 +116,8 @@
                                                                             target="_blank"
                                                                             href="{{ $payload['linkedin_profile'] }}">{{ $payload['linkedin_profile'] }}</a>
                                                                     </div>
-                                                                    <div><strong>Client status: </strong>{{ $payload['status'] }}</div>
+                                                                    <div><strong>Client status:
+                                                                        </strong>{{ $payload['status'] }}</div>
                                                                     <div><strong>Client message: </strong>
                                                                         <p>{{ $payload['client_message'] }}</p>
                                                                     </div>
@@ -103,11 +133,25 @@
                                                 <div class="d-flex px-3 py-1 justify-content-center align-items-center">
 
                                                     <button type="button"
-                                                        class="btn btn-sm btn-icon-only btn-rounded btn-outline-secondary mb-0 ms-2 btn-sm d-flex align-items-center justify-content-center ms-3"
+                                                        class="btn btn-sm btn-icon-only btn-rounded {{ $approved ? "btn-success btn-outline-success " : "btn-outline-secondary " }} mb-0 ms-2 btn-sm d-flex align-items-center justify-content-center ms-3"
                                                         data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                                                         data-bs-original-title="Refund rate is lower with 97% than other products">
                                                         <i class="fas fa-info" aria-hidden="true"></i>
                                                     </button>
+                                                </div>
+                                                <div class="d-flex px-3 py-1 justify-content-center align-items-center">
+                                                    <form method="POST" action="/projects/clients-request/{{ $request->id }}">
+                                                        @csrf
+                                                        @method('DELETE')
+
+                                                        <button  type="submit"
+                                                            class="btn btn-sm btn-icon-only btn-rounded btn-danger mb-0 ms-2 btn-sm d-flex align-items-center justify-content-center ms-3"
+                                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                            title="Delete this request" >
+                                                            <i class="fas fa-trash" style="font-size: 12px;"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </td>
                                         </tr>
