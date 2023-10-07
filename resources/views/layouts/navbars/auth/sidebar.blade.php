@@ -72,13 +72,13 @@
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link " href="{{ route('activities.create') }}">
+                                <a class="nav-link   {{ str_contains(url()->current(), 'activities/create') ? 'bg-dark text-white' : '' }}" href="{{ route('activities.create') }}">
                                     <span class="sidenav-mini-icon"> D </span>
                                     <span class="sidenav-normal"> Daily Activities </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link " href="{{ route('activities.duplicates') }}">
+                                <a class="nav-link   {{ str_contains(url()->current(), 'duplicates') ? 'bg-dark text-white' : '' }}" href="{{ route('activities.duplicates') }}">
                                     <span class="sidenav-mini-icon"> D </span>
                                     <span class="sidenav-normal">Duplicates </span>
                                 </a>
