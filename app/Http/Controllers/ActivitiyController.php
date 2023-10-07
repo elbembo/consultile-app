@@ -152,14 +152,25 @@ class ActivitiyController extends Controller
     }
     function days()
     {
-        $workDays = Activitiy::pluck('created_at')->groupBy(function ($date) {
-            return Carbon::parse($date)->format('Y-m-d');
-        });
-        foreach ($workDays as $key => $value) {
-            $days[] = $key;
-        }
-        // dd($days);
-        return view('activities.days');
+        // $workDays = Activitiy::pluck('created_at')->groupBy(function ($date) {
+        //     return Carbon::parse($date)->format('Y-m-d');
+        // });
+        // foreach ($workDays as $key => $value) {
+        //     $days[] = $key;
+        // }
+        // // dd($days);
+        $duplicates = Activitiy::where('user_id', auth()->id())->groupBy('url')->get();
+
+        dd($duplicates);
+        return view('activities.duplicates');
+    }
+    function duplicates()
+    {
+        $duplicateActivities = Activitiy::select('url')->groupBy('url')->orderBy('url','desc')->paginate(10);
+        // dd($duplicates->toArray()['data']);
+        $duplicates = Activitiy::whereIn('url', $duplicateActivities->toArray()['data'])->orderBy('url')->get();
+        dump($duplicates);
+        return view('activities.duplicates',compact('duplicates','duplicateActivities'));
     }
 
     /**
@@ -187,7 +198,7 @@ class ActivitiyController extends Controller
      */
     public function store(Request $request)
     {
-        Activitiy::create(array_merge($request->all(), ['user_id' => auth()->id()]));
+        Activitiy::create(array_merge($request->all(), ['user_id' => auth()->id(),"url"=> rtrim(strtok($request->url, '?'), '/')]));
         return redirect('/activities/create');
     }
 

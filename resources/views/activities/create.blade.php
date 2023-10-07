@@ -10,7 +10,7 @@
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label for="url">Link of client account</label>
-                                <input type="url" name="url" id="url" class="form-control" autocomplete="off" maxlength="255" required>
+                                <input type="url" name="url" id="url"  pattern="https:\/\/www\.linkedin\.com\/in\/.*"  class="form-control" autocomplete="off" maxlength="255" required>
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="linkedin-accounts">Linkedin Account</label>

@@ -102,6 +102,7 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
             Route::resource('server', ServerController::class);
         });
         Route::get('activities/days', [ActivitiyController::class, 'days'])->name('activities.days');
+        Route::get('activities/duplicates', [ActivitiyController::class, 'duplicates'])->name('activities.duplicates');
         Route::resource('activities', ActivitiyController::class);
 
 
