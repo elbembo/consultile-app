@@ -78,9 +78,9 @@
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link " href="{{ url('#') }}">
-                                    <span class="sidenav-mini-icon"> P </span>
-                                    <span class="sidenav-normal">Projects list </span>
+                                <a class="nav-link " href="{{ route('activities.duplicates') }}">
+                                    <span class="sidenav-mini-icon"> D </span>
+                                    <span class="sidenav-normal">Duplicates </span>
                                 </a>
                             </li>
                             <li class="nav-item ">

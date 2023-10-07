@@ -166,10 +166,8 @@ class ActivitiyController extends Controller
     }
     function duplicates()
     {
-        $duplicateActivities = Activitiy::select('url')->groupBy('url')->orderBy('url','desc')->paginate(10);
-        // dd($duplicates->toArray()['data']);
-        $duplicates = Activitiy::whereIn('url', $duplicateActivities->toArray()['data'])->orderBy('url')->get();
-        dump($duplicates);
+        $duplicateActivities = Activitiy::select('url')->groupBy('url')->having(DB::raw('count(*)'), '>', 1)->orderBy('id','desc')->paginate(10);
+        $duplicates = Activitiy::whereIn('url', $duplicateActivities->toArray()['data'])->join('users', 'users.id', '=', 'activitiys.user_id')->select('activitiys.*', 'users.name')->orderBy('url')->get();
         return view('activities.duplicates',compact('duplicates','duplicateActivities'));
     }
 

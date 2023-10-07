@@ -1,7 +1,6 @@
 @extends('layouts.user_type.auth')
 
 @section('content')
-
     <div class="row mt-4">
         <div class="col-md-12">
             <div class="card h-100 mt-4 mt-md-0">
@@ -23,7 +22,10 @@
                                 <tr>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-40">
-                                        Link</th>
+                                        Emp</th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">
+                                        Time</th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">
                                         Account</th>
@@ -34,16 +36,27 @@
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">
                                         Message</th>
                                     <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-20">
-                                        Time</th>
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 w-40">
+                                        Link</th>
+
+
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $hili = false;
+                                    $previousValue = null;
+                                @endphp
                                 @foreach ($duplicates as $connection)
-                                    <tr>
+                                    @if ($connection->url != $previousValue)
+                                        @php $hili = !$hili @endphp
+                                    @endif
+                                    <tr class="{{ $hili ? 'bg-gray-300' : '' }}">
                                         <td>
-                                            <a href="{{ $connection->url }}"
-                                                class="btn-link text-sm font-weight-bold mb-0">{{ str_replace('www.linkedin.com/in/', '.../', $connection->url) }}</a>
+                                            <p class="text-sm font-weight-bold mb-0">{{ $connection->name }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-sm font-weight-bold mb-0">{{ $connection->created_at }}</p>
                                         </td>
                                         <td>
                                             <p class="text-sm font-weight-bold mb-0">{{ $connection->account }}</p>
@@ -55,10 +68,14 @@
                                             <p class="text-sm font-weight-bold mb-0">{{ $connection->message }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-sm font-weight-bold mb-0">{{ $connection->created_at }}</p>
+                                            <a href="{{ $connection->url }}"
+                                                class="btn-link text-sm font-weight-bold mb-0">{{ str_replace('www.linkedin.com/in/', '.../', $connection->url) }}</a>
                                         </td>
 
+
+
                                     </tr>
+                                    @php $previousValue = $connection->url @endphp
                                 @endforeach
                             </tbody>
                         </table>
