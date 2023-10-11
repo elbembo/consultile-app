@@ -13,6 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
-        'zoho-webhook'
+        'zoho-webhook',
+        'zoho-projects-webhook',
     ];
 }

@@ -17,7 +17,7 @@ class ClientsRequestController extends Controller
     public function index()
     {
         //
-        $requests = WebhookCall::where('approved', '<', '3')->orderBy('id', 'desc')->paginate(30);
+        $requests = WebhookCall::where('approved', '<', '3')->where('name', 'zoho-forms')->orderBy('id', 'desc')->paginate(30);
         // dd($requests->links());
         return view('projects.client-request.index', compact('requests'));
     }
