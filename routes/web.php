@@ -200,4 +200,5 @@ Route::get('/cache', function () {
 });
 // Route::post('webhook', [WebHookController::class, 'webhookHandler']);
 Route::webhooks('zoho-webhook','zoho-forms');
+Route::webhooks('zoho-leads-webhook','zoho-leads');
 Route::webhooks('zoho-projects-webhook','zoho-projects');

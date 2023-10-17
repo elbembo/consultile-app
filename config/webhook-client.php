@@ -67,7 +67,7 @@ return [
              * This package supports multiple webhook receiving endpoints. If you only have
              * one endpoint receiving webhooks, you can use 'default'.
              */
-            'name' => 'zoho-projects',
+            'name' => 'zoho-leads',
 
             /*
              * We expect that every webhook call will be signed using a secret. This secret

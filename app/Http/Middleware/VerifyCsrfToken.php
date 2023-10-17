@@ -15,5 +15,6 @@ class VerifyCsrfToken extends Middleware
         //
         'zoho-webhook',
         'zoho-projects-webhook',
+        'zoho-leads-webhook',
     ];
 }
