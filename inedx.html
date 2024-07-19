@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drag and Drop Form Builder</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        #elements {
+            width: 200px;
+            float: left;
+        }
+        #canvas {
+            width: 500px;
+            height: 600px;
+            border: 1px solid #ccc;
+            float: left;
+            margin-left: 20px;
+        }
+        .draggable {
+            width: 150px;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #000;
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+    <div id="elements">
+        <div class="draggable" data-type="text">Text Field</div>
+        <div class="draggable" data-type="checkbox">Checkbox</div>
+        <div class="draggable" data-type="button">Button</div>
+    </div>
+    <div id="canvas">
+        <h3>Form Builder Canvas</h3>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
