@@ -10,10 +10,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    {{-- @if (env('IS_DEMO')) --}}
-    {{-- <x-demo-metas></x-demo-metas> --}}
-    {{-- @endif --}}
-
     <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/apple-icon.png">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <title>
@@ -95,6 +91,7 @@
         }
     </style>
     <script src="/assets/js/plugins/jquery-3.5.1.min.js"></script>
+    <script src="/assets/js/plugins/jquery-ui.min.js"></script>
     {{-- <script src="/assets/js/core/bootstrap.min.js"></script> --}}
     <script src="/assets/js/core/bootstrap.bundle.min.js"></script>
     <script src="/assets/js/plugins/bootstrap-tagsinput.min.js"></script>
@@ -213,6 +210,8 @@
     <script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
     <script src="/assets/js/plugins/fullcalendar.min.js"></script>
     <script src="/assets/js/plugins/chartjs.min.js"></script>
+    <script src="/assets/js/plugins/form-builder.min.js"></script>
+    <script src="/assets/js/plugins/form-render.min.js"></script>
     {{-- <script src="/assets/js/core.min.js?v=1.0.4"></script> --}}
     <script src="/assets/js/plugins/summernote-lite.min.js"></script>
     <script src="/assets/js/plugins/moment.min.js"></script>
@@ -231,7 +230,7 @@
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
     </script>
-    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    {{-- <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
     <script>
         const beamsClient = new PusherPushNotifications.Client({
             instanceId: 'c2ba298f-0a48-471b-9560-6f37abcfb28e',
@@ -286,7 +285,7 @@
             let toast = new bootstrap.Toast(toastEle)
             toast.show()
         });
-    </script>
+    </script> --}}
     @stack('scripts')
 </body>
 

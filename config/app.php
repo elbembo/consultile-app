@@ -183,6 +183,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Webklex\IMAP\Providers\LaravelServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        
     ],
 
     /*

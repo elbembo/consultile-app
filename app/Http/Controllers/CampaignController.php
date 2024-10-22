@@ -43,9 +43,10 @@ class CampaignController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        $type = $request->query('type');
         $groups = ContactGroupe::orderBy('group_name')->get()->groupBy(function ($data) {
             return $data->group_name;
         });
@@ -57,6 +58,10 @@ class CampaignController extends Controller
         foreach ($settings as $setting) {
             $headers[$setting['key']] = $setting['value'];
         }
+        if($type && $type = 'contacts')
+            return view('campaign.create-contacts', compact('templates', 'headers', 'groups'));
+        if($type && $type = 'import')
+            return view('campaign.create-import', compact('templates', 'headers', 'groups'));
         return view('campaign.create', compact('templates', 'headers', 'groups'));
     }
 

@@ -57,6 +57,11 @@ Route::domain('subscribe.' . env('APP_DOMAIN', 'consultile.com'))->group(functio
     Route::get('unsubscribe', [ContactController::class, 'unsubscribe']);
     Route::post('unsubscribe', [ContactController::class, 'unsubscribe']);
 });
+Route::domain('forms.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
+    Route::get('/', function () {
+        return view('domains.forms.index');
+    });
+});
 Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
     Route::group(['middleware' => ['auth', 'permission']], function () {
         Route::get('/', [HomeController::class, 'home'])->name('home');
@@ -81,9 +86,14 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
         Route::resource('campaigns', CampaignController::class);
         Route::delete('campaigns/{campaign}/attachments', [CampaignController::class, 'removeAttachment'])->name('campaigns.removeAttachment');
 
+        Route::get('forms', function () {
+            return view('forms.index');
+        });
+
         Route::get('subscribes/export', [SubscribeHomeController::class, 'export']);
         Route::post('subscribes/exportSMS', [SubscribeHomeController::class, 'exportSMS'])->name('export.sms');
         Route::resource('subscribes', SubscribeHomeController::class);
+
 
         Route::resource('users', UserController::class);
         Route::resource('email/templates', EmailTemplateController::class);
