@@ -6,6 +6,7 @@ use App\Imports\DirectContactsImport;
 use App\Models\Campaign;
 use App\Models\CampaignContacts;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\HeadingRowImport;
 
 class CampaignContactsController extends Controller
 {
@@ -55,8 +56,13 @@ class CampaignContactsController extends Controller
             if ($request->debug != 'debug')
                 $failures = null;
             $campaign->target_audience = 'direct:'.$code;
-            $campaign->save();
 
+            $headings = (new HeadingRowImport)->toArray($file);
+
+            // The headers will be in the first array index
+            $headers = $headings[0][0];
+            $campaign->field_data = $headers;
+            $campaign->save();
             return redirect()->route('campaigns.edit', [$campaign,'code' => $code]);
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();

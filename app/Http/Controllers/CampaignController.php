@@ -364,21 +364,25 @@ class CampaignController extends Controller
             $sec = env('SCHEDULED_SEC', 5);
             for ($i = 0; $i < $sec; $i++) {
                 $qeue = EmailQeue::where('priority', '>', 0)->first();
-                if (!empty($qeue)) {
-                    if($qeue->type == 'direct_email_campaign' ){
-                        $contact = CampaignContacts::where('id', $qeue->contact_id)->first();
-                    }else if($qeue->type == 'email_campaign'){
-                        $contact = Contact::where('id', $qeue->contact_id)->first();
-                    }
+                if (!empty($qeue->capmaign_id)) {
 
-                    if (!empty($contact)) {
-                        $campaign = Campaign::find($qeue->capmaign_id);
-                    }
-                    if ($campaign) {
-                        $mailTemp = EmailTemplate::where('id', $campaign->template_id)->first();
-                    }
+
+
+                    $campaign = Campaign::find($qeue->capmaign_id);
+                    if(empty($campaign->template_id))
+                        continue;
+                    $mailTemp = EmailTemplate::find($campaign->template_id);
                     if ($mailTemp) {
-                        $emailto = trim(trim($contact->email, "‎"));
+                        if($qeue->type == 'direct_email_campaign' ){
+                            $contact = CampaignContacts::where('id', $qeue->contact_id)->first();
+                            $emailto = trim(trim($contact->email, "‎"));
+                            $body = Helper::parser($emailto, $mailTemp->content,$contact->fields_data ,$qeue->massage_id);
+                        }else if($qeue->type == 'email_campaign'){
+                            $contact = Contact::where('id', $qeue->contact_id)->first();
+                            $emailto = trim(trim($contact->email, "‎"));
+                            $body = Helper::parser($emailto, $mailTemp->content,[], $qeue->massage_id);
+                        }
+
                         $mailData = [
                             'from' => ['email' => env('MAIL_FROM_ADDRESS', 'newsletters@consultile-mea.com'), 'name' => $campaign->sender_name],
                             'replyTo' => ['email' => $campaign->replay_to, 'name' => $campaign->replay_to_name],
@@ -387,7 +391,7 @@ class CampaignController extends Controller
                             'attachments' => $campaign->details,
                             'tracking' => $campaign->tracking,
                             'messageId' => $qeue->massage_id,
-                            'body' => Helper::parser($emailto, $mailTemp->content, $qeue->massage_id)
+                            'body' => $body
                         ];
                         if (preg_match("/(.+)@(.+)\.(.+)/i", $emailto)) {
                             try {

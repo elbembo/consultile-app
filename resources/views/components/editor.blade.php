@@ -51,6 +51,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="d-flex">
+                    @if(empty($campaign->field_data))
                     <div class=" bg-light btn btn-link custom_data  p-2 m-1 " data-value="First Name">
                         First
                         Name</div>
@@ -61,6 +62,13 @@
                     </div>
                     <div class=" bg-light btn btn-link custom_data  p-2 m-1 " data-value="Email">Email
                     </div>
+                    @else
+                    @foreach($campaign->field_data as $value)
+                    <div class=" bg-light btn btn-link custom_data  p-2 m-1 " data-value="{{ $value }}">{{ $value }}
+                    </div>
+
+                    @endforeach
+                    @endif
                     <div class=" bg-light btn btn-link unsubscribe-btn  p-2 m-1 " data-value="Email">
                         Unsubscribe link</div>
                 </div>

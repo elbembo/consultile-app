@@ -267,7 +267,7 @@ class ContactController extends Controller
         $t = $request->input('t');
         if ($request->method() == "POST") {
             $tracker = EmailTraker::where('massage_id', $t)->first();
-            if (!empty($tracker)) {
+            if (!empty($tracker) && $tracker->type == 'email_campaign') {
                 $contact = Contact::find($tracker->contact_id);
                 if (!empty($request->reason))
                     foreach ($request->reason as $reason) {

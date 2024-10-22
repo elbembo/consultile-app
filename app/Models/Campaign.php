@@ -26,6 +26,7 @@ class Campaign extends Model
         'template_id',
         'audience_done',
         'details',
+        'field_data',
         'tracking',
         'group_name'
     ];
@@ -36,5 +37,6 @@ class Campaign extends Model
      */
     protected $casts = [
         'details' => Json::class,
+        'field_data' => Json::class,
     ];
 }

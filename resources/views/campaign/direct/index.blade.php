@@ -18,7 +18,6 @@
                                     name="group_name" value="{{ old('group_name') }}" required></div>
                             <div class="col-md-8"><input class="form-control" type="file" name="contacts"
                                     value="{{ old('contacts') }}" required></div>
-                                    {{ $campaign }}
                         </div>
 
 

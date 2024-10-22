@@ -312,7 +312,7 @@
                     </div>
                 </div>
             @endif
-            @if (isset($campaign))
+            @if (isset($campaign) && !empty($campaign->target_audience))
                 <div class="card mb-2">
                     <div class="card-header">
                         <h6 class="mb-0 d-flex justify-content-between">{{ __('Email Template  ') }} <small
@@ -430,7 +430,7 @@
                                         @if ($campaign->status == 'draft')
                                             <input type="hidden" name="status" value="processing">
                                             <button name="submitBTN" class="btn bg-gradient-success text-lg mt-2"
-                                                type="submit" value="Do you want to run this campaign?"><i
+                                                type="submit" value="Do you want to run this campaign?" {{ empty($campaign->target_audience) ? 'disabled' : '' }}><i
                                                     class="fa fa-play me-sm-1" aria-hidden="true"></i>Run
                                                 campaign</button>
                                         @elseif($campaign->status == 'processing')

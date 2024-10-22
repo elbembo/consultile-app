@@ -27,15 +27,6 @@ class DirectContactsImport implements ToModel, WithHeadingRow
     }
     public function model(array $row)
     {
-        // $fields = [];
-        // foreach($row as $key => $value){
-        //     if($key != 'email')
-        //         array_push($fields,$row);
-
-        // }
-
-
-
         return new CampaignContacts([
             //
             'email' => $row['email'],
