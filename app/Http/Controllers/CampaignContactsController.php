@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\DirectContactsImport;
+use App\Models\Campaign;
 use App\Models\CampaignContacts;
 use Illuminate\Http\Request;
 
@@ -12,9 +14,11 @@ class CampaignContactsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Campaign $campaign)
     {
         //
+
+        return view('campaign.direct.index',compact('campaign'));
     }
 
     /**
@@ -33,9 +37,32 @@ class CampaignContactsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request ,Campaign $campaign)
     {
         //
+        $validated = $request->validate([
+            'contacts' => 'max:3000|mimes:xlsx,xlsm,xltx,tsv,csv,xml,xlt,xls,xltm,xltx,xlsm'
+        ]);
+        if (!$validated)
+            return back();
+        $file = $request->file('contacts');
+        $failures = [];
+        try {
+            $import = new DirectContactsImport($request->group_name);
+            $import->import($file);
+            $code = $import->code;
+            $failures = $import->failures();
+            if ($request->debug != 'debug')
+                $failures = null;
+            $campaign->target_audience = 'direct:'.$code;
+            $campaign->save();
+
+            return redirect()->route('campaigns.edit', [$campaign,'code' => $code]);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+
+            return view('campaign.direct.index', compact('failures','campaign'));
+        }
     }
 
     /**

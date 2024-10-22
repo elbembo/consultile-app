@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('campaign_contacts', function (Blueprint $table) {
             $table->id();
+            $table->string('email');
+            $table->string('name');
+            $table->string('code');
+            $table->json('fields_data');
             $table->timestamps();
         });
     }

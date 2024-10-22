@@ -6,6 +6,7 @@ use App\Events\NotificationEvent;
 use App\Helpers\Helper;
 use App\Models\Campaign;
 use App\Mail\SendCampaignEmails;
+use App\Models\CampaignContacts;
 use App\Models\Contact;
 use App\Models\ContactGroupe;
 use App\Models\EmailQeue;
@@ -58,10 +59,10 @@ class CampaignController extends Controller
         foreach ($settings as $setting) {
             $headers[$setting['key']] = $setting['value'];
         }
-        if($type && $type = 'contacts')
-            return view('campaign.create-contacts', compact('templates', 'headers', 'groups'));
-        if($type && $type = 'import')
-            return view('campaign.create-import', compact('templates', 'headers', 'groups'));
+        // if($type && $type == 'contacts')
+        //     return view('campaign.create-contacts', compact('templates', 'headers', 'groups'));
+        // if($type && $type == 'import')
+        //     return view('campaign.create-import', compact('templates', 'headers', 'groups'));
         return view('campaign.create', compact('templates', 'headers', 'groups'));
     }
 
@@ -175,13 +176,19 @@ class CampaignController extends Controller
                 if ($request->status == 'processing') {
                     $ta = 0;
                     if ($campaign->group_name != '0') {
+                        $type = 'email_campaign';
                         $contactGroup = ContactGroupe::where('group_name', '=', $campaign->group_name)->pluck('contact_id');
                         $contacts = Contact::whereIn('id', $contactGroup)->where('subscribe', 1)->get();
+                    }elseif(str_starts_with($campaign->target_audience, 'direct:') ){
+                        $type = 'direct_email_campaign';
+                        $code = explode(':',$campaign->target_audience)[1];
+                        $contacts = CampaignContacts::where('code',$code)->get();
                     } else {
+                        $type = 'email_campaign';
                         $contacts = Contact::where('email', '!=', '')->where('subscribe', 1);
                         if (!empty($campaign->target_location))
                             $contacts = $contacts->where('country', $campaign->target_location);
-                        if (!empty($campaign->target_audience)) {
+                        if (!empty($campaign->target_audience) && $campaign->target_audience != 'all' && !str_starts_with($campaign->target_location,'direct:')) {
                             foreach (explode(',', $campaign->target_audience) as  $key => $tag) {
                                 if ($key == 0)
                                     $contacts->where('tags', 'like',  "%$tag%");
@@ -195,6 +202,7 @@ class CampaignController extends Controller
                     foreach ($contacts as $contact) {
                         if (preg_match("/(.+)@(.+)\.(.+)/i", $contact->email)) {
                             EmailQeue::create([
+                                'type' => $type,
                                 'capmaign_id' => $campaign->id,
                                 'contact_id' => $contact->id,
                                 'priority' => $campaign->campaign_priority,
@@ -209,14 +217,19 @@ class CampaignController extends Controller
                     $campaign->update($request->all());
                     $campaign->save();
                     return redirect("campaigns");
+
                 } elseif ($request->status == 'canceled') {
+
                     DB::table('email_qeues')->where('capmaign_id', $campaign->id)->delete();
+
                 } elseif ($request->status == 'replicate') {
+
                     $newCampaign = $campaign->replicate();
                     $newCampaign->created_at = Carbon::now();
                     $newCampaign->total_audience = 0;
                     $newCampaign->audience_done = 0;
                     $newCampaign->status = 'draft';
+
                     if (strpos($campaign->name, 'Replicate') !== false) {
                         $needle = 'Replicate';
                         $number = substr($campaign->name, strpos($campaign->name, $needle) + strlen($needle));
@@ -227,7 +240,9 @@ class CampaignController extends Controller
                     }
 
                     $newCampaign->save();
+
                     return redirect("campaigns/$newCampaign->id/edit");
+
                 } elseif ($request->status == 'pause') {
                     DB::table('email_qeues')->where('capmaign_id', $campaign->id)->update([
                         'priority' => 0,
@@ -288,7 +303,8 @@ class CampaignController extends Controller
         $contacts = Contact::where('email', '!=', '')->where('subscribe', 1);
         if (!empty($request->target_location))
             $contacts = $contacts->where('country', $request->target_location);
-        if (!empty($request->target_audience)) {
+
+        if (!empty($request->target_audience) && $request->target_audience != 'all' && !str_starts_with($request->target_location,'direct:')) {
             foreach (explode(',', $request->target_audience) as  $key => $tag) {
                 if ($key == 0)
                     $contacts->where('tags', 'like',  "%$tag%");
@@ -296,9 +312,12 @@ class CampaignController extends Controller
                     $contacts->orWhere('tags', 'like',  "%$tag%")->where('email', '!=', '')->where('subscribe', 1);
             }
         }
+
         $count = $contacts->count();
+
         return response()->json(['count' => $count]);
     }
+
     public function removeAttachment(Request $request)
     {
         //
@@ -320,6 +339,7 @@ class CampaignController extends Controller
             $delivered = 0;
         }
         if (EmailTraker::create([
+            'type' => $qeue->type,
             'capmaign_id' => $campaign->id,
             'contact_id' => $contact->id,
             'priority' => $campaign->campaign_priority,
@@ -345,9 +365,13 @@ class CampaignController extends Controller
             for ($i = 0; $i < $sec; $i++) {
                 $qeue = EmailQeue::where('priority', '>', 0)->first();
                 if (!empty($qeue)) {
-                    $contact = DB::table('contacts')->where('id', $qeue->contact_id)->first();
+                    if($qeue->type == 'direct_email_campaign' ){
+                        $contact = CampaignContacts::where('id', $qeue->contact_id)->first();
+                    }else if($qeue->type == 'email_campaign'){
+                        $contact = Contact::where('id', $qeue->contact_id)->first();
+                    }
 
-                    if ($contact) {
+                    if (!empty($contact)) {
                         $campaign = Campaign::find($qeue->capmaign_id);
                     }
                     if ($campaign) {

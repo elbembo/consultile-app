@@ -4,6 +4,7 @@ use App\Events\AccessRequestEvent;
 use App\Events\CampaignComplete;
 use App\Events\NotificationEvent;
 use App\Http\Controllers\ActivitiyController;
+use App\Http\Controllers\CampaignContactsController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
@@ -83,8 +84,10 @@ Route::domain('app.' . env('APP_DOMAIN', 'consultile.com'))->group(function () {
 
 
         Route::post('/send-test-email', [CampaignController::class, 'send_test'])->name('email.send_test');
+        Route::resource('campaigns.import', CampaignContactsController::class);
         Route::resource('campaigns', CampaignController::class);
         Route::delete('campaigns/{campaign}/attachments', [CampaignController::class, 'removeAttachment'])->name('campaigns.removeAttachment');
+
 
         Route::get('forms', function () {
             return view('forms.index');
